@@ -42,7 +42,7 @@ const ProfileNeighbor = () => {
             />
           </div>
           <div className="mt-auto text-end mb-5">
-            <Link to={"/"} className="btn btn-success me-5">
+            <Link to={"/profileEditNeighbor"} className="btn btn-success me-5">
               Editar información
             </Link>
           </div>
