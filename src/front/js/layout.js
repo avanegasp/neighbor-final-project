@@ -5,6 +5,8 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import ProfileNeighbor from "./pages/ProfileNeighbor.jsx";
+import ProfileSeller from "./pages/ProfileSeller.jsx";
+import ProfileAdmin from "./pages/ProfileAdmin.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -27,6 +29,9 @@ const Layout = () => {
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<ProfileNeighbor />} path="/profileNeighbor" />
+            <Route element={<ProfileSeller />} path="/profileSeller" />
+            <Route element={<ProfileAdmin />} path="/profileAdmin" />
+
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import TitleProfiles from "../component/TitleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../component/PersonalProfileDetails/PersonalProfileDetails.jsx";
 
-const ProfileNeighbor = () => {
+const ProfileSeller = () => {
   return (
     <div className="container d-flex flex-column min-vh-100">
-      <TitleProfiles title={"Vecinos"} />
+      <TitleProfiles title={"Vendedor(a)"} />
       <div
         className="d-flex justify-content-center align-items-start"
         style={{ minHeight: "80vh" }}
@@ -35,10 +35,10 @@ const ProfileNeighbor = () => {
           </div>
           <div className="col-md-7 d-flex flex-column justify-content-center">
             <PersonalProfileDetails
-              nameProfile={"Pedro"}
-              lastName={"Manrique"}
-              floor={1020}
-              hobbies={"Apasionado de la Lectura, senderismo y videojuegos"}
+              nameProfile={"Oliva"}
+              lastName={"Vanegas"}
+              floor={2404}
+              hobbies={"Amo correr, dormir y jugar con la pelota"}
             />
           </div>
           <div className="mt-auto text-end mb-5">
@@ -52,4 +52,4 @@ const ProfileNeighbor = () => {
   );
 };
 
-export default ProfileNeighbor;
+export default ProfileSeller;

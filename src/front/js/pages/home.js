@@ -9,7 +9,17 @@ export const Home = () => {
   return (
     <div className="text-center mt-5">
       <h1>Hello Neighbors!!</h1>
-      <Link to={"/profileNeighbor"}>Profile Neighbor</Link>
+      <div>
+        <div>
+          <Link to={"/profileNeighbor"}>Perfil Vecino(a)</Link>
+        </div>
+        <div>
+          <Link to={"/profileSeller"}>Perfil Vendedora(a)</Link>
+        </div>
+        <div>
+          <Link to={"/profileAdmin"}>Perfil Admin</Link>
+        </div>
+      </div>
     </div>
   );
 };
