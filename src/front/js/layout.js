@@ -4,13 +4,15 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import ProfileNeighbor from "./pages/ProfileNeighbor.jsx";
-import ProfileSeller from "./pages/ProfileSeller.jsx";
-import ProfileAdmin from "./pages/ProfileAdmin.jsx";
+import ProfileNeighbor from "./pages/profiles/Neighbor.jsx";
+import ProfileSeller from "./pages/profiles/Seller.jsx";
+import ProfileAdmin from "./pages/profiles/Admin.jsx";
 
-import ProfileEditAdmin from "./pages/ProfileEditAdmin.jsx";
-import ProfileEditNeighbor from "./pages/ProfileEditNeighbor.jsx";
-import ProfileEditSeller from "./pages/ProfileEditSeller.jsx";
+import ProfileEditAdmin from "./pages/editProfiles/Admin.jsx";
+import ProfileEditNeighbor from "./pages/editProfiles/Neighbor.jsx";
+import ProfileEditSeller from "./pages/editProfiles/Seller.jsx";
+
+import Directory from "./pages/directory/Directory.jsx";
 
 import injectContext from "./store/appContext";
 
@@ -42,6 +44,7 @@ const Layout = () => {
             />
             <Route element={<ProfileEditSeller />} path="/profileEditSeller" />
             <Route element={<ProfileEditAdmin />} path="/profileEditAdminr" />
+            <Route element={<Directory />} path="/directory" />
 
             <Route element={<h1>Not found!</h1>} />
           </Routes>
