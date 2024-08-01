@@ -1,6 +1,6 @@
 import React from "react";
 
-const NeighborTP = ({ title }) => {
+const TitleProfiles = ({ title }) => {
   return (
     <div className="d-flex justify-content-center align-items-center my-4 flex-grow-1">
       <h1>Información personal {title}</h1>
@@ -8,4 +8,4 @@ const NeighborTP = ({ title }) => {
   );
 };
 
-export default NeighborTP;
+export default TitleProfiles;

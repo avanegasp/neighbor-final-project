@@ -19,6 +19,9 @@ export const Home = () => {
         <div>
           <Link to={"/profileAdmin"}>Perfil Admin</Link>
         </div>
+        <div>
+          <Link to={"/directory"}>Directorio</Link>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
-import EditProfileDetails from "../component/editProfileDetails/EditProfileDetails.jsx";
+import EditProfileDetails from "../../component/editProfileDetails/EditProfileDetails.jsx";
 
-const ProfileEditNeigbor = () => {
+const ProfileEditNeighbor = () => {
   return (
     <div className="container d-flex flex-column min-vh-100">
       <div>
@@ -14,4 +14,4 @@ const ProfileEditNeigbor = () => {
   );
 };
 
-export default ProfileEditNeigbor;
+export default ProfileEditNeighbor;
