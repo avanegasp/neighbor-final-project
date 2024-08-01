@@ -1,15 +1,20 @@
 import React from "react";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
 import TagRol from "../../component/tagRol/TagRol.jsx";
+import Search from "../../component/search/Search.jsx";
 
 const Directory = () => {
   return (
     <div className="container d-flex flex-column min-vh-100">
       <div
-        className="d-flex justify-content-center align-items-center"
+        className="d-flex justify-content-between align-items-center"
         style={{ minHeight: "20vh" }}
       >
         <h1>Directorio</h1>
+        <div className="input-group mb-3 inputSearch w-25">
+          <span className="input-group-text"></span>
+          <Search />
+        </div>
       </div>
       <div className="row w-100 border border-1 border-dark">
         <div className="col-md-4 ms-4">
