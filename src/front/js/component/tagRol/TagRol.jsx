@@ -5,7 +5,7 @@ const TagRol = ({ rol }) => {
     <>
       <button
         type="button"
-        className="btn btn-outline-warning position-absolute top-0 end-0"
+        className="btn btn-outline-info position-absolute top-0 end-0"
       >
         Seller
       </button>

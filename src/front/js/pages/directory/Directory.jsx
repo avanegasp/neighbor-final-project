@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
 import TagRol from "../../component/tagRol/TagRol.jsx";
 import Search from "../../component/search/Search.jsx";
@@ -15,6 +17,7 @@ const Directory = () => {
           <Search />
         </div>
       </div>
+
       <div className="row w-100 border border-1 border-dark">
         <div className="col-md-4 ms-4">
           <div className="card mt-5 mb-5">
@@ -23,6 +26,9 @@ const Directory = () => {
               className="card-img-top"
               alt="..."
             />
+            <button className="btn btn-outline-warning position-relative bottom-0 end-0">
+              <FontAwesomeIcon icon={faHeart} />
+            </button>
           </div>
         </div>
         <div className="col-md-7 d-flex flex-column justify-content-center position-relative mt-5">
