@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TitleProfiles from "../component/TitleProfiles/TitleProfiles.jsx";
-import PersonalProfileDetails from "../component/PersonalProfileDetails/PersonalProfileDetails.jsx";
+import TitleProfiles from "../component/titleProfiles/TitleProfiles.jsx";
+import PersonalProfileDetails from "../component/personalProfileDetails/PersonalProfileDetails.jsx";
 
 const ProfileSeller = () => {
   return (
