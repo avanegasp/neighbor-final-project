@@ -12,7 +12,6 @@ const Directory = () => {
       >
         <h1>Directorio</h1>
         <div className="input-group mb-3 inputSearch w-25">
-          <span className="input-group-text"></span>
           <Search />
         </div>
       </div>
