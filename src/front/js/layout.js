@@ -12,11 +12,13 @@ import ProfileEditAdmin from "./pages/ProfileEditAdmin.jsx";
 import ProfileEditNeighbor from "./pages/ProfileEditNeighbor.jsx";
 import ProfileEditSeller from "./pages/ProfileEditSeller.jsx";
 
+import Login from "./pages/Login.jsx";
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import Login from "./pages/Login.jsx";
+
 
 //create your first component
 const Layout = () => {

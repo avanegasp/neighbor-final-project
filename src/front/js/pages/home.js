@@ -18,9 +18,9 @@ export const Home = () => {
         </div>
         <div>
           <Link to={"/profileAdmin"}>Perfil Admin</Link>
-		</div>
-		<div>
-		  <Link to={"/login"}>Login</Link>
+        </div>
+        <div>
+          <Link to={"/login"}>Login</Link>
         </div>
       </div>
     </div>
