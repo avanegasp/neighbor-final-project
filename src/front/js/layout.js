@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import { Home } from "./pages/home.jsx";
 import ProfileNeighbor from "./pages/ProfileNeighbor.jsx";
 import ProfileSeller from "./pages/ProfileSeller.jsx";
 import ProfileAdmin from "./pages/ProfileAdmin.jsx";
@@ -11,7 +11,7 @@ import ProfileAdmin from "./pages/ProfileAdmin.jsx";
 import ProfileEditAdmin from "./pages/ProfileEditAdmin.jsx";
 import ProfileEditNeighbor from "./pages/ProfileEditNeighbor.jsx";
 import ProfileEditSeller from "./pages/ProfileEditSeller.jsx";
-
+import Register from "./component/Register.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -42,7 +42,7 @@ const Layout = () => {
             />
             <Route element={<ProfileEditSeller />} path="/profileEditSeller" />
             <Route element={<ProfileEditAdmin />} path="/profileEditAdminr" />
-
+            <Route element={<Register />} path="/register" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
