@@ -14,10 +14,13 @@ import ProfileEditSeller from "./pages/editProfiles/Seller.jsx";
 
 import Directory from "./pages/directory/Directory.jsx";
 
+import Login from "./pages/Login.jsx";
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
 
 //create your first component
 const Layout = () => {
@@ -44,6 +47,7 @@ const Layout = () => {
             />
             <Route element={<ProfileEditSeller />} path="/profileEditSeller" />
             <Route element={<ProfileEditAdmin />} path="/profileEditAdminr" />
+            <Route element={<Login />} path="/login" />
             <Route element={<Directory />} path="/directory" />
 
             <Route element={<h1>Not found!</h1>} />

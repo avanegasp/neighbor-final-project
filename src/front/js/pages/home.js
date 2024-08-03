@@ -20,6 +20,7 @@ export const Home = () => {
           <Link to={"/profileAdmin"}>Perfil Admin</Link>
         </div>
         <div>
+          <Link to={"/login"}>Login</Link>
           <Link to={"/directory"}>Directorio</Link>
         </div>
       </div>
