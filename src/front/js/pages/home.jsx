@@ -9,6 +9,11 @@ export const Home = () => {
   return (
     <div className="text-center mt-5">
       <h1>Hello Neighbors!!</h1>
+
+      <div>
+        <Link to={"/register"}>Register</Link>
+      </div>
+
       <div>
         <div>
           <Link to={"/profileNeighbor"}>Perfil Vecino(a)</Link>
