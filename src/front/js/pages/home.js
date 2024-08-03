@@ -21,6 +21,7 @@ export const Home = () => {
         </div>
         <div>
           <Link to={"/login"}>Login</Link>
+          <Link to={"/directory"}>Directorio</Link>
         </div>
       </div>
     </div>
