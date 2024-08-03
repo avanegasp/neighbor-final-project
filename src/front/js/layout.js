@@ -8,6 +8,7 @@ import ProfileNeighbor from "./pages/ProfileNeighbor.jsx";
 import ProfileSeller from "./pages/ProfileSeller.jsx";
 import ProfileAdmin from "./pages/ProfileAdmin.jsx";
 
+
 import ProfileEditAdmin from "./pages/ProfileEditAdmin.jsx";
 import ProfileEditNeighbor from "./pages/ProfileEditNeighbor.jsx";
 import ProfileEditSeller from "./pages/ProfileEditSeller.jsx";
