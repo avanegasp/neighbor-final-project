@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TitleProfiles from "../component/TitleProfiles/TitleProfiles.jsx";
-import PersonalProfileDetails from "../component/PersonalProfileDetails/PersonalProfileDetails.jsx";
+import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
+import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
 
-const ProfileAdmin = () => {
+const ProfileNeighbor = ({ rol }) => {
   return (
     <div className="container d-flex flex-column min-vh-100">
-      <TitleProfiles title={"Admin"} />
+      <TitleProfiles title={"Vecinos"} />
       <div
         className="d-flex justify-content-center align-items-start"
         style={{ minHeight: "80vh" }}
@@ -35,16 +35,14 @@ const ProfileAdmin = () => {
           </div>
           <div className="col-md-7 d-flex flex-column justify-content-center">
             <PersonalProfileDetails
-              nameProfile={"Carolina"}
-              lastName={"Pastrana"}
-              floor={520}
-              hobbies={
-                "Apasionada de los números, calculadora y sacar gente del edificio"
-              }
+              nameProfile={"Pedro"}
+              lastName={"Manrique"}
+              floor={1020}
+              hobbies={"Apasionado de la Lectura, senderismo y videojuegos"}
             />
           </div>
           <div className="mt-auto text-end mb-5">
-            <Link to={"/profileEditAdminr"} className="btn btn-success me-5">
+            <Link to={"/profileEditNeighbor"} className="btn btn-success me-5">
               Editar información
             </Link>
           </div>
@@ -54,4 +52,4 @@ const ProfileAdmin = () => {
   );
 };
 
-export default ProfileAdmin;
+export default ProfileNeighbor;

@@ -1,11 +1,11 @@
 import React from "react";
-import EditProfileDetails from "../component/editProfileDetails/EditProfileDetails.jsx";
+import EditProfileDetails from "../../component/editProfileDetails/EditProfileDetails.jsx";
 
-const ProfileEditSeller = () => {
+const ProfileEditAdmin = () => {
   return (
     <div className="container d-flex flex-column min-vh-100">
       <div>
-        <h1>Editar perfil Vendedor(a)</h1>
+        <h1>Editar perfil Admin</h1>
       </div>
       <div>
         <EditProfileDetails />
@@ -14,4 +14,4 @@ const ProfileEditSeller = () => {
   );
 };
 
-export default ProfileEditSeller;
+export default ProfileEditAdmin;
