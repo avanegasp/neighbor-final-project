@@ -78,3 +78,40 @@ def add_neighbor():
     db.session.add(new_neighbor)
     db.session.commit()
     return jsonify({"Neighbor": new_neighbor.serialize()}),201
+
+ #Registro seller
+
+@api.route('/registers', methods=['POST'])
+def add_seller():
+    body = request.jsonify
+    email = body.get("email",None)
+    password = body.get("password",None)
+
+    if email is None:
+        return jsonify({"error": "El email es requerido"}),400
+    if password is None:
+        return jsonify({"error": "El password es requerido"}),400    
+
+    new_seller = Seller(email=email, password=password, is_active=True)
+    db.session.add(new_seller)
+    db.session.commit()
+    return jsonify({"Seller": new_neighbor.serialize()}),201
+
+
+    #Registro administrador
+
+@api.route('/registers', methods=['POST'])
+def add_administrator():
+    body = request.jsonify
+    email = body.get("email",None)
+    password = body.get("password",None)
+
+    if email is None:
+        return jsonify({"error": "El email es requerido"}),400
+    if password is None:
+        return jsonify({"error": "El password es requerido"}),400    
+
+    new_administrator = Administrator(email=email, password=password, is_active=True)
+    db.session.add(new_administrator)
+    db.session.commit()
+    return jsonify({"Administrator": new_administrator.serialize()}),201    
