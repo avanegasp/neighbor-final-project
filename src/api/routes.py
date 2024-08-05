@@ -41,7 +41,7 @@ def my_seller():
 @api.route('/sellers/<int:id>', methods=['GET'])
 def get_sellers(id):
     seller =seller.query.get(id)
-    if sellers is None:
+    if seller is None:
         return jsonify({"error": "seller not found"}), 404
 
 
@@ -49,16 +49,16 @@ def get_sellers(id):
 
 @api.route('/administrators', methods=['GET'])
 def my_administrator():
-    administrators = Administrators.query.all()
+    administrators = Administrator.query.all()
     serialize_administrators = [administrator.serialize() for administrator in administrators]
     return jsonify({
-        "administrator":administrator_administrators
+        "administrator":serialize_administrators
     }),200
 
 @api.route('/administrators/<int:id>', methods=['GET'])
 def get_administrators(id):
-    administrators =administrator.query.get(id)
-    if administrators is None:
+    administrator= administrator.query.get(id)
+    if administrator is None:
         return jsonify({"error": "administrator not found"}), 404    
 
     #registro de vecino
