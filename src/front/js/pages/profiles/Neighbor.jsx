@@ -5,7 +5,7 @@ import PersonalProfileDetails from "../../component/personalProfileDetails/Perso
 
 const ProfileNeighbor = ({ rol }) => {
   return (
-    <div className="container d-flex flex-column min-vh-100">
+    <div className="container d-flex flex-column min-vh-100 mb-5">
       <TitleProfiles title={"Vecinos"} />
       <div
         className="d-flex justify-content-center align-items-start"

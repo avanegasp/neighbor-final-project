@@ -22,11 +22,13 @@ def my_neighbor():
         "neighbor":serialize_neighbors
     }),200
 
-@api.route('/neighbors/<int:id>', methods=['GET'])
+@api.route('/neighbor/<int:id>', methods=['GET'])
 def get_neighbor(id):
     neighbor = Neighbor.query.get(id)
     if neighbor is None:
         return jsonify({"error": "neighbor not found"}), 404
+    
+    return jsonify(neighbor.serialize())
 
 #Vendedores
 
@@ -38,13 +40,13 @@ def my_seller():
         "seller":serialize_sellers
     }),200
 
-@api.route('/sellers/<int:id>', methods=['GET'])
+@api.route('/seller/<int:id>', methods=['GET'])
 def get_sellers(id):
-    seller =seller.query.get(id)
+    seller = Seller.query.get(id)
     if seller is None:
         return jsonify({"error": "seller not found"}), 404
 
-
+    return jsonify(seller.serialize())
     #administrador
 
 @api.route('/administrators', methods=['GET'])
@@ -55,12 +57,13 @@ def my_administrator():
         "administrator":serialize_administrators
     }),200
 
-@api.route('/administrators/<int:id>', methods=['GET'])
+@api.route('/administrator/<int:id>', methods=['GET'])
 def get_administrators(id):
-    administrator= administrator.query.get(id)
+    administrator= Administrator.query.get(id)
     if administrator is None:
         return jsonify({"error": "administrator not found"}), 404    
 
+    return jsonify(administrator.serialize())
     #registro de vecino
 
 @api.route('/registers', methods=['POST'])
