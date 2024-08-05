@@ -85,6 +85,8 @@ class Administrator(db.Model):
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
     neighbor_id = db.Column(Integer,ForeignKey('neighbor.id'))
 
+    boulding = db.relationship('Boulding')
+
 
 
     def __repr__(self):
@@ -98,10 +100,30 @@ class Administrator(db.Model):
             "lastname": self.lastname,
             "floor": self.floor,
             "bouldingname": self.bouldingname,
-            "role": self.role
+            "role": self.role,
+            'boulding': [boulding.serialize() for boulding in self.bouldings],
 
             # do not serialize the password, its a security breach
         }               
+
+class Boulding(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bouldingname = db.Column(db.String(80), unique=False, nullable=False)
+    administrator_id = db.Column(Integer,ForeignKey('administrator.id'))
+
+
+
+    def __repr__(self):
+        return f'<BOULDING {self.email}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "bouldingname": self.bouldingname,
+            
+            # do not serialize the password, its a security breach
+        }               
+
 
 
     
