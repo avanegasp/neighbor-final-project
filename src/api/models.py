@@ -21,6 +21,9 @@ class Neighbor(db.Model):
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.NEIGHBOR.value)
+      
+    sellers = db.relationship('Seller')
+    administrators = db.relationship('Administrator') 
 
 
     def __repr__(self):
@@ -34,7 +37,9 @@ class Neighbor(db.Model):
             "name": self.name,
             "lastname": self.lastname,
             "floor": self.floor,
-            "role": self.role
+            "role": self.role,
+            'seller': [seller.serialize() for seller in self.sellers],
+            'administrator': [administrator.serialize() for administrator in self.administrators],
 
             # do not serialize the password, its a security breach
         }
@@ -48,6 +53,8 @@ class Seller(db.Model):
     floor = db.Column(db.String(80), unique=False, nullable=False)
     shopname= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
+    neighbor_id = db.Column(Integer,ForeignKey('neighbor.id'))
+
 
 
     def __repr__(self):
@@ -76,6 +83,8 @@ class Administrator(db.Model):
     floor = db.Column(db.String(80), unique=False, nullable=False)
     bouldingname = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
+    neighbor_id = db.Column(Integer,ForeignKey('neighbor.id'))
+
 
 
     def __repr__(self):
