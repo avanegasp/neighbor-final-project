@@ -53,8 +53,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
+
       profileGetNeighbor: async (id) => {
+        if (!id) {
+          console.error("Id is undefined");
+          return;
+        }
+
         console.log("Id desde flux", id);
+
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${id}`
@@ -75,6 +82,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching neighbor:", error);
         }
       },
+
       //   profileGetSeller: async (id) => {
       //     try {
       //       const response = await fetch(

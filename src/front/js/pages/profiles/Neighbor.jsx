@@ -6,22 +6,20 @@ import PersonalProfileDetails from "../../component/personalProfileDetails/Perso
 
 const ProfileNeighbor = () => {
   const { store, actions } = useContext(Context);
-  const params = useParams();
+  const { id } = useParams();
 
-  console.log("here", params.id);
+  console.log("here", id);
 
   useEffect(() => {
-    console.log("PARAMS...", params.id);
-    if (params.id) {
-      actions.profileGetNeighbor(params.id);
-    }
-  }, [params.id]);
+    console.log("PARAMS...", id);
+    actions.profileGetNeighbor(id);
+  }, [id]);
 
   if (!store.neighbor) return <div>Loading...</div>;
 
   return (
     <div className="container d-flex flex-column min-vh-100 mb-5">
-      <TitleProfiles title={store.neighbor.rol} />
+      <TitleProfiles title={store.neighbor.role} />
       <div
         className="d-flex justify-content-center align-items-start"
         style={{ minHeight: "80vh" }}
