@@ -22,11 +22,13 @@ def my_neighbor():
         "neighbor":serialize_neighbors
     }),200
 
-@api.route('/neighbors/<int:id>', methods=['GET'])
+@api.route('/neighbor/<int:id>', methods=['GET'])
 def get_neighbor(id):
     neighbor = Neighbor.query.get(id)
     if neighbor is None:
         return jsonify({"error": "neighbor not found"}), 404
+    
+    return jsonify(neighbor.serialize())
 
 #Vendedores
 
@@ -38,29 +40,30 @@ def my_seller():
         "seller":serialize_sellers
     }),200
 
-@api.route('/sellers/<int:id>', methods=['GET'])
+@api.route('/seller/<int:id>', methods=['GET'])
 def get_sellers(id):
-    seller =seller.query.get(id)
-    if sellers is None:
+    seller = Seller.query.get(id)
+    if seller is None:
         return jsonify({"error": "seller not found"}), 404
 
-
+    return jsonify(seller.serialize())
     #administrador
 
 @api.route('/administrators', methods=['GET'])
 def my_administrator():
-    administrators = Administrators.query.all()
+    administrators = Administrator.query.all()
     serialize_administrators = [administrator.serialize() for administrator in administrators]
     return jsonify({
-        "administrator":administrator_administrators
+        "administrator":serialize_administrators
     }),200
 
-@api.route('/administrators/<int:id>', methods=['GET'])
+@api.route('/administrator/<int:id>', methods=['GET'])
 def get_administrators(id):
-    administrators =administrator.query.get(id)
-    if administrators is None:
+    administrator= Administrator.query.get(id)
+    if administrator is None:
         return jsonify({"error": "administrator not found"}), 404    
 
+    return jsonify(administrator.serialize())
     #registro de vecino
 
 @api.route('/registers', methods=['POST'])
@@ -78,3 +81,40 @@ def add_neighbor():
     db.session.add(new_neighbor)
     db.session.commit()
     return jsonify({"Neighbor": new_neighbor.serialize()}),201
+
+ #Registro seller
+
+@api.route('/registers', methods=['POST'])
+def add_seller():
+    body = request.jsonify
+    email = body.get("email",None)
+    password = body.get("password",None)
+
+    if email is None:
+        return jsonify({"error": "El email es requerido"}),400
+    if password is None:
+        return jsonify({"error": "El password es requerido"}),400    
+
+    new_seller = Seller(email=email, password=password, is_active=True)
+    db.session.add(new_seller)
+    db.session.commit()
+    return jsonify({"Seller": new_neighbor.serialize()}),201
+
+
+    #Registro administrador
+
+@api.route('/registers', methods=['POST'])
+def add_administrator():
+    body = request.jsonify
+    email = body.get("email",None)
+    password = body.get("password",None)
+
+    if email is None:
+        return jsonify({"error": "El email es requerido"}),400
+    if password is None:
+        return jsonify({"error": "El password es requerido"}),400    
+
+    new_administrator = Administrator(email=email, password=password, is_active=True)
+    db.session.add(new_administrator)
+    db.session.commit()
+    return jsonify({"Administrator": new_administrator.serialize()}),201    
