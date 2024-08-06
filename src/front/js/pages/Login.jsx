@@ -1,21 +1,53 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Login = () => {
   const { store, actions } = useContext(Context);
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const handleSubmit = async(e) => {
-    e.preventDefault()
-    const response = await actions.login(email, password)
-    console.log(response)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
+  const navigate = useNavigate();
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await actions.login(email, password);
+    console.log(response);
+    if (response) {  
+      switch(userType){
+        case 'NEIGHBOR':
+          navigate('/profileNeighbor');
+          return
+        case 'SELLER':
+          navigate('/profileSeller');
+          return
+        case 'ADMINISTRATOR':
+          navigate('/profileAdmin');
+          return
+      }
   }
+  };
   return (
     <div className="container d-flex flex-column min-vh-100">
-      <div className="">
+      <div className="m-2">
         <h1>Login</h1>
+        <div className="btn-group btn-group-toggle" data-toggle="buttons" onChange={(e) => setUserType(e.target.value)}>
+          <label className="btn btn-secondary ">
+            <input type="radio" name="options" id="option1" value="NEIGHBOR"/>
+            {"Neighbor"}
+          </label>
+          <label className="btn btn-secondary">
+            <input type="radio" name="options" id="option2" value="SELLER"/>
+            {"Seller"}
+          </label>
+          <label className="btn btn-secondary">
+            <input type="radio" name="options" id="option3" value="ADMINISTRATOR"/>
+            {"Admin"}
+          </label>
+        </div>
       </div>
+
       <form onSubmit={handleSubmit}>
         <div className="form-group justify-content-center align-items-start">
           <label htmlFor="LoginEmail">Email address</label>
@@ -23,7 +55,7 @@ const Login = () => {
             type="email"
             className="form-control"
             id="LoginEmail"
-            value={(email)}
+            value={email}
             aria-describedby="emailHelp"
             placeholder="Enter email"
             onChange={(e) => setEmail(e.target.value)}
@@ -38,7 +70,7 @@ const Login = () => {
             type="password"
             className="form-control"
             id="LoginPassword"
-            value={(password)}
+            value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
