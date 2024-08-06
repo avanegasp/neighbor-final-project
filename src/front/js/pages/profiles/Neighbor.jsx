@@ -6,15 +6,16 @@ import PersonalProfileDetails from "../../component/personalProfileDetails/Perso
 
 const ProfileNeighbor = () => {
   const { store, actions } = useContext(Context);
-  const { id } = useParams();
+  const params = useParams();
 
-  console.log("here", id);
+  console.log("here", params.id);
 
   useEffect(() => {
-    if (id) {
-      actions.profileGetNeighbor(id);
+    console.log("PARAMS...", params.id);
+    if (params.id) {
+      actions.profileGetNeighbor(params.id);
     }
-  }, []);
+  }, [params.id]);
 
   if (!store.neighbor) return <div>Loading...</div>;
 

@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       neighbor: null,
+      seller: null,
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -53,6 +54,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       profileGetNeighbor: async (id) => {
+        console.log("Id desde flux", id);
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${id}`
@@ -73,6 +75,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching neighbor:", error);
         }
       },
+      //   profileGetSeller: async (id) => {
+      //     try {
+      //       const response = await fetch(
+      //         `${process.eventNames.BACKEND_URL}/api/seller`
+      //       );
+      //     } catch (error) {
+      //       console.error("Error fetching seller:", error);
+      //     }
+      //   },
     },
   };
 };
