@@ -6,6 +6,7 @@ const PersonalProfileDetails = ({
   floor,
   hobbies,
   shopname,
+  bouldingname,
 }) => {
   return (
     <div className="">
@@ -19,9 +20,16 @@ const PersonalProfileDetails = ({
       <p>
         <strong>Piso:</strong> {floor}
       </p>
-      <p>
-        <strong>Shopname:</strong> {shopname}
-      </p>
+      {shopname ? (
+        <p>
+          <strong>Shopname:</strong> {shopname}
+        </p>
+      ) : null}
+      {bouldingname ? (
+        <p>
+          <strong>bouldingname:</strong> {bouldingname}
+        </p>
+      ) : null}
       <p>
         <strong>Hobbies:</strong> {hobbies}
       </p>
