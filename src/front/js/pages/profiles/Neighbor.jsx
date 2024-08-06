@@ -12,7 +12,7 @@ const ProfileNeighbor = () => {
 
   useEffect(() => {
     console.log("PARAMS...", id);
-    actions.profileGetNeighbor(id);
+    actions.getProfileNeighbor(id);
   }, [id]);
 
   if (!store.neighbor) return <div>Loading...</div>;

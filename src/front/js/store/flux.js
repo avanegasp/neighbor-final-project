@@ -54,19 +54,19 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      profileGetNeighbor: async (id) => {
+      getProfileNeighbor: async (id) => {
         if (!id) {
-          console.error("Id is undefined");
+          // console.error("Id is undefined");
           return;
         }
 
-        console.log("Id desde flux", id);
+        // console.log("Id desde flux", id);
 
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${id}`
           );
-          console.log("Ruta neighbor", response);
+          // console.log("Ruta neighbor", response);
           if (!response.ok) return false;
 
           const data = await response.json();
@@ -83,15 +83,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      //   profileGetSeller: async (id) => {
-      //     try {
-      //       const response = await fetch(
-      //         `${process.eventNames.BACKEND_URL}/api/seller`
-      //       );
-      //     } catch (error) {
-      //       console.error("Error fetching seller:", error);
-      //     }
-      //   },
+      getProfileSeller: async (id) => {
+        if (!id) {
+          console.error("Id es undefined en seller flux", id);
+          return;
+        }
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/seller/${id}`
+          );
+          if (!response.ok) return false;
+
+          const data = await response.json();
+          console.log("Data seller flux", data);
+          if (data.error) {
+            console.error(data.error);
+          } else {
+            setStore({
+              seller: data,
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching seller:", error);
+        }
+      },
     },
   };
 };
