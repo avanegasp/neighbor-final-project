@@ -74,13 +74,13 @@ def add_neighbor():
     floor = body.get("floor",None)
     if not re.match(email_regex, email):
         return jsonify({"error": "El formato del email no es válido"}), 400
-    if email is None or password is None or country is None or is_brewer is None:
+    if email is None or password is None or name is None or lastName is None or floor is None :
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
     if User.query.filter_by(email = email).first() is not None:
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
-        new_user = User(email = email, password = password_hash, country = country, is_brewer = is_brewer)
+        new_user = User(email = email, password = password_hash, name = name, lastName = lastName, floor = floor)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
@@ -101,13 +101,13 @@ def add_seller():
     shopName = body.get("shopName",None)
     if not re.match(email_regex, email):
         return jsonify({"error": "El formato del email no es válido"}), 400
-    if email is None or password is None or country is None or is_brewer is None:
+    if email is None or password is None or name is None or lastName is None or floor is None or shopName is None:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
     if User.query.filter_by(email = email).first() is not None:
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
-        new_user = User(email = email, password = password_hash, country = country, is_brewer = is_brewer)
+        new_user = User(email = email, password = password_hash, name = name, lastName = lastName, floor = floor, shopName = shopName)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"mensaje": "Seller creado exitosamente"}), 201
@@ -127,13 +127,13 @@ def add_administrator():
     buildingName = body.get("buildingName",None)
     if not re.match(email_regex, email):
         return jsonify({"error": "El formato del email no es válido"}), 400
-    if email is None or password is None or country is None or is_brewer is None:
+    if email is None or password is None  or name is None or lastName is None or floor is None or buildingName is N:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
     if User.query.filter_by(email = email).first() is not None:
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
-        new_user = User(email = email, password = password_hash, country = country, is_brewer = is_brewer)
+        new_user = User(email = email, password = password_hash, name = name, lastName = lastName, floor = floor, buildingName = buildingName)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
