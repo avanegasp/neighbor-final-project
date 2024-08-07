@@ -1,6 +1,12 @@
 import React from "react";
 
-const PersonalProfileDetails = ({ nameProfile, lastName, floor, hobbies }) => {
+const PersonalProfileDetails = ({
+  nameProfile,
+  lastName,
+  floor,
+  hobbies,
+  shopname,
+}) => {
   return (
     <div className="">
       <p>
@@ -12,6 +18,9 @@ const PersonalProfileDetails = ({ nameProfile, lastName, floor, hobbies }) => {
       </p>
       <p>
         <strong>Piso:</strong> {floor}
+      </p>
+      <p>
+        <strong>Shopname:</strong> {shopname}
       </p>
       <p>
         <strong>Hobbies:</strong> {hobbies}
