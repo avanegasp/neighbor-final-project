@@ -12,7 +12,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await actions.login(email, password);
+    const response = await actions.login(email, password, userType);
     console.log(response);
     if (response) {  
       switch(userType){
@@ -32,7 +32,11 @@ const Login = () => {
     <div className="container d-flex flex-column min-vh-100">
       <div className="m-2">
         <h1>Login</h1>
-        <div className="btn-group btn-group-toggle" data-toggle="buttons" onChange={(e) => setUserType(e.target.value)}>
+        
+      </div>
+
+      <form onSubmit={handleSubmit}>
+      <div className="btn-group btn-group-toggle" data-toggle="buttons" onChange={(e) => setUserType(e.target.value)}>
           <label className="btn btn-secondary ">
             <input type="radio" name="options" id="option1" value="NEIGHBOR"/>
             {"Neighbor"}
@@ -46,9 +50,6 @@ const Login = () => {
             {"Admin"}
           </label>
         </div>
-      </div>
-
-      <form onSubmit={handleSubmit}>
         <div className="form-group justify-content-center align-items-start">
           <label htmlFor="LoginEmail">Email address</label>
           <input
