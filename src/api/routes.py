@@ -62,56 +62,81 @@ def get_administrators(id):
         return jsonify({"error": "administrator not found"}), 404    
 
     #registro de vecino
+    
 
-@api.route('/registers', methods=['POST'])
+@api.route('/neighbor/registers', methods=['POST'])
 def add_neighbor():
-    body = request.jsonify
-    email = body.get("email",None)
-    password = body.get("password",None)
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastName = body.get("lastName", None)
+    floor = body.get("floor",None)
+    if not re.match(email_regex, email):
+        return jsonify({"error": "El formato del email no es válido"}), 400
+    if email is None or password is None or country is None or is_brewer is None:
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if User.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = User(email = email, password = password_hash, country = country, is_brewer = is_brewer)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500  
 
-    if email is None:
-        return jsonify({"error": "El email es requerido"}),400
-    if password is None:
-        return jsonify({"error": "El password es requerido"}),400    
+#registro seller
 
-    new_neighbor = Neighbor(email=email, password=password, is_active=True)
-    db.session.add(new_neighbor)
-    db.session.commit()
-    return jsonify({"Neighbor": new_neighbor.serialize()}),201
-
- #Registro seller
-
-@api.route('/registers', methods=['POST'])
+@api.route('/seller/registers', methods=['POST'])
 def add_seller():
-    body = request.jsonify
-    email = body.get("email",None)
-    password = body.get("password",None)
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastName = body.get("lastName", None)
+    floor = body.get("floor",None)
+    shopName = body.get("shopName",None)
+    if not re.match(email_regex, email):
+        return jsonify({"error": "El formato del email no es válido"}), 400
+    if email is None or password is None or country is None or is_brewer is None:
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if User.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = User(email = email, password = password_hash, country = country, is_brewer = is_brewer)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Seller creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500 
 
-    if email is None:
-        return jsonify({"error": "El email es requerido"}),400
-    if password is None:
-        return jsonify({"error": "El password es requerido"}),400    
+    # registro administrador    
 
-    new_seller = Seller(email=email, password=password, is_active=True)
-    db.session.add(new_seller)
-    db.session.commit()
-    return jsonify({"Seller": new_neighbor.serialize()}),201
-
-
-    #Registro administrador
-
-@api.route('/registers', methods=['POST'])
+@api.route('/administrator/registers', methods=['POST'])
 def add_administrator():
-    body = request.jsonify
-    email = body.get("email",None)
-    password = body.get("password",None)
-
-    if email is None:
-        return jsonify({"error": "El email es requerido"}),400
-    if password is None:
-        return jsonify({"error": "El password es requerido"}),400    
-
-    new_administrator = Administrator(email=email, password=password, is_active=True)
-    db.session.add(new_administrator)
-    db.session.commit()
-    return jsonify({"Administrator": new_administrator.serialize()}),201    
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastName = body.get("lastName", None)
+    buildingName = body.get("buildingName",None)
+    if not re.match(email_regex, email):
+        return jsonify({"error": "El formato del email no es válido"}), 400
+    if email is None or password is None or country is None or is_brewer is None:
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if User.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = User(email = email, password = password_hash, country = country, is_brewer = is_brewer)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500                   

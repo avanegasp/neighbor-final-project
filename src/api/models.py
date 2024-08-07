@@ -18,7 +18,7 @@ class Neighbor(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(580), unique=False, nullable=False)
     name = db.Column(db.String(80), unique=False, nullable=False)
-    lastname = db.Column(db.String(80), unique=False, nullable=False)
+    lastName = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.NEIGHBOR.value)
       
@@ -35,11 +35,11 @@ class Neighbor(db.Model):
             "email": self.email,
             "password": self.password,
             "name": self.name,
-            "lastname": self.lastname,
+            "lastName": self.lastName,
             "floor": self.floor,
             "role": self.role,
             'seller': [seller.serialize() for seller in self.sellers],
-            'administrator': [administrator.serialize() for administrator in self.administrators],
+            'admins': [admins.serialize() for admins in self.admins],
 
             # do not serialize the password, its a security breach
         }
@@ -49,9 +49,9 @@ class Seller(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(580), unique=False, nullable=False)
     name = db.Column(db.String(80), unique=False, nullable=False)
-    lastname = db.Column(db.String(80), unique=False, nullable=False)
+    lastName = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
-    shopname= db.Column(db.String(80), unique=False, nullable=False)
+    shopName= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
     neighbor_id = db.Column(Integer,ForeignKey('neighbor.id'))
 
@@ -66,9 +66,9 @@ class Seller(db.Model):
             "email": self.email,
             "password": self.password,
             "name": self.name,
-            "lastname": self.lastname,
+            "lastName": self.lastName,
             "floor": self.floor,
-            "shopname": self.shopname,
+            "shopName": self.shopName,
             "role": self.role
 
             # do not serialize the password, its a security breach
@@ -81,11 +81,11 @@ class Administrator(db.Model):
     name = db.Column(db.String(80), unique=False, nullable=False)
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
-    bouldingname = db.Column(db.String(80), unique=False, nullable=False)
+    buildingName = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
     neighbor_id = db.Column(Integer,ForeignKey('neighbor.id'))
 
-    boulding = db.relationship('Boulding')
+    building = db.relationship('Building')
 
 
 
@@ -99,30 +99,30 @@ class Administrator(db.Model):
             "name": self.name,
             "lastname": self.lastname,
             "floor": self.floor,
-            "bouldingname": self.bouldingname,
+            "buildingName": self.buildingName,
             "role": self.role,
-            'boulding': [boulding.serialize() for boulding in self.bouldings],
+            'building': [building.serialize() for building in self.buildings],
 
             # do not serialize the password, its a security breach
         }               
 
-class Boulding(db.Model):
+class Building(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    bouldingname = db.Column(db.String(80), unique=False, nullable=False)
+    bouldingName = db.Column(db.String(80), unique=False, nullable=False)
     administrator_id = db.Column(Integer,ForeignKey('administrator.id'))
 
 
 
     def __repr__(self):
-        return f'<BOULDING {self.email}>'
+        return f'<BUILDING {self.email}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "bouldingname": self.bouldingname,
+            "buildingName": self.buildingName,
             
             # do not serialize the password, its a security breach
-        }               
+        }    
 
 
 
