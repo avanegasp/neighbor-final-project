@@ -98,7 +98,7 @@ def add_seller():
     new_seller = Seller(email=email, password=password, is_active=True)
     db.session.add(new_seller)
     db.session.commit()
-    return jsonify({"Seller": new_neighbor.serialize()}),201
+    return jsonify({"Seller": new_seller.serialize()}),201
 
 
     #Registro administrador
