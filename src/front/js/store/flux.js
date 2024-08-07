@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       neighbor: null,
       seller: null,
       admin: null,
+      users: null,
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -130,6 +131,26 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (error) {
           console.error("Error fetching admin:", error);
+        }
+      },
+      getAllDirectory: async () => {
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/directory`
+          );
+          if (!response.ok) return false;
+
+          const data = await response.json();
+          console.log("Esto es data directory flux", data);
+          if (data.error) {
+            console.error(data.error);
+          } else {
+            setStore({
+              users: data,
+            });
+          }
+        } catch (error) {
+          console.error("fetching data", error);
         }
       },
     },

@@ -4,12 +4,11 @@ const PersonalProfileDetails = ({
   nameProfile,
   lastName,
   floor,
-  hobbies,
   shopname,
   bouldingname,
 }) => {
   return (
-    <div className="">
+    <div className="mt-5">
       <p>
         {" "}
         <strong>Nombre</strong> : {nameProfile}
@@ -30,9 +29,6 @@ const PersonalProfileDetails = ({
           <strong>bouldingname:</strong> {bouldingname}
         </p>
       ) : null}
-      <p>
-        <strong>Hobbies:</strong> {hobbies}
-      </p>
     </div>
   );
 };

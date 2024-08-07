@@ -26,7 +26,6 @@
 //         </div>
 //         <div>
 //           <Link to={"/login"}>Login</Link>
-//           <Link to={"/directory"}>Directorio</Link>
 //         </div>
 //       </div>
 //     </div>
@@ -73,6 +72,7 @@ export const Home = () => {
             <Link to={"/profileNeighbor"}>Perfil Vecino(a)</Link>
             <Link to={"/profileSeller"}>Perfil Vendedora(a)</Link>
             <Link to={"/profileAdmin"}>Perfil Admin</Link>
+            <Link to={"/directory"}>Directorio</Link>
           </div>
         </div>
       </div>

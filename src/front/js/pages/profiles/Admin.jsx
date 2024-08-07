@@ -49,9 +49,6 @@ const ProfileAdmin = () => {
               lastName={store.admin.lastname}
               floor={store.admin.floor}
               bouldingname={store.admin.bouldingname}
-              hobbies={
-                "Apasionada de los números, calculadora y sacar gente del edificio"
-              }
             />
           </div>
           <div className="mt-auto text-end mb-5">

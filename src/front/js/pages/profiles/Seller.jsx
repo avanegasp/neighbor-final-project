@@ -48,7 +48,6 @@ const ProfileSeller = () => {
               lastName={store.seller.lastname}
               floor={store.seller.floor}
               shopname={store.seller.shopname}
-              hobbies={"Amo correr, dormir y jugar con la pelota"}
             />
           </div>
           <div className="mt-auto text-end mb-5">

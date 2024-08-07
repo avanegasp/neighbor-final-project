@@ -64,6 +64,24 @@ def get_administrators(id):
         return jsonify({"error": "administrator not found"}), 404    
 
     return jsonify(administrator.serialize())
+
+# Directorio
+@api.route('/directory', methods=['GET'])
+def get_all_users_directory():
+    administrators = Administrator.query.all()
+    serialize_administrators = [administrator.serialize() for administrator in administrators]
+    sellers = Seller.query.all()
+    serialize_sellers = [seller.serialize() for seller in sellers]
+    neighbors = Neighbor.query.all()
+    serialize_neighbors = [neighbor.serialize() for neighbor in neighbors]
+    
+    return jsonify({
+        "administrator":serialize_administrators, 
+        "seller":serialize_sellers, 
+        "neighbor":serialize_neighbors
+        }), 200
+
+
     #registro de vecino
 
 @api.route('/registers', methods=['POST'])
