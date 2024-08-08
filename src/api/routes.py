@@ -5,6 +5,8 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, Neighbor,Seller,Administrator
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+import re
+from werkzeug.security import generate_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -72,15 +74,15 @@ def add_neighbor():
     name = body.get("name",None)
     lastName = body.get("lastName", None)
     floor = body.get("floor",None)
-    if not re.match(email_regex, email):
-        return jsonify({"error": "El formato del email no es válido"}), 400
+    #if not re.match(email_regex, email):
+       # return jsonify({"error": "El formato del email no es válido"}), 400
     if email is None or password is None or name is None or lastName is None or floor is None :
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
-    if User.query.filter_by(email = email).first() is not None:
+    if Neighbor.query.filter_by(email = email).first() is not None:
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
-        new_user = User(email = email, password = password_hash, name = name, lastName = lastName, floor = floor)
+        new_user = Neighbor(email = email, password = password_hash, name = name, lastName = lastName, floor = floor)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
@@ -104,10 +106,10 @@ def add_seller():
     if email is None or password is None or name is None or lastName is None or floor is None or shopName is None:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
-    if User.query.filter_by(email = email).first() is not None:
+    if Seller.query.filter_by(email = email).first() is not None:
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
-        new_user = User(email = email, password = password_hash, name = name, lastName = lastName, floor = floor, shopName = shopName)
+        new_user = Seller(email = email, password = password_hash, name = name, lastName = lastName, floor = floor, shopName = shopName)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"mensaje": "Seller creado exitosamente"}), 201
@@ -130,10 +132,10 @@ def add_administrator():
     if email is None or password is None  or name is None or lastName is None or floor is None or buildingName is N:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
-    if User.query.filter_by(email = email).first() is not None:
+    if Administrator.query.filter_by(email = email).first() is not None:
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
-        new_user = User(email = email, password = password_hash, name = name, lastName = lastName, floor = floor, buildingName = buildingName)
+        new_user = Administrator(email = email, password = password_hash, name = name, lastName = lastName, floor = floor, buildingName = buildingName)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
