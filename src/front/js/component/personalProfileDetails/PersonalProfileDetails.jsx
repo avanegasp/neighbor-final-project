@@ -1,8 +1,14 @@
 import React from "react";
 
-const PersonalProfileDetails = ({ nameProfile, lastName, floor, hobbies }) => {
+const PersonalProfileDetails = ({
+  nameProfile,
+  lastName,
+  floor,
+  shopname,
+  bouldingname,
+}) => {
   return (
-    <div className="">
+    <div className="mt-5">
       <p>
         {" "}
         <strong>Nombre</strong> : {nameProfile}
@@ -13,9 +19,16 @@ const PersonalProfileDetails = ({ nameProfile, lastName, floor, hobbies }) => {
       <p>
         <strong>Piso:</strong> {floor}
       </p>
-      <p>
-        <strong>Hobbies:</strong> {hobbies}
-      </p>
+      {shopname ? (
+        <p>
+          <strong>Shopname:</strong> {shopname}
+        </p>
+      ) : null}
+      {bouldingname ? (
+        <p>
+          <strong>bouldingname:</strong> {bouldingname}
+        </p>
+      ) : null}
     </div>
   );
 };

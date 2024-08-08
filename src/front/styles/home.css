@@ -5,3 +5,94 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+body {
+  background-color: rgba(143, 143, 143, 1);
+  /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7SJRmWO41OOhib33LnukCJysJ9OL_cVvdcQ&s"); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  padding: 2rem;
+}
+
+.home-title {
+  font-size: 6rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+.description {
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: 5px 5px 7px rgba(0, 0, 0, 0.7);
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 1rem;
+}
+
+.btn-login,
+.btn-signup {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  color: white;
+  font-size: 1rem;
+}
+
+.btn-login {
+  background-color: #30e354;
+  border-color: #00e62e;
+}
+
+.btn-signup {
+  background-color: #30e390;
+  border-color: #30e3cd;
+}
+
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 4rem;
+  }
+
+  .description {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-title {
+    font-size: 3rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .home-container {
+    padding: 1rem;
+  }
+}

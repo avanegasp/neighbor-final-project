@@ -1,11 +1,19 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
-import TagRol from "../../component/tagRol/TagRol.jsx";
+import React, { useContext, useEffect } from "react";
+import { Context } from "../../store/appContext.js";
 import Search from "../../component/search/Search.jsx";
+import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
 
 const Directory = () => {
+  const { store, actions } = useContext(Context);
+
+  useEffect(() => {
+    actions.getAllDirectory();
+  }, []);
+
+  if (!store.users) return <div>Loading...</div>;
+
+  console.log("Daaataaaaaa", store.users);
+
   return (
     <div className="container d-flex flex-column min-vh-100">
       <div
@@ -18,31 +26,58 @@ const Directory = () => {
         </div>
       </div>
 
-      <div className="row w-100 border border-1 border-dark">
-        <div className="col-md-4 ms-4">
-          <div className="card mt-5 mb-5">
-            <img
-              src="https://picsum.photos/200"
-              className="card-img-top"
-              alt="..."
+      {store.users.selers}
+      {store.users.neighbors}
+      {store.users.administrator.map((user) => {
+        console.log("USERRRRR", user);
+        return (
+          <div
+            className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+            key={user.id}
+          >
+            <AllUsersInfo
+              role={user.role}
+              nameProfile={user.name}
+              lastName={user.lastname}
+              floor={user.floor}
+              bouldingname={user.bouldingname}
             />
-            <button className="btn btn-outline-warning position-relative bottom-0 end-0">
-              <FontAwesomeIcon icon={faHeart} />
-            </button>
           </div>
-        </div>
-        <div className="col-md-7 d-flex flex-column justify-content-center position-relative mt-5">
-          <TagRol rol={"Seller"} />
-          <PersonalProfileDetails
-            nameProfile={"Carolina"}
-            lastName={"Pastrana"}
-            floor={520}
-            hobbies={
-              "Apasionada de los números, calculadora y sacar gente del edificio"
-            }
-          />
-        </div>
-      </div>
+        );
+      })}
+      {store.users.neighbor.map((user) => {
+        console.log("USERRRRR", user);
+        return (
+          <div
+            className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+            key={user.id}
+          >
+            <AllUsersInfo
+              role={user.role}
+              nameProfile={user.name}
+              lastName={user.lastname}
+              floor={user.floor}
+              shopname={user.shopname}
+            />
+          </div>
+        );
+      })}
+      {store.users.seller.map((user) => {
+        console.log("USERRRRR", user);
+        return (
+          <div
+            className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+            key={user.id}
+          >
+            <AllUsersInfo
+              role={user.role}
+              nameProfile={user.name}
+              lastName={user.lastname}
+              floor={user.floor}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };

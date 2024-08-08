@@ -1,6 +1,6 @@
 import React from "react";
 
-const EditProfileDetails = ({ name, lastName, floor, hobbies }) => {
+const EditProfileDetails = ({ name, lastName, floor }) => {
   return (
     <form>
       <div className="mb-3">
@@ -18,12 +18,6 @@ const EditProfileDetails = ({ name, lastName, floor, hobbies }) => {
       <div className="mb-3">
         <label for="" className="form-label">
           Piso:{floor}
-        </label>
-        <input type="text" className="form-control" />
-      </div>
-      <div className="mb-3">
-        <label for="" className="form-label">
-          Hobbies:{hobbies}
         </label>
         <input type="text" className="form-control" />
       </div>
