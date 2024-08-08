@@ -18,7 +18,7 @@ CORS(api)
 #Vecinos
 
 @api.route('/neighbors', methods=['GET'])
-def my_neighbor():
+def get_all_neighbors():
     neighbors = Neighbor.query.all()
     serialize_neighbors = [neighbor.serialize() for neighbor in neighbors ]
     return jsonify({
@@ -36,7 +36,7 @@ def get_neighbor(id):
 #Vendedores
 
 @api.route('/sellers', methods=['GET'])
-def my_seller():
+def get_all_sellers():
     sellers = Seller.query.all()
     serialize_sellers = [seller.serialize() for seller in sellers]
     return jsonify({
@@ -44,7 +44,7 @@ def my_seller():
     }),200
 
 @api.route('/seller/<int:id>', methods=['GET'])
-def get_sellers(id):
+def get_seller(id):
     seller = Seller.query.get(id)
     if seller is None:
         return jsonify({"error": "seller not found"}), 404
@@ -53,7 +53,7 @@ def get_sellers(id):
     #administrador
 
 @api.route('/administrators', methods=['GET'])
-def my_administrator():
+def get_all_administrators():
     administrators = Administrator.query.all()
     serialize_administrators = [administrator.serialize() for administrator in administrators]
     return jsonify({
@@ -61,7 +61,7 @@ def my_administrator():
     }),200
 
 @api.route('/administrator/<int:id>', methods=['GET'])
-def get_administrators(id):
+def get_administrator(id):
     administrator= Administrator.query.get(id)
     if administrator is None:
         return jsonify({"error": "administrator not found"}), 404    
