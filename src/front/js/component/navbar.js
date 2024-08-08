@@ -13,6 +13,11 @@ export const Navbar = () => {
             <button className="btn btn-primary">Logout</button>
           </Link>
         </div>
+        <div>
+          <Link to="/directory">
+            <button className="btn btn-primary">Directorio</button>
+          </Link>
+        </div>
       </div>
     </nav>
   );

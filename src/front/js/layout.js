@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import { Home } from "./pages/home.jsx";
 import ProfileNeighbor from "./pages/profiles/Neighbor.jsx";
 import ProfileSeller from "./pages/profiles/Seller.jsx";
 import ProfileAdmin from "./pages/profiles/Admin.jsx";
@@ -21,7 +21,6 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
-
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -38,9 +37,9 @@ const Layout = () => {
           <Navbar />
           <Routes>
             <Route element={<Home />} path="/" />
-            <Route element={<ProfileNeighbor />} path="/profileNeighbor" />
-            <Route element={<ProfileSeller />} path="/profileSeller" />
-            <Route element={<ProfileAdmin />} path="/profileAdmin" />
+            <Route element={<ProfileNeighbor />} path="/profileNeighbor/:id" />
+            <Route element={<ProfileSeller />} path="/profileSeller/:id" />
+            <Route element={<ProfileAdmin />} path="/profileAdmin/:id" />
             <Route
               element={<ProfileEditNeighbor />}
               path="/profileEditNeighbor"
