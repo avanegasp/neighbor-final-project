@@ -1,87 +1,100 @@
-import React from 'react';
+import React from "react";
 
 
 const Business = () => {
-
-
   return (
-    <div className="container bg-white p-3">
-      <div className="row my-3">
-
+    <div className="container my-4">
+      <div className="mb-4">
+        <h2 className="text-center business">Business</h2>
       </div>
-      <div className="row my-3">
-        <div className="col">
-          <div className="container">
-            <div className="card-header bg-white text-black text-center fs-2 ">Business</div>
-            <div className="card-body">
-              <div className="col">
-
-                <div className="row">
-                  <div className="card mb-3 m-2" style={{ maxWidth: "18rem", textAlign: "center" }}>
-                    <img src={`https://fastly.picsum.photos/id/133/2742/1828.jpg?hmac=0X5o8bHUICkOIvZHtykCRL50Bjn1N8w1AvkenF7n93E`} className="card-img" alt="..." style={{ padding: "20px" }} />
-
-                  </div>
-                  <div className="card mb-3 m-2" style={{ maxWidth: "18rem", textAlign: "center" }}>
-                    <img src={`https://fastly.picsum.photos/id/26/4209/2769.jpg?hmac=vcInmowFvPCyKGtV7Vfh7zWcA_Z0kStrPDW3ppP0iGI`} className="card-img" alt="..." style={{ padding: "10px" }} />
-
-                  </div>
-                  <div className="card mb-3 m-2" style={{ maxWidth: "18rem", textAlign: "center" }}>
-                    <img src={`https://fastly.picsum.photos/id/133/2742/1828.jpg?hmac=0X5o8bHUICkOIvZHtykCRL50Bjn1N8w1AvkenF7n93E`} className="card-img" alt="..." style={{ padding: "20px" }} />
-
-                  </div>
-                  <div className="card mb-3 m-2" style={{ maxWidth: "18rem", textAlign: "center" }}>
-                    <img src={`https://fastly.picsum.photos/id/26/4209/2769.jpg?hmac=vcInmowFvPCyKGtV7Vfh7zWcA_Z0kStrPDW3ppP0iGI`} className="card-img" alt="..." style={{ padding: "20px" }} />
-
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Date</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Product</th>
-                  <th scope="col">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                 
-                  <td>Date</td>
-                  <td>Amount</td>
-                  <td>Product</td>
-                  <td>Price</td>
-                </tr>
-                <tr>
-                  
-                  <td>Date</td>
-                  <td>Amount</td>
-                  <td>Product</td>
-                  <td>Price</td>
-                </tr>
-                <tr>
-                 
-                  <td>Date</td>
-                  <td>Amount</td>
-                  <td>Product</td>
-                  <td>Price</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="row my-2">
-            <div className="col">
-              <textarea className="form-control" rows={3} placeholder="Anonymous Review"></textarea>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <button className="btn btn-primary">Edit info</button>
-            </div>
+      <div className="row">
+        <div className="col-12 col-md-6 col-lg-3 mb-3">
+          <div className="card">
+            <img
+              src="https://ideogram.ai/assets/progressive-image/balanced/response/BdP2GwLfRwWh39dRX-d1UA"
+              className="card-img-top"
+              alt="Business"
+            />
           </div>
         </div>
+        <div className="col-12 col-md-6 col-lg-3 mb-3">
+          <div className="card">
+            <img
+              src="https://ideogram.ai/assets/image/lossless/response/xtU_6kplThiPK6v7BrgSjA"
+              className="card-img-top"
+              alt="Business"
+            />
+          </div>
+        </div>
+        <div className="col-12 col-md-6 col-lg-3 mb-3">
+          <div className="card">
+            <img
+              src="https://ideogram.ai/assets/progressive-image/balanced/response/txYlg76OTTuVv5luURoaUA"
+              className="card-img-top"
+              alt="Business"
+            />
+          </div>
+        </div>
+        <div className="col-12 col-md-6 col-lg-3 mb-3">
+          <div className="card">
+            <img
+              src="https://ideogram.ai/assets/progressive-image/balanced/response/JOr5PovPTdywjf3E9BzkhQ"
+              className="card-img-top"
+              alt="Business"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="mb-4">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Foto
+              </th>
+              <th scope="col">Servicio</th>
+              <th scope="col">Horarios</th>
+              <th scope="col">Pecio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Paseador de Perros</td>
+              <td>L,M,V de 8am a 10am, 19pm a 21pm</td>
+              <td>$10</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Galletas chicas exploradoras</td>
+              <td>Luego de la escuela </td>
+              <td>$10 la caja </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Mecanico</td>
+              <td>A Servicio</td>
+              <td>Segun el Problema del auto</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Pepostera</td>
+              <td>A Servicio</td>
+              <td>Segun su pedido</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="mb-4">
+        <div className="review">
+          <h2>Reseña del Producto</h2>
+          <p>
+            Este producto es excelente. La calidad es muy buena y el servicio al cliente fue excepcional.
+            En general, estoy muy satisfecho con mi compra.
+          </p>
+        </div>
+      </div>
+      <div className="text-center">
+        <button className="btn btn-edit">Editar info</button>
       </div>
     </div>
   );
