@@ -42,14 +42,14 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="home-container">
+    <div className="home-container bg-withe">
       <div className="row w-100">
         <div className="col-12 text-center">
           <h1 className="home-title">NEIGHBORS</h1>
         </div>
       </div>
       <div className="row w-100">
-        <div className="col-md-6 d-flex align-items-center justify-content-center">
+        <div className="col-md-6 d-flex align-items-center justify-content-center bg-withe">
           <p className="description">
             Neighburs is an excellent application designed to improve building
             management and organization. It simplifies communication between

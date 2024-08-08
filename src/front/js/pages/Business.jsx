@@ -5,14 +5,14 @@ const Business = () => {
 
 
   return (
-    <div className="container">
+    <div className="container bg-white p-3">
       <div className="row my-3">
 
       </div>
       <div className="row my-3">
         <div className="col">
           <div className="container">
-            <div className="card-header bg-white text-black text-center">Business</div>
+            <div className="card-header bg-white text-black text-center fs-2 ">Business</div>
             <div className="card-body">
               <div className="col">
 
@@ -84,8 +84,6 @@ const Business = () => {
         </div>
       </div>
     </div>
-
-
   );
 };
 

@@ -1,19 +1,24 @@
-/*
-    home.css: This website contains selectors only used in home.css
-
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
-
 body {
   background-color: rgba(143, 143, 143, 1);
-  /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7SJRmWO41OOhib33LnukCJysJ9OL_cVvdcQ&s"); */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://ideogram.ai/assets/progressive-image/balanced/response/cBOFsQXnTsqxgu8BCw4KoA");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  margin: 0;
-  font-family: Arial, sans-serif;
+  filter: blur(10px); 
+  z-index: -1;
 }
 
 .home-container {
@@ -23,12 +28,14 @@ body {
   align-items: center;
   height: 90vh;
   padding: 2rem;
+  position: relative;
+  z-index: 0;
 }
 
 .home-title {
   font-size: 6rem;
   font-weight: bold;
-  color: #ffffff;
+  color: black;
   margin-bottom: 1.5rem;
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
   text-align: center;
@@ -36,7 +43,7 @@ body {
 
 .description {
   font-size: 1.5rem;
-  color: #ffffff;
+  color: black;
   text-shadow: 5px 5px 7px rgba(0, 0, 0, 0.7);
   max-width: 90%;
   margin: 0 auto;
