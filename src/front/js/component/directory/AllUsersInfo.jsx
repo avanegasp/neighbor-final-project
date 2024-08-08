@@ -13,9 +13,9 @@ const AllUsersInfo = ({
   floor,
 }) => {
   return (
-    <div className="row w-100 border border-1 border-dark">
+    <div className="row w-100 border border-1 border-dark justify-content-center">
       <div className="col-md-4">
-        <div className="card mt-5 mb-5">
+        <div className="card mt-5 mb-5 w-50">
           <img
             src="https://picsum.photos/200"
             className="card-img-top"
@@ -26,7 +26,7 @@ const AllUsersInfo = ({
           </button>
         </div>
       </div>
-      <div className="col-md-7 mb-5">
+      <div className="col-md-7 mt-5 mb-5">
         <TagRol role={role} />
         <PersonalProfileDetails
           nameProfile={nameProfile}

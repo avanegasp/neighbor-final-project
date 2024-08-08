@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
 
