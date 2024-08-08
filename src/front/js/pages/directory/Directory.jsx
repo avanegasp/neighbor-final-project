@@ -38,7 +38,7 @@ const Directory = () => {
               nameProfile={user.name}
               lastname={user.lastname}
               floor={user.floor}
-              buldingname={user.buldingname}
+              buldingName={user.buldingName}
             />
           </div>
         );
