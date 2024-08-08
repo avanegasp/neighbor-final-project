@@ -5,6 +5,9 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, Neighbor,Seller,Administrator
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+
 
 api = Blueprint('api', __name__)
 
@@ -118,3 +121,43 @@ def add_administrator():
     db.session.add(new_administrator)
     db.session.commit()
     return jsonify({"Administrator": new_administrator.serialize()}),201    
+
+@api.route('/login', methods=['POST'])
+def login():
+    try:
+        body = request.json
+        email = body.get("email", None)
+        password = body.get("password", None)
+        userType = body.get("userType", None)
+        if email is None or password is None or userType is None:
+            return jsonify({"error": "Email, password, or user type are missing!"}), 400
+        
+        if userType == "NEIGHBOR":
+            neighbor = Neighbor.query.filter_by(email=email).first()
+            if not neighbor:
+                return jsonify({"error": "Wrong data!"}), 400
+            
+            if not check_password_hash(neighbor.password, password):
+                return jsonify ({"error": "Wrong data!"}), 400
+            
+            auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email})
+            return jsonify({"token": auth_token}), 200
+            
+        if userType == "SELLER":
+            seller = Seller.query.filter_by(email=email).first()
+            if not seller or not check_password_hash(seller.password, password):
+                return jsonify({"error": "Wrong data!"}), 400
+            
+            auth_token = create_access_token({"id": seller.id, "email": seller.email})
+            return jsonify({"token": auth_token}), 200
+        
+        if userType == "ADMINISTRATOR":
+            admin = Administrator.query.filter_by(email=email).first()
+            if not admin or not check_password_hash(admin.password, password):
+                return jsonify({"error": "Wrong data!"}), 400
+            
+            auth_token = create_access_token({"id": neighbor.id, "email": admin.email})
+            return jsonify({"token": auth_token}), 200
+            
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
