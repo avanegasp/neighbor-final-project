@@ -22,8 +22,6 @@ class Neighbor(db.Model):
     floor = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.NEIGHBOR.value)
       
-    sellers = db.relationship('Seller')
-    administrators = db.relationship('Administrator') 
 
 
     def __repr__(self):
@@ -35,11 +33,11 @@ class Neighbor(db.Model):
             "email": self.email,
             "password": self.password,
             "name": self.name,
-            "lastname": self.lastname,
+            "lastname": self.lastName,
             "floor": self.floor,
             "role": self.role,
             'seller': [seller.serialize() for seller in self.sellers],
-            'administrator': [administrator.serialize() for administrator in self.administrators],
+            'administrators': [admin.serialize() for admin in self.administrators],
 
             # do not serialize the password, its a security breach
         }
@@ -49,12 +47,15 @@ class Seller(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(580), unique=False, nullable=False)
     name = db.Column(db.String(80), unique=False, nullable=False)
-    lastname = db.Column(db.String(80), unique=False, nullable=False)
+    lastName = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
-    shopname= db.Column(db.String(80), unique=False, nullable=False)
+    shopName= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
 
+<<<<<<< HEAD
+=======
     neighbor_id = db.Column(Integer,ForeignKey('neighbor.id'))
+>>>>>>> e7a25381808b89eb8032680dd1d35c4bb42d9564
 
     products = db.relationship('Product', backref='seller')
     orders = db.relationship('Order', backref='seller')
@@ -67,7 +68,7 @@ class Seller(db.Model):
             "id": self.id,
             "email": self.email,
             "name": self.name,
-            "lastname": self.lastname,
+            "lastName": self.lastName,
             "floor": self.floor,
             "shopname": self.shopname,
             "role": self.role,
@@ -81,11 +82,11 @@ class Administrator(db.Model):
     name = db.Column(db.String(80), unique=False, nullable=False)
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
-    bouldingname = db.Column(db.String(80), unique=False, nullable=False)
+    buildingName = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
     neighbor_id = db.Column(db.Integer,db.ForeignKey('neighbor.id'))
 
-    boulding = db.relationship('Boulding')
+    building = db.relationship('Building')
 
 
 
@@ -99,28 +100,31 @@ class Administrator(db.Model):
             "name": self.name,
             "lastname": self.lastname,
             "floor": self.floor,
-            "bouldingname": self.bouldingname,
+            "buildingName": self.buildingName,
             "role": self.role,
-            'boulding': [boulding.serialize() for boulding in self.bouldings],
+            'building': [building.serialize() for building in self.buildings],
 
             # do not serialize the password, its a security breach
         }               
 
-class Boulding(db.Model):
+class Building(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    bouldingname = db.Column(db.String(80), unique=False, nullable=False)
+
+    buildingname = db.Column(db.String(80), unique=False, nullable=False)
     administrator_id = db.Column(db.Integer,db.ForeignKey('administrator.id'))
 
+
     def __repr__(self):
-        return f'<BOULDING {self.email}>'
+        return f'<BUILDING {self.email}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "bouldingname": self.bouldingname,
+            "buildingName": self.buildingName,
             
             # do not serialize the password, its a security breach
         }               
+      
 #uno a muchos entre seller y productos
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -139,7 +143,6 @@ class Product(db.Model):
             "name": self.name,
             "price": self.price,
         }     
-
 
 #uno a muchos entre seller y order
 #muchos a muchos entre order y product
