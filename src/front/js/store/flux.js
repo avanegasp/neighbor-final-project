@@ -2,6 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       message: null,
+      neighbor: null,
+      seller: null,
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -40,6 +42,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(process.env.BACKEND_URL + "/api/login", {
             method: "POST",
             headers: { "Content-type": "application/json" },
+
             body: JSON.stringify({ email, password, userType }),
           });
           if (!response.ok) {
@@ -49,6 +52,60 @@ const getState = ({ getStore, getActions, setStore }) => {
           return data;
         } catch (error) {
           console.log(error);
+        }
+      },
+
+      getProfileNeighbor: async (id) => {
+        if (!id) {
+          // console.error("Id is undefined");
+          return;
+        }
+
+        // console.log("Id desde flux", id);
+
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/neighbor/${id}`
+          );
+          // console.log("Ruta neighbor", response);
+          if (!response.ok) return false;
+
+          const data = await response.json();
+          console.log("Esto es data de neighbor", data);
+          if (data.error) {
+            console.error(data.error);
+          } else {
+            setStore({
+              neighbor: data,
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching neighbor:", error);
+        }
+      },
+
+      getProfileSeller: async (id) => {
+        if (!id) {
+          console.error("Id es undefined en seller flux", id);
+          return;
+        }
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/seller/${id}`
+          );
+          if (!response.ok) return false;
+
+          const data = await response.json();
+          console.log("Data seller flux", data);
+          if (data.error) {
+            console.error(data.error);
+          } else {
+            setStore({
+              seller: data,
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching seller:", error);
         }
       },
     },
