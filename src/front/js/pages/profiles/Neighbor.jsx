@@ -49,7 +49,7 @@ const ProfileNeighbor = () => {
           <div className="col-md-7 d-flex flex-column justify-content-center">
             <PersonalProfileDetails
               nameProfile={store.neighbor.name}
-              lastName={store.neighbor.lastname}
+              lastname={store.neighbor.lastname}
               floor={store.neighbor.floor}
             />
           </div>

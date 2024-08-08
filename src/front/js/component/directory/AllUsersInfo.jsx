@@ -7,9 +7,9 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 const AllUsersInfo = ({
   role,
   nameProfile,
-  lastName,
-  shopname,
-  bouldingname,
+  lastname,
+  shopName,
+  buldingName,
   floor,
 }) => {
   return (
@@ -30,10 +30,10 @@ const AllUsersInfo = ({
         <TagRol role={role} />
         <PersonalProfileDetails
           nameProfile={nameProfile}
-          lastName={lastName}
+          lastname={lastname}
           floor={floor}
-          shopname={shopname}
-          bouldingname={bouldingname}
+          shopName={shopName}
+          buldingName={buldingName}
         />
       </div>
     </div>
