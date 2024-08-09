@@ -33,12 +33,9 @@ class Neighbor(db.Model):
             "email": self.email,
             "password": self.password,
             "name": self.name,
-            "lastname": self.lastName,
+            "lastname": self.lastname,
             "floor": self.floor,
             "role": self.role,
-            'seller': [seller.serialize() for seller in self.sellers],
-            'administrators': [admin.serialize() for admin in self.administrators],
-
             # do not serialize the password, its a security breach
         }
 
@@ -47,15 +44,10 @@ class Seller(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(580), unique=False, nullable=False)
     name = db.Column(db.String(80), unique=False, nullable=False)
-    lastName = db.Column(db.String(80), unique=False, nullable=False)
+    lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     shopName= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
-
-<<<<<<< HEAD
-=======
-    neighbor_id = db.Column(Integer,ForeignKey('neighbor.id'))
->>>>>>> e7a25381808b89eb8032680dd1d35c4bb42d9564
 
     products = db.relationship('Product', backref='seller')
     orders = db.relationship('Order', backref='seller')
@@ -68,9 +60,9 @@ class Seller(db.Model):
             "id": self.id,
             "email": self.email,
             "name": self.name,
-            "lastName": self.lastName,
+            "lastname": self.lastname,
             "floor": self.floor,
-            "shopname": self.shopname,
+            "shopName": self.shopName,
             "role": self.role,
             "orders": [order.serialize() for order in self.orders]
         } 
@@ -84,7 +76,33 @@ class Administrator(db.Model):
     floor = db.Column(db.String(80), unique=False, nullable=False)
     buildingName = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
-    neighbor_id = db.Column(db.Integer,db.ForeignKey('neighbor.id'))
+
+    buildings = db.relationship('Building', backref='administrator')  # Cambiado a 'buildings'
+
+    def __repr__(self):
+        return f'<ADMINISTRATOR {self.email}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "name": self.name,
+            "lastname": self.lastname,
+            "floor": self.floor,
+            "buildingName": self.buildingName,
+            "role": self.role,
+            'buildings': [building.serialize() for building in self.buildings],
+            # do not serialize the password, its a security breach
+        }
+
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(580), unique=False, nullable=False)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    lastname = db.Column(db.String(80), unique=False, nullable=False)
+    floor = db.Column(db.String(80), unique=False, nullable=False)
+    buildingName = db.Column(db.String(80), unique=False, nullable=False)
+    role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
 
     building = db.relationship('Building')
 
@@ -102,15 +120,28 @@ class Administrator(db.Model):
             "floor": self.floor,
             "buildingName": self.buildingName,
             "role": self.role,
-            'building': [building.serialize() for building in self.buildings],
+            'buildings': [building.serialize() for building in self.buildings],
 
             # do not serialize the password, its a security breach
         }               
 
 class Building(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    buildingName = db.Column(db.String(80), unique=False, nullable=False)
+    administrator_id = db.Column(db.Integer, db.ForeignKey('administrator.id'))
 
-    buildingname = db.Column(db.String(80), unique=False, nullable=False)
+    def __repr__(self):
+        return f'<BUILDING {self.buildingName}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "buildingName": self.buildingName,
+        }
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    buildingName = db.Column(db.String(80), unique=False, nullable=False)
     administrator_id = db.Column(db.Integer,db.ForeignKey('administrator.id'))
 
 
@@ -153,7 +184,6 @@ class Order(db.Model):
     amount = db.Column(db.Integer, unique=False, nullable=False)
     
     seller_id = db.Column(db.Integer, db.ForeignKey('seller.id'))
-
     products = db.relationship('order_product', backref='order')
 
     def __repr__(self):

@@ -26,8 +26,6 @@ const Directory = () => {
         </div>
       </div>
 
-      {store.users.selers}
-      {store.users.neighbors}
       {store.users.administrator.map((user) => {
         console.log("USERRRRR", user);
         return (
@@ -38,9 +36,9 @@ const Directory = () => {
             <AllUsersInfo
               role={user.role}
               nameProfile={user.name}
-              lastName={user.lastname}
+              lastname={user.lastname}
               floor={user.floor}
-              bouldingname={user.bouldingname}
+              buldingName={user.buldingName}
             />
           </div>
         );
@@ -55,9 +53,9 @@ const Directory = () => {
             <AllUsersInfo
               role={user.role}
               nameProfile={user.name}
-              lastName={user.lastname}
+              lastname={user.lastname}
               floor={user.floor}
-              shopname={user.shopname}
+              shopName={user.shopName}
             />
           </div>
         );
@@ -72,7 +70,7 @@ const Directory = () => {
             <AllUsersInfo
               role={user.role}
               nameProfile={user.name}
-              lastName={user.lastname}
+              lastname={user.lastname}
               floor={user.floor}
             />
           </div>

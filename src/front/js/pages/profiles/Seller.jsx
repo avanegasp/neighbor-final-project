@@ -45,9 +45,9 @@ const ProfileSeller = () => {
           <div className="col-md-7 d-flex flex-column justify-content-center">
             <PersonalProfileDetails
               nameProfile={store.seller.name}
-              lastName={store.seller.lastname}
+              lastname={store.seller.lastname}
               floor={store.seller.floor}
-              shopname={store.seller.shopname}
+              shopName={store.seller.shopName}
             />
           </div>
           <div className="mt-auto text-end mb-5">
