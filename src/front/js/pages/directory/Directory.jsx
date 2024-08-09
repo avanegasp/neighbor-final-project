@@ -1,48 +1,94 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
-import TagRol from "../../component/tagRol/TagRol.jsx";
+import React, { useContext, useEffect } from "react";
+import { Context } from "../../store/appContext.js";
 import Search from "../../component/search/Search.jsx";
+import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
 
 const Directory = () => {
+  const { store, actions } = useContext(Context);
+
+  useEffect(() => {
+    actions.getAllDirectory();
+  }, []);
+
+  if (!store.users) return <div>Loading...</div>;
+
+  // console.log("Daaataaaaaa", store.users);
+
+
   return (
-    <div className="container d-flex flex-column min-vh-100">
-      <div
-        className="d-flex justify-content-between align-items-center"
-        style={{ minHeight: "20vh" }}
-      >
-        <h1>Directorio</h1>
-        <div className="input-group mb-3 inputSearch w-25">
-          <Search />
+    <div className="d-flex flex-column min-vh-100">
+      <div className="container d-flex flex-column flex-grow-1">
+        <div
+          className="d-flex justify-content-between align-items-center mb-3"
+          style={{ minHeight: "20vh" }}
+        >
+          <h1 className="d-flex justify-context-center">Directorio</h1>
+
+          <div className="input-group mb-3 inputSearch w-25">
+            <Search />
+          </div>
+        </div>
+
+        <div
+          className="flex-grow-1 overflow-auto border border-white p-3"
+          style={{ maxHeight: 'calc(80vh - 100px)' }}
+        >
+          {store.users.administrator.map((user) => {
+            // console.log("USERRRRR", user);
+            return (
+              <div
+                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                key={user.id}
+              >
+                <AllUsersInfo
+                  role={user.role}
+                  nameProfile={user.name}
+                  lastname={user.lastname}
+                  floor={user.floor}
+                  buildingName={user.buildingName}
+                />
+              </div>
+            );
+          })}
+          {store.users.neighbor.map((user) => {
+            // console.log("USERRRRR", user);
+            return (
+              <div
+                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                key={user.id}
+              >
+                <AllUsersInfo
+                  role={user.role}
+                  nameProfile={user.name}
+                  lastname={user.lastname}
+                  floor={user.floor}
+                />
+              </div>
+            );
+          })}
+          {store.users.seller.map((user) => {
+            // console.log("USERRRRR", user);
+            return (
+              <div
+                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                key={user.id}
+              >
+                <AllUsersInfo
+                  role={user.role}
+                  nameProfile={user.name}
+                  lastname={user.lastname}
+                  floor={user.floor}
+                  shopName={user.shopName}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      <div className="row w-100 border border-1 border-dark">
-        <div className="col-md-4 ms-4">
-          <div className="card mt-5 mb-5">
-            <img
-              src="https://picsum.photos/200"
-              className="card-img-top"
-              alt="..."
-            />
-            <button className="btn btn-outline-warning position-relative bottom-0 end-0">
-              <FontAwesomeIcon icon={faHeart} />
-            </button>
-          </div>
-        </div>
-        <div className="col-md-7 d-flex flex-column justify-content-center position-relative mt-5">
-          <TagRol rol={"Seller"} />
-          <PersonalProfileDetails
-            nameProfile={"Carolina"}
-            lastName={"Pastrana"}
-            floor={520}
-            hobbies={
-              "Apasionada de los números, calculadora y sacar gente del edificio"
-            }
-          />
-        </div>
-      </div>
+      <footer className="bg-dark text-white text-center py-3">
+        <p>Footer Content Here</p>
+      </footer>
     </div>
   );
 };

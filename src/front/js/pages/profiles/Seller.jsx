@@ -1,19 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Context } from "../../store/appContext.js";
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
 
 const ProfileSeller = () => {
+  const { store, actions } = useContext(Context);
+  const { id } = useParams();
+
+  useEffect(() => {
+    actions.getProfileSeller(id);
+  }, [id]);
+
+  if (!store.seller) return <div>Loading...</div>;
   return (
     <div className="container d-flex flex-column min-vh-100">
-      <TitleProfiles title={"Vendedor(a)"} />
+      <TitleProfiles title={store.seller.role} />
       <div
         className="d-flex justify-content-center align-items-start"
         style={{ minHeight: "80vh" }}
       >
-        <div className="row w-100 border border-1 border-dark">
+        <div className="row w-100 border border-1 border-dark bg-white">
           <div className="col-md-4 ms-4">
-            <div className="card mt-5">
+            <div className="card mt-5 mb-5 w-50">
               <img
                 src="https://picsum.photos/200"
                 className="card-img-top"
@@ -35,10 +44,10 @@ const ProfileSeller = () => {
           </div>
           <div className="col-md-7 d-flex flex-column justify-content-center">
             <PersonalProfileDetails
-              nameProfile={"Oliva"}
-              lastName={"Vanegas"}
-              floor={2404}
-              hobbies={"Amo correr, dormir y jugar con la pelota"}
+              nameProfile={store.seller.name}
+              lastname={store.seller.lastname}
+              floor={store.seller.floor}
+              shopName={store.seller.shopName}
             />
           </div>
           <div className="mt-auto text-end mb-5">

@@ -4,5 +4,10 @@
   "workbench.editorAssociations": {
     "*.md": "vscode.markdown.preview.editor"
   },
-  "githubPullRequests.ignoredPullRequestBranches": ["dev"]
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "dev"
+  ],
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }
