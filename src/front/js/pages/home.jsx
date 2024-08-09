@@ -27,12 +27,14 @@ export const Home = () => {
             <Link to="/register" className="btn btn-signup">
               Crear cuenta nueva
             </Link>
+            <Link to={"/Business"}> SHOP </Link>
+            {/* <Link to={"/profileNeighbor"}>Perfil Vecino(a)</Link>
             <Link to={"/profileSeller"}>Perfil Vendedora(a)</Link>
             <Link to={"/profileAdmin"}>Perfil Admin</Link>
             <Link to={"/profileNeighbor"}>Perfil Vecino(a)</Link>
 
-            {/* <Link to={"/Business"}> SHOP </Link>
-            <Link to={"/directory"}>Directorio</Link> */}
+
+            <Link to={"/directory"}>Directorio</Link>*/}
 
           </div>
         </div>
