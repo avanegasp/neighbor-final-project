@@ -77,6 +77,7 @@ class Administrator(db.Model):
     buildingName = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
 
+    
     buildings = db.relationship('Building', backref='administrator')  # Cambiado a 'buildings'
 
     def __repr__(self):

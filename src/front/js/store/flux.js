@@ -58,98 +58,104 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileNeighbor: async (id) => {
-        if (!id) {
-          // console.error("Id is undefined");
-          return;
-        }
-
-        // console.log("Id desde flux", id);
+        if (!id) return;
 
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/neighbor/${id}`
+            `${process.env.BACKEND_URL}/api/neighbor/${id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
           );
-          // console.log("Ruta neighbor", response);
-          if (!response.ok) return false;
+
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
 
           const data = await response.json();
-          console.log("Esto es data de neighbor", data);
-          if (data.error) {
-            console.error(data.error);
-          } else {
-            setStore({
-              neighbor: data,
-            });
-          }
+          setStore({ neighbor: data });
         } catch (error) {
-          console.error("Error fetching neighbor:", error);
+          console.error("Error fetching neighbor:", error.message);
         }
       },
 
       getProfileSeller: async (id) => {
-        if (!id) {
-          console.error("Id es undefined en seller flux", id);
-          return;
-        }
+        if (!id) return;
+
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/seller/${id}`
+            `${process.env.BACKEND_URL}/api/seller/${id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
           );
-          if (!response.ok) return false;
+
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
 
           const data = await response.json();
-          console.log("Data seller flux", data);
-          if (data.error) {
-            console.error(data.error);
-          } else {
-            setStore({
-              seller: data,
-            });
-          }
+          setStore({ seller: data });
         } catch (error) {
-          console.error("Error fetching seller:", error);
+          console.error("Error fetching seller:", error.message);
         }
       },
+
       getProfileAdmin: async (id) => {
-        if (!id) {
-          console.error("id es undefined Seller flux", id);
-          return;
-        }
+        if (!id) return;
+
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/administrator/${id}`
+            `${process.env.BACKEND_URL}/api/administrator/${id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
           );
-          if (!response.ok) return false;
+
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
 
           const data = await response.json();
-          console.log("Data admin flux", data);
-          if (data.error) {
-            console.error(data.error);
-          } else {
-            setStore({
-              admin: data,
-            });
-          }
+          setStore({ admin: data });
         } catch (error) {
-          console.error("Error fetching admin:", error);
+          console.error("Error fetching admin:", error.message);
         }
       },
 
       getAllDirectory: async () => {
         try {
-          const response = await fetch("http://localhost:3001/api/directory", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/directory`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
           if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
           }
+
           const data = await response.json();
           setStore({ users: data });
         } catch (error) {
-          console.error("Error fetching data:", error);
+          console.error("Error fetching directory:", error.message);
         }
       },
     },
