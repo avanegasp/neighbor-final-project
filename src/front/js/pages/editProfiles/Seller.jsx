@@ -3,15 +3,13 @@ import EditProfileDetails from "../../component/editProfileDetails/EditProfileDe
 
 const ProfileEditSeller = () => {
   return (
-    <div className="container d-flex flex-column min-vh-100">
-      <div>
-        <h1>Editar perfil Vendedor(a)</h1>
-      </div>
-      <div>
+    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+      <div className="col-10 text-center">
         <EditProfileDetails />
       </div>
     </div>
   );
 };
+
 
 export default ProfileEditSeller;

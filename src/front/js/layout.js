@@ -7,6 +7,7 @@ import { Home } from "./pages/home.jsx";
 import ProfileNeighbor from "./pages/profiles/Neighbor.jsx";
 import ProfileSeller from "./pages/profiles/Seller.jsx";
 import ProfileAdmin from "./pages/profiles/Admin.jsx";
+import Business from "./pages/Business.jsx"
 
 import ProfileEditAdmin from "./pages/editProfiles/Admin.jsx";
 import ProfileEditNeighbor from "./pages/editProfiles/Neighbor.jsx";
@@ -20,7 +21,6 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-
 
 //create your first component
 const Layout = () => {
@@ -38,18 +38,17 @@ const Layout = () => {
           <Navbar />
           <Routes>
             <Route element={<Home />} path="/" />
-            <Route element={<ProfileNeighbor />} path="/profileNeighbor" />
-            <Route element={<ProfileSeller />} path="/profileSeller" />
-            <Route element={<ProfileAdmin />} path="/profileAdmin" />
+            <Route element={<ProfileNeighbor />} path="/profileNeighbor/:id" />
+            <Route element={<ProfileSeller />} path="/profileSeller/:id" />
+            <Route element={<ProfileAdmin />} path="/profileAdmin/:id" />
             <Route
               element={<ProfileEditNeighbor />}
-              path="/profileEditNeighbor"
-            />
+              path="/profileEditNeighbor"/>
             <Route element={<ProfileEditSeller />} path="/profileEditSeller" />
             <Route element={<ProfileEditAdmin />} path="/profileEditAdminr" />
             <Route element={<Login />} path="/login" />
             <Route element={<Directory />} path="/directory" />
-
+            <Route element={<Business/>} path="/business" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

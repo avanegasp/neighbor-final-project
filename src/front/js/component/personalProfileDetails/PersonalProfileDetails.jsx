@@ -1,21 +1,34 @@
 import React from "react";
 
-const PersonalProfileDetails = ({ nameProfile, lastName, floor, hobbies }) => {
+const PersonalProfileDetails = ({
+  nameProfile,
+  lastname,
+  floor,
+  shopName,
+  buildingName,
+}) => {
   return (
-    <div className="">
-      <p>
+    <div className="mt-5">
+      <p className="fs-4">
         {" "}
         <strong>Nombre</strong> : {nameProfile}
       </p>
-      <p>
-        <strong>Apellido:</strong> {lastName}
+      <p className="fs-4">
+        <strong>Apellido:</strong> {lastname}
       </p>
-      <p>
+      <p className="fs-4">
         <strong>Piso:</strong> {floor}
       </p>
-      <p>
-        <strong>Hobbies:</strong> {hobbies}
-      </p>
+      {shopName ? (
+        <p className="fs-4">
+          <strong>Emprendimiento:</strong> {shopName}
+        </p>
+      ) : null}
+      {buildingName ? (
+        <p className="fs-4">
+          <strong>Edificio:</strong> {buildingName}
+        </p>
+      ) : null}
     </div>
   );
 };
