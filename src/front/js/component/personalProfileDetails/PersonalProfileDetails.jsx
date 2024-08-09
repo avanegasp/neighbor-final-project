@@ -5,28 +5,28 @@ const PersonalProfileDetails = ({
   lastname,
   floor,
   shopName,
-  buldingName,
+  buildingName,
 }) => {
   return (
     <div className="mt-5">
-      <p>
+      <p className="fs-4">
         {" "}
         <strong>Nombre</strong> : {nameProfile}
       </p>
-      <p>
+      <p className="fs-4">
         <strong>Apellido:</strong> {lastname}
       </p>
-      <p>
+      <p className="fs-4">
         <strong>Piso:</strong> {floor}
       </p>
       {shopName ? (
-        <p>
-          <strong>Shopname:</strong> {shopName}
+        <p className="fs-4">
+          <strong>Emprendimiento:</strong> {shopName}
         </p>
       ) : null}
-      {buldingName ? (
-        <p>
-          <strong>buldingName:</strong> {buldingName}
+      {buildingName ? (
+        <p className="fs-4">
+          <strong>Edificio:</strong> {buildingName}
         </p>
       ) : null}
     </div>

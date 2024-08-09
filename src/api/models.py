@@ -36,9 +36,6 @@ class Neighbor(db.Model):
             "lastname": self.lastname,
             "floor": self.floor,
             "role": self.role,
-            'seller': [seller.serialize() for seller in self.sellers],
-            'administrators': [admin.serialize() for admin in self.administrators],
-
             # do not serialize the password, its a security breach
         }
 
@@ -80,7 +77,7 @@ class Administrator(db.Model):
     buildingName = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
 
-    building = db.relationship('Building')
+    buildings = db.relationship('Building')
 
 
 
@@ -96,7 +93,7 @@ class Administrator(db.Model):
             "floor": self.floor,
             "buildingName": self.buildingName,
             "role": self.role,
-            'building': [building.serialize() for building in self.buildings],
+            'buildings': [building.serialize() for building in self.buildings],
 
             # do not serialize the password, its a security breach
         }               
