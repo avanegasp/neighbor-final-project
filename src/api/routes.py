@@ -28,6 +28,7 @@ def get_all_neighbors():
         logging.error(f"Error retrieving neighbors: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
+
 @api.route('/neighbor/<int:id>', methods=['GET'])
 def get_neighbor(id):
     try:
@@ -82,6 +83,38 @@ def get_administrator(id):
     except Exception as e:
         logging.error(f"Error retrieving administrator {id}: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
+@api.route('/seller/<int:id>', methods=['GET'])
+def get_seller(id):
+    seller = Seller.query.get(id)
+    if seller is None:
+        return jsonify({"error": "seller not found"}), 404
+
+    return jsonify(seller.serialize())
+    #administrador
+
+@api.route('/administrators', methods=['GET'])
+def get_all_administrators():
+    try:
+        administrators = Administrator.query.all()
+        serialize_administrators = [administrator.serialize() for administrator in administrators]
+        return jsonify({"administrator": serialize_administrators}), 200
+    except Exception as e:
+        logging.error(f"Error retrieving administrators: {e}")
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
+
+@api.route('/administrator/<int:id>', methods=['GET'])
+def get_administrator(id):
+    try:
+        administrator = Administrator.query.get(id)
+        if administrator is None:
+            return jsonify({"error": "administrator not found"}), 404
+        return jsonify(administrator.serialize()), 200
+    except Exception as e:
+        logging.error(f"Error retrieving administrator {id}: {e}")
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
 
 # Directorio
 @api.route('/directory', methods=['GET'])
