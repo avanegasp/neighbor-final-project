@@ -101,8 +101,6 @@ def add_neighbor():
     name = body.get("name",None)
     lastName = body.get("lastName", None)
     floor = body.get("floor",None)
-    #if not re.match(email_regex, email):
-       # return jsonify({"error": "El formato del email no es válido"}), 400
     if email is None or password is None or name is None or lastName is None or floor is None :
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
@@ -129,8 +127,6 @@ def add_seller():
     lastName = body.get("lastName", None)
     floor = body.get("floor",None)
     shopName = body.get("shopName",None)
-    if not re.match(email_regex, email):
-        return jsonify({"error": "El formato del email no es válido"}), 400
     if email is None or password is None or name is None or lastName is None or floor is None or shopName is None:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
@@ -154,9 +150,8 @@ def add_administrator():
     password = body.get("password", None)
     name = body.get("name",None)
     lastName = body.get("lastName", None)
+    floor = body.get("floor",None)
     buildingName = body.get("buildingName",None)
-    if not re.match(email_regex, email):
-        return jsonify({"error": "El formato del email no es válido"}), 400
     if email is None or password is None  or name is None or lastName is None or floor is None or buildingName is N:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
