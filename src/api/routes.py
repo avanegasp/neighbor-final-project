@@ -73,37 +73,7 @@ def get_all_administrators():
         logging.error(f"Error retrieving administrators: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
-@api.route('/administrator/<int:id>', methods=['GET'])
-def get_administrator(id):
-    try:
-        administrator = Administrator.query.get(id)
-        if administrator is None:
-            return jsonify({"error": "administrator not found"}), 404
-        return jsonify(administrator.serialize()), 200
-    except Exception as e:
-        logging.error(f"Error retrieving administrator {id}: {e}")
-        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
-
-@api.route('/seller/<int:id>', methods=['GET'])
-def get_seller(id):
-    seller = Seller.query.get(id)
-    if seller is None:
-        return jsonify({"error": "seller not found"}), 404
-
-    return jsonify(seller.serialize())
     #administrador
-
-@api.route('/administrators', methods=['GET'])
-def get_all_administrators():
-    try:
-        administrators = Administrator.query.all()
-        serialize_administrators = [administrator.serialize() for administrator in administrators]
-        return jsonify({"administrator": serialize_administrators}), 200
-    except Exception as e:
-        logging.error(f"Error retrieving administrators: {e}")
-        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
-
-
 @api.route('/administrator/<int:id>', methods=['GET'])
 def get_administrator(id):
     try:
@@ -111,6 +81,7 @@ def get_administrator(id):
         if administrator is None:
             return jsonify({"error": "administrator not found"}), 404
         return jsonify(administrator.serialize()), 200
+    
     except Exception as e:
         logging.error(f"Error retrieving administrator {id}: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
@@ -134,157 +105,104 @@ def get_all_users_directory():
     except Exception as e:
         logging.error(f"Error retrieving directory: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
-
-    #registro de vecino
     
+@api.route('/editNeighbor/<int:id>', methods=['PUT'])
+def edit_neighbor(id):
+    body = request.json
 
-# @api.route('/neighbor/registers', methods=['POST'])
-# def add_neighbor():
-#     body = request.json
-#     email = body.get("email", None)
-#     password = body.get("password", None)
-#     name = body.get("name",None)
-#     lastname = body.get("lastname", None)
-#     floor = body.get("floor",None)
-#     #if not re.match(email_regex, email):
-#        # return jsonify({"error": "El formato del email no es válido"}), 400
-#     if email is None or password is None or name is None or lastname is None or floor is None :
-#         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
-#     password_hash = generate_password_hash(password)
-#     if Neighbor.query.filter_by(email = email).first() is not None:
-#         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
-#     try: 
-#         new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
-#         db.session.add(new_user)
-#         db.session.commit()
-#         return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
-#     except Exception as error:
-#         db.session.rollback() 
-#         return jsonify({"error": f"{error}"}), 500  
+    neighbor = Neighbor.query.get(id)
+    if neighbor is None:
+        return jsonify({"error": "neighbor not found"}),404
+    
+    required_fields = ["name", "lastname", "floor", "email"]
 
-# #registro seller
+    missing_fields = [field for field in required_fields if field not in body]
+    if missing_fields:
+        return jsonify({"error": f"Missing fields:{', '.join(missing_fields)}"}),400
 
-# @api.route('/seller/registers', methods=['POST'])
-# def add_seller():
+    name = body.get("name", None)
+    lastname = body.get("lastname", None)
+    floor = body.get("floor", None)
+    email = body.get("email", None)
 
-#     body = request.json
-#     email = body.get("email", None)
-#     password = body.get("password", None)
-#     name = body.get("name",None)
-#     lastname = body.get("lastname", None)
-#     floor = body.get("floor",None)
-#     shopName = body.get("shopName",None)
-#     if not re.match(email_regex, email):
-#         return jsonify({"error": "El formato del email no es válido"}), 400
-#     if email is None or password is None or name is None or lastname is None or floor is None or shopName is None:
-#         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
-#     password_hash = generate_password_hash(password)
-#     if Seller.query.filter_by(email = email).first() is not None:
-#         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
-#     try: 
-#         new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, shopName = shopName)
-#         db.session.add(new_user)
-#         db.session.commit()
-#         return jsonify({"mensaje": "Seller creado exitosamente"}), 201
-#     except Exception as error:
-#         db.session.rollback() 
-#         return jsonify({"error": f"{error}"}), 500 
+    neighbor.name = name
+    neighbor.lastname = lastname
+    neighbor.floor = floor
+    neighbor.email = email
 
-    # registro administrador    
-
-# @api.route('/administrator/registers', methods=['POST'])
-# def add_administrator():
-#     body = request.json
-#     email = body.get("email", None)
-#     password = body.get("password", None)
-#     name = body.get("name",None)
-#     lastname = body.get("lastname", None)
-#     buildingName = body.get("buildingName",None)
-#     if not re.match(email_regex, email):
-#         return jsonify({"error": "El formato del email no es válido"}), 400
-#     if email is None or password is None  or name is None or lastname is None or floor is None or buildingName is N:
-#         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
-#     password_hash = generate_password_hash(password)
-#     if Administrator.query.filter_by(email = email).first() is not None:
-#         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
-#     try: 
-#         new_user = Administrator(email = email, password = password_hash, name = name, lastname = lastName, floor = floor, buildingName = buildingName)
-#         db.session.add(new_user)
-#         db.session.commit()
-#         return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
-#     except Exception as error:
-#         db.session.rollback() 
-#         return jsonify({"error": f"{error}"}), 500                   
-
-#     body = request.jsonify
-#     email = body.get("email",None)
-#     password = body.get("password",None)
-
-#     if email is None:
-#         return jsonify({"error": "El email es requerido"}),400
-#     if password is None:
-#         return jsonify({"error": "El password es requerido"}),400    
-
-#     new_seller = Seller(email=email, password=password, is_active=True)
-#     db.session.add(new_seller)
-#     db.session.commit()
-#     return jsonify({"Seller": new_seller.serialize()}),201
-
-
-    #Registro administrador
-
-@api.route('/registers', methods=['POST'])
-def add_administrator():
-    body = request.jsonify
-    email = body.get("email",None)
-    password = body.get("password",None)
-
-    if email is None:
-        return jsonify({"error": "El email es requerido"}),400
-    if password is None:
-        return jsonify({"error": "El password es requerido"}),400    
-
-    new_administrator = Administrator(email=email, password=password, is_active=True)
-    db.session.add(new_administrator)
-    db.session.commit()
-    return jsonify({"Administrator": new_administrator.serialize()}),201    
-
-@api.route('/login', methods=['POST'])
-def login():
     try:
-        body = request.json
-        email = body.get("email", None)
-        password = body.get("password", None)
-        userType = body.get("userType", None)
-        if email is None or password is None or userType is None:
-            return jsonify({"error": "Email, password, or user type are missing!"}), 400
-        
-        if userType == "NEIGHBOR":
-            neighbor = Neighbor.query.filter_by(email=email).first()
-            if not neighbor:
-                return jsonify({"error": "Wrong data!"}), 400
-            
-            if not check_password_hash(neighbor.password, password):
-                return jsonify ({"error": "Wrong data!"}), 400
-            
-            auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email})
-            return jsonify({"token": auth_token}), 200
-            
-        if userType == "SELLER":
-            seller = Seller.query.filter_by(email=email).first()
-            if not seller or not check_password_hash(seller.password, password):
-                return jsonify({"error": "Wrong data!"}), 400
-            
-            auth_token = create_access_token({"id": seller.id, "email": seller.email})
-            return jsonify({"token": auth_token}), 200
-        
-        if userType == "ADMINISTRATOR":
-            admin = Administrator.query.filter_by(email=email).first()
-            if not admin or not check_password_hash(admin.password, password):
-                return jsonify({"error": "Wrong data!"}), 400
-            
-            auth_token = create_access_token({"id": neighbor.id, "email": admin.email})
-            return jsonify({"token": auth_token}), 200
-            
+        db.session.commit()
+        return jsonify({"neighbor": neighbor.serialize()})
+    
     except Exception as error:
-        return jsonify({"error": f"{error}"}), 500
+        db.session.rollback()
+        return jsonify({"error": str(error)}),500
+    
+@api.route('/editSeller/<int:id>', methods=['PUT'])
+def edit_seller(id):
+    body = request.json
+
+    seller = Seller.query.get(id)
+    if seller is None:
+        return jsonify({"error":"seller not found"}),404
+    
+    required_fields = ["name", "lastname", "floor", "email", "shopName"]
+
+    missing_fields = [field for field in required_fields if field not in body]
+    if missing_fields:
+        return jsonify({"error": f"Missing fields:{','.join(missing_fields)}"}),400
+    
+    name = body.get("name", None)
+    lastname = body.get("lastname", None)
+    floor = body.get("floor", None)
+    email = body.get("email", None)
+    shopName = body.get("shopName", None)
+
+    seller.name = name
+    seller.lastname = lastname
+    seller.floor = floor
+    seller.email = email
+    seller.shopName = shopName
+
+    try:
+        db.session.commit()
+        return jsonify({"seller": seller.serialize()})
+
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": str(error)}),500
+    
+@api.route('/editAdministrator/<int:id>', methods=['PUT'])
+def edit_admin(id):
+    body = request.json
+
+    administrator = Administrator.query.get(id)
+    if administrator is None:
+        return jsonify({"error":"administrator not found"}),404
+    
+    required_fields = ["name", "lastname", "floor", "email", "buildingName"]
+
+    missing_fields = [field for field in required_fields if field not in body]
+    if missing_fields:
+        return jsonify({"error": f"Missing fields:{','.join(missing_fields)}"}),400
+    
+    name = body.get("name", None)
+    lastname = body.get("lastname", None)
+    floor = body.get("floor", None)
+    email = body.get("email", None)
+    buildingName = body.get("buildingName", None)
+
+    administrator.name = name
+    administrator.lastname = lastname
+    administrator.floor = floor
+    administrator.email = email
+    administrator.buildingName = buildingName
+
+    try:
+        db.session.commit()
+        return jsonify({"administrator": administrator.serialize()})
+
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": str(error)}),500
+    
