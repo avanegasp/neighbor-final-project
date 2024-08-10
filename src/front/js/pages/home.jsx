@@ -16,7 +16,7 @@ export const Home = () => {
       <div className="row w-100">
         <div className="col-md-6 d-flex align-items-center justify-content-center bg-withe">
           <p className="description">
-            Neighburs es una aplicación excelente que mejora la gestión y organización de edificios, simplifica la comunicación entre residentes y administradores, optimiza solicitudes de mantenimiento, y fomenta la comunidad y el apoyo a negocios locales.
+            Neighburs es una aplicación excelente que mejora la gestión y organización de edificios, simplifica la comunicación entre residentes y administradores, optimiza solicitudes de mantenimiento, y fomenta la comunidad y el apoyo a negocios de nuestros vecinos.
           </p>
         </div>
         <div className="col-md-6 d-flex justify-content-center align-items-center">
@@ -27,16 +27,7 @@ export const Home = () => {
             <Link to="/register" className="btn btn-signup">
               Crear cuenta nueva
             </Link>
-            <Link to={"/Business"}> SHOP </Link>
-            {/* <Link to={"/profileNeighbor"}>Perfil Vecino(a)</Link>
-            <Link to={"/profileSeller"}>Perfil Vendedora(a)</Link>
-            <Link to={"/profileAdmin"}>Perfil Admin</Link>
-            <Link to={"/profileNeighbor"}>Perfil Vecino(a)</Link>
-
-
-            <Link to={"/directory"}>Directorio</Link>*/}
-
-          </div>
+         </div>
         </div>
       </div>
     </div>

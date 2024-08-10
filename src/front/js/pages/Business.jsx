@@ -5,7 +5,7 @@ const Business = () => {
   return (
     <div className="container my-4">
       <div className="mb-4">
-        <h2 className="text-center business">Business</h2>
+        <h2 className="text-center business">TIENDA</h2>
       </div>
       <div className="row">
         <div className="col-12 col-md-6 col-lg-3 mb-3">

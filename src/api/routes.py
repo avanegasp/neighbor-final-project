@@ -129,7 +129,6 @@ def edit_neighbor(id):
     neighbor.lastname = lastname
     neighbor.floor = floor
     neighbor.email = email
-
     try:
         db.session.commit()
         return jsonify({"neighbor": neighbor.serialize()})
