@@ -87,35 +87,3 @@ body::before {
 .btn-signup {
   background-color: #30e390;
 }
-
-@media (max-width: 768px) {
-  .home-title {
-    font-size: 4rem;
-  }
-
-  .description {
-    font-size: 1.2rem;
-  }
-
-  .card {
-    width: 90%; 
-  }
-}
-
-@media (max-width: 576px) {
-  .home-title {
-    font-size: 3rem;
-  }
-
-  .description {
-    font-size: 1rem;
-  }
-
-  .home-container {
-    padding: 1rem;
-  }
-
-  .card {
-    width: 100%; 
-  }
-}
