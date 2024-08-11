@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import { faCircleRadiation } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/index.css";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleLogin = () => {
     setIsAuthenticated(true);
   };
   const handleLogout = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     setIsAuthenticated(false);
   };
 
@@ -17,6 +20,43 @@ export const Navbar = () => {
       <Link className="navbar-brand" to="/">
         <span className="icon-n">N</span>
       </Link>
+      <div
+        className="collapse navbar-collapse justify-content-end fs-5 "
+        id="navbarNavAltMarkup"
+      >
+        <div className="btn-group dropstart">
+          <button
+            className="favNavbar btn btn-ligth rounded-pill"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Favs{" "}
+            <span className="favNumNavbar">{store.favorites.length}</span>
+          </button>
+          <ul className="dropdown-menu">
+            <li>
+              <div className="bg-white">
+                {store.favorites.map((favorite, index) => (
+                  <div className="d-flex" key={index}>
+                    <p className="dropdown-item text-black" style={favsNames}>
+                      {favorite.name}
+                    </p>
+                    <span
+                      className="me-3 mb-3 fs-3"
+                      onClick={() => {
+                        actions.removeToFavorite(favorite.name);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faCircleRadiation} />
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
       {/* {isAuthenticated && ( */}
       <div className="dropdown dropstart">
         <button
@@ -65,8 +105,8 @@ export const Navbar = () => {
             <div className="dropdown-item">
               <a
                 className="text-success fs-5 mx-1 my-1"
-              href="#"
-              onClick={handleLogout}
+                href="#"
+                onClick={handleLogout}
               >
                 <i className="text-success fs-5 mx-1 my-1 fa-solid fa-right-from-bracket"></i> Cerrar Sesión
               </a>
