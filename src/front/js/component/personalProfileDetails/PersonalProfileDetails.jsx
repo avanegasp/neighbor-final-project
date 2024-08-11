@@ -6,6 +6,7 @@ const PersonalProfileDetails = ({
   floor,
   shopName,
   buildingName,
+  email
 }) => {
   return (
     <div className="mt-5">
@@ -18,6 +19,9 @@ const PersonalProfileDetails = ({
       </p>
       <p className="fs-4">
         <strong>Piso:</strong> {floor}
+      </p>
+      <p className="fs-4">
+        <strong>Correo:</strong> {email}
       </p>
       {shopName ? (
         <p className="fs-4">
