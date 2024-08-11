@@ -48,6 +48,7 @@ const ProfileSeller = () => {
               lastname={store.seller.lastname}
               floor={store.seller.floor}
               shopName={store.seller.shopName}
+              email={store.seller.email}
             />
           </div>
           <div className="mt-auto text-end mb-5">

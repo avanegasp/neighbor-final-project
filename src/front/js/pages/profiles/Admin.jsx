@@ -49,16 +49,17 @@ const ProfileAdmin = () => {
               lastname={store.admin.lastname}
               floor={store.admin.floor}
               buildingName={store.admin.buildingName}
+              email={store.admin.email}
             />
           </div>
           <div className="mt-auto text-end mb-5">
-            <Link to={"/profileEditAdminr"} className="btn btn-success me-5">
+            <Link to={"/profileEditAdmin"} className="btn btn-success me-5">
               Editar información
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

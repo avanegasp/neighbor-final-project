@@ -11,6 +11,7 @@ const AllUsersInfo = ({
   shopName,
   buildingName,
   floor,
+  email
 }) => {
   console.log("allusersINFO...", shopName)
   return (
@@ -35,6 +36,7 @@ const AllUsersInfo = ({
           floor={floor}
           shopName={shopName}
           buildingName={buildingName}
+          email={email}
         />
       </div>
     </div>

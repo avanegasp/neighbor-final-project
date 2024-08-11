@@ -51,6 +51,7 @@ const ProfileNeighbor = () => {
               nameProfile={store.neighbor.name}
               lastname={store.neighbor.lastname}
               floor={store.neighbor.floor}
+              email={store.neighbor.email}
             />
           </div>
           <div className="mt-auto text-end mb-5">

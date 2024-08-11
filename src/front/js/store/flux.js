@@ -2,9 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       // message: null,
-      neighbor: null,
-      seller: null,
-      admin: null,
+      neighbor: {},
+      seller: {},
+      admin: {},
       users: null,
       favorites: []
     },
@@ -30,32 +30,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, "green");
       },
 
-      // getMessage: async () => {
-      //   try {
-      //     // fetching data from the backend
-      //     const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-      //     const data = await resp.json();
-      //     setStore({ message: data.message });
-      //     // don't forget to return something, that is how the async resolves
-      //     return data;
-      //   } catch (error) {
-      //     console.log("Error loading message from backend", error);
-      //   }
-      // },
-      // changeColor: (index, color) => {
-      //   //get the store
-      //   const store = getStore();
-
-      //   //we have to loop the entire demo array to look for the respective index
-      //   //and change its color
-      //   const demo = store.demo.map((elm, i) => {
-      //     if (i === index) elm.background = color;
-      //     return elm;
-      //   });
-
-      //   //reset the global store
-      //   setStore({ demo: demo });
-      // },
       login: async (email, password, userType) => {
         try {
           const response = await fetch(process.env.BACKEND_URL + "/api/login", {
@@ -75,6 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileNeighbor: async (id) => {
+        console.log("HEREEEE PROFILE", id);
         if (!id) return;
 
         try {
@@ -173,6 +148,93 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ users: data });
         } catch (error) {
           console.error("Error fetching directory:", error.message);
+        }
+      },
+      editNeighbor: async (id, fields) => {
+        const actions = getActions();
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/editNeighbor/${id}`,
+            {
+              method: "PUT",
+              body: JSON.stringify({
+                name: fields.name,
+                lastname: fields.lastname,
+                floor: fields.floor,
+                email: fields.email,
+              }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+          const data = await response.json();
+          console.log("DATAAAA", data);
+          actions.getProfileNeighbor(id);
+        } catch (error) {
+          console.error("Error editing neighbor:", error.message);
+        }
+      },
+      editSeller: async (id, fields) => {
+        const actions = getActions();
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/editSeller/${id}`,
+            {
+              method: "PUT",
+              body: JSON.stringify({
+                name: fields.name,
+                lastname: fields.lastname,
+                floor: fields.floor,
+                email: fields.email,
+                shopName: fields.shopName,
+              }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+          const data = await response.json();
+          actions.getProfileSeller(id);
+        } catch (error) {
+          console.error("Error editing seller:", error.message);
+        }
+      },
+      editAdmin: async (id, fields) => {
+        const actions = getActions();
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/editAdministrator/${id}`,
+            {
+              method: "PUT",
+              body: JSON.stringify({
+                name: fields.name,
+                lastname: fields.lastname,
+                floor: fields.floor,
+                email: fields.email,
+                buildingName: fields.buildingName,
+              }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+          const data = await response.json();
+          actions.getProfileSeller(id);
+        } catch (error) {
+          console.error("Error editing seller:", error.message);
         }
       },
     },
