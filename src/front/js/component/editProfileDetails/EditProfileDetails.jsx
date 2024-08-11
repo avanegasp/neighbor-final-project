@@ -1,40 +1,120 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../../store/appContext.js";
+import { useNavigate } from "react-router-dom";
+const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName = "", shopName = "", email = "", id, role = "" }) => {
 
-const EditProfileDetails = ({ name, lastname, floor, buildingName, shopName }) => {
+  const { actions } = useContext(Context)
+
+  const [profile, setProfile] = useState({
+    name,
+    lastname,
+    floor,
+    email,
+    buildingName,
+    shopName
+  })
+
+  const navigate = useNavigate()
+
+  console.log('HEREEE', id)
+
+  function handleChange(e) {
+    setProfile({ ...profile, [e.target.name]: e.target.value })
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (role === "NEIGHBOR") {
+      await actions.editNeighbor(id, profile)
+      navigate(`/profileNeighbor/${id}`)
+
+    } else if (role === "SELLER") {
+      await actions.editSeller(id, profile)
+      navigate(`/profileSeller/${id}`)
+
+    } else {
+      await actions.editAdmin(id, profile)
+      navigate(`/profileAdmin/${id}`)
+    }
+  }
+
+  console.log("ROLEEEEE", role)
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="mb-3">
         <label htmlFor="name" className="form-label fs-3">
-          Nombre: {name}
+          Nombre
         </label>
-        <input type="text" className="form-control" id="name" />
+        <input
+          name="name"
+          onChange={(e) => handleChange(e)}
+          type="text"
+          className="form-control"
+          placeholder="Nombre"
+          value={profile.name} />
       </div>
       <div className="mb-3">
         <label htmlFor="lastname" className="form-label fs-3">
-          Apellido: {lastname}
+          Apellido
         </label>
-        <input type="text" className="form-control" id="lastname" />
+        <input name="lastname"
+          onChange={handleChange}
+          type="text"
+          className="form-control"
+          placeholder="Apellido"
+          value={profile.lastname} />
       </div>
       <div className="mb-3">
         <label htmlFor="floor" className="form-label fs-3">
-          Piso: {floor}
+          Piso
         </label>
-        <input type="text" className="form-control" id="floor" />
+        <input
+          name="floor"
+          onChange={handleChange}
+          type="text"
+          className="form-control"
+          placeholder="Piso"
+          value={profile.floor} />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="floor" className="form-label fs-3">
+          Correo
+        </label>
+        <input
+          name="email"
+          onChange={handleChange}
+          type="text"
+          className="form-control"
+          placeholder="floor"
+          value={profile.email} />
       </div>
       {shopName ? (
         <div className="mb-3">
           <label htmlFor="shopName" className="form-label fs-3">
-            shopName: {shopName}
+            shopName
           </label>
-          <input type="text" className="form-control" id="shopName" />
+          <input
+            name="shopName"
+            onChange={handleChange}
+            type="text"
+            className="form-control"
+            placeholder="shopName"
+            value={profile.shopName} />
         </div>
       ) : null}
       {buildingName ? (
         <div className="mb-3">
           <label htmlFor="buildingName" className="form-label fs-3">
-            buildingName: {buildingName}
+            buildingName
           </label>
-          <input type="text" className="form-control" id="buildingName" />
+          <input
+            name="buildingName"
+            onChange={handleChange}
+            type="text"
+            className="form-control"
+            placeholder="buildingName"
+            value={profile.buildingName} />
         </div>
       ) : null}
       <button type="submit" className="btn btn-primary">
