@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { useForm } from 'react-hook-form';
 
 export default function Register() {
     const [name, setName] = useState("Neighbor");
@@ -9,9 +9,10 @@ export default function Register() {
         setName(selectedValue);
     };
 
-    const Submit = () => {
-        // Manejo de la lógica de envío del formulario aquí
-    };
+    const { register, handleSubmit } = useForm();
+    const onSubmit = (data) => {
+        console.log(data.name)
+    }
 
     return (
         <div className='container-fluid w-50'>
@@ -57,23 +58,22 @@ export default function Register() {
             </div>
 
             {name === 'Neighbor' && (
-                <form className='mt-1' onSubmit={Submit}>
+                <form className='mt-1' onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-3">
                         <label htmlFor="neighborName" className="form-label">Name | Lastname</label>
-                        <input type="text" className="form-control" id="neighborName" />
+                        <input type="text" {...register("name")} className="form-control" id="neighborName" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="neighborEmail" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="neighborEmail" aria-describedby="emailHelp" />
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                        <input type="email" {...register("email")} className="form-control" id="neighborEmail" aria-describedby="emailHelp" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="neighborPassword" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="neighborPassword" />
+                        <input type="password" {...register("password")} className="form-control" id="neighborPassword" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="neighborFloor" className="form-label">Floor</label>
-                        <input type="text" className="form-control" id="neighborFloor" />
+                        <input type="text" {...register("floor")} className="form-control" id="neighborFloor" />
                     </div>
                     <button type="submit" className="btn btn-primary">Create an account</button>
                 </form>
@@ -88,7 +88,6 @@ export default function Register() {
                     <div className="mb-3">
                         <label htmlFor="sellerEmail" className="form-label">Email address</label>
                         <input type="email" className="form-control" id="sellerEmail" aria-describedby="emailHelp" />
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="sellerPassword" className="form-label">Password</label>
@@ -115,7 +114,6 @@ export default function Register() {
                     <div className="mb-3">
                         <label htmlFor="adminEmail" className="form-label">Email address</label>
                         <input type="email" className="form-control" id="adminEmail" aria-describedby="emailHelp" />
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="adminPassword" className="form-label">Password</label>
