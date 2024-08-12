@@ -1,58 +1,90 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
-
 body {
-    background-color: rgba(143, 143, 143, 1);
-    margin: 0;
-    font-family: Arial, sans-serif;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("https://ideogram.ai/assets/progressive-image/balanced/response/cBOFsQXnTsqxgu8BCw4KoA");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(6px);
-    z-index: -1;
-  }
-  
-  .btn-edit{
-    background-color: #30e390;
-  }
+  background-color: rgba(143, 143, 143, 1);
+  margin: 0;
+  font-family: Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
 
-  .table{
-  color:white;
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://ideogram.ai/assets/progressive-image/balanced/response/cBOFsQXnTsqxgu8BCw4KoA");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: blur(6px);
+  z-index: -1;
+}
+
+.btn-edit {
+  background-color: #30e390;
+}
+
+.table {
+  color: white;
   margin-top: 1rem;
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 1rem; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
-  }
-  .review{
-  color:white;
+}
+
+.review {
+  color: white;
   margin-top: 1rem;
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 1rem; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
-  }
-  .business{
-    color:white;
-    margin-top: 1rem;
-    background-color: rgba(0, 0, 0, 0.6); 
-    padding: 1rem; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
-  
-    }
+}
+
+.business {
+  color: white;
+  margin-top: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.navbar {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.5);
+  height: 70px; 
+  padding: 0 20px; 
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  position: relative;
+}
+
+.navbar .dropdown {
+  position: absolute;
+  right: 30px; 
+}
+
+.navbar-brand {
+  position: absolute;
+  left: 30px;
+}
+
+.icon-n {
+  font-size: 60px;
+  font-weight: bold;
+  color: white;
+}
+
+.dropdown button {
+  font-size: 1.5rem; 
+}
+
