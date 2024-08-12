@@ -47,6 +47,7 @@ const Directory = () => {
                   floor={user.floor}
                   buildingName={user.buildingName}
                   email={user.email}
+                  id={user.id}
                 />
               </div>
             );
@@ -64,6 +65,7 @@ const Directory = () => {
                   lastname={user.lastname}
                   floor={user.floor}
                   email={user.email}
+                  id={user.id}
                 />
               </div>
             );
@@ -82,6 +84,7 @@ const Directory = () => {
                   floor={user.floor}
                   shopName={user.shopName}
                   email={user.email}
+                  id={user.id}
                 />
               </div>
             );

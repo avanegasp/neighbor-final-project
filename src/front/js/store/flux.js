@@ -6,8 +6,30 @@ const getState = ({ getStore, getActions, setStore }) => {
       seller: {},
       admin: {},
       users: null,
+      favorites: []
     },
     actions: {
+      addToFavorite: (id, name, role) => {
+        const store = getStore();
+        const isFavoriteExist = store.favorites.some(
+          (favorite) => favorite.id === id && favorite.role === role
+        );
+        if (!isFavoriteExist) {
+          setStore({
+            favorites: [...store.favorites, { id, name, role }],
+          });
+        }
+      },
+
+
+      removeToFavorite: (id) => {
+        const store = getStore();
+        const filteredFavorite = store.favorites.filter(
+          (favorite) => favorite.name !== id
+        );
+        setStore({ favorites: filteredFavorite });
+      },
+
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
