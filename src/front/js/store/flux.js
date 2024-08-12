@@ -9,15 +9,20 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: []
     },
     actions: {
-      addToFavorite: (id, name) => {
+      addToFavorite: (id, name, role) => {
         const store = getStore();
-        console.log("desde fluxxxxxxxx", id, name);
-        setStore({
-          favorites: [...store.favorites, { id, name }],
-        });
+        const isFavoriteExist = store.favorites.some(
+          (favorite) => favorite.id === id && favorite.role === role
+        );
+        if (!isFavoriteExist) {
+          setStore({
+            favorites: [...store.favorites, { id, name, role }],
+          });
+        }
       },
 
-      removeToFavorite: (id, name) => {
+
+      removeToFavorite: (id) => {
         const store = getStore();
         const filteredFavorite = store.favorites.filter(
           (favorite) => favorite.name !== id
