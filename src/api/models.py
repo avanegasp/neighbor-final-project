@@ -21,6 +21,8 @@ class Neighbor(db.Model):
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.NEIGHBOR.value)
+    
+    review = db.relationship('Review', backref='Neighbor', uselist=False) 
       
 
 
@@ -162,9 +164,11 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
     price =  db.Column(db.Float(30), unique=False, nullable=False)
+    schedule = db.Column(db.String(50), unique=False, nullable=False)
 
     seller_id = db.Column(db.Integer, db.ForeignKey('seller.id'))
     orders = db.relationship('order_product', backref='product')
+    review = db.relationship('Review', backref='Product', uselist=False) 
 
     def __repr__(self):
         return f'<Product {self.id}>'
@@ -174,7 +178,28 @@ class Product(db.Model):
             "id": self.id,
             "name": self.name,
             "price": self.price,
+            "schedule": self.schedule
         }     
+        
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    comment_text = db.Column(db.String(255), nullable=True, unique=False)
+    stars = db.Column(db.Integer, nullable=False, unique=False)
+    
+    neighbor_id = db.Column(db.Integer, db.ForeignKey("neighbor.id"), unique=True)
+    product_id = db.Column(db.Integer, db.ForeignKey("product.id"), unique=True) 
+
+    
+    def __repr__(self):
+        return f'<Review {self.id}>'
+    
+    def serialize(self):
+        return{
+            "id": self.id,
+            "comment_text": self.comment_text,
+            "stars": self.stars 
+            
+        }
 
 #uno a muchos entre seller y order
 #muchos a muchos entre order y product
