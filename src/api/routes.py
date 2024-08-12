@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, Neighbor, Seller, Administrator
+from api.models import db, Neighbor, Seller, Administrator, Product
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -204,4 +204,98 @@ def edit_admin(id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"error": str(error)}),500
+
+
+@api.route('/seller/<int:seller_id>/create-business', methods=['POST'])
+#@jwt.required
+def create_business(seller_id):
+    try:
+        body = request.json
+        name = body.get("name", None)
+        price = body.get("price", None)
+        schedule = body.get("schedule", None)
+        
+        if name is None or price is None or schedule is None:
+            return jsonify("Missing data!"), 400
+        
+        business_exists = Product.query.filter_by(name=name).first()
+        if business_exists is not None:
+            return jsonify({"error": f"{name} already exists!"}), 400
+        
+        business = Product(name=name, price=price, schedule=schedule, seller_id=seller_id)
+        
+        db.session.add(business)
+        db.session.commit()
+        db.session.refresh(business)
+        return jsonify({"message": f"{business.name} created!"}), 201
+        
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500
+
+@api.route('/businesses', methods=['GET'])
+def get_all_businesses():
+    try:
+        businesses = Product.query.all()
+        serialized_businesses = [business.serialize() for business in businesses]
+        return jsonify({"businesses": serialized_businesses}), 200
     
+    except Exception as error:
+        return jsonify ({"error": f"{error}"}), 500
+    
+@api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['GET'])
+def get_single_business(seller_id, business_id):
+    try:
+        business = Product.query.get(seller_id=seller_id, id=business_id)
+        if not business:
+            return jsonify({"Business not found"}), 404
+        return jsonify({"Business": business.serialize()}), 200
+        
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500 
+    
+@api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['PUT'])
+# @jwt_required
+def update_business(seller_id, business_id):
+    
+    business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
+    try:
+        if not business:
+            return jsonify({"error": "Business doesn't exist"}), 404
+        body = request.json
+        name = body.get("name", None)
+        price = body.get("price", None)
+        schedule = body.get("schedule", None)
+        
+        if name is None or price is None or schedule is None:
+            return jsonify("Missing data!"), 400
+        
+        business = Product.query.get(business_id)
+        business.name = name
+        business.price =  price
+        business.schedule = schedule
+        
+        db.session.commit()
+        db.session.refresh(business)
+        return jsonify({"message": f"{business.name} updated!"}), 200
+        
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500
+    
+@api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['DELETE'])
+# @jwt_required
+def delete_business(seller_id,business_id):
+    
+    business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
+    try:
+        if not business:
+            return jsonify({"error": "Business does not exist"}), 404
+        db.session.delete(business)
+        db.session.commit()
+        return jsonify({"message": "Business deleted"}), 200
+        
+        
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+
