@@ -16,7 +16,7 @@ const AllUsersInfo = ({
   id
 }) => {
   const { actions } = useContext(Context)
-  console.log("allusersINFO...", id)
+  // console.log("allusersINFO...", id)
   return (
     <div className="row w-100 border border-1 border-dark justify-content-center bg-white">
       <div className="col-md-4">

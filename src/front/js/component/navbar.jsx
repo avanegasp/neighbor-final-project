@@ -2,9 +2,8 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/index.css";
+import Favorite from "./favorite/Favorite.jsx";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -40,30 +39,8 @@ export const Navbar = () => {
           <ul className="dropdown-menu">
             <li>
               <div className="bg-white">
-                {store.favorites.map((favorite, index) => {
-                  // console.log("FAAAVORITEEE", favorite)
-                  let path = "/"
-                  if (favorite.role === "NEIGHBOR") {
-                    path = "/profileNeighbor"
-                  } else if (favorite.role === "SELLER") {
-                    path = "/profileSeller"
-                  } else {
-                    path = "/profileAdmin"
-                  }
-                  return (
-                    <div className="d-flex" key={index}>
-                      <Link to={`${path}/${favorite.id}`} className="dropdown-item text-black">{favorite.name}</Link>
-                      <span
-                        className="me-3 mb-3 fs-3"
-                        onClick={() => {
-                          actions.removeToFavorite(favorite.name);
-                        }}
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </span>
-                    </div>
-                  )
-                })}
+                <Favorite favorites={store.favorites}
+                  removeToFavorite={actions.removeToFavorite} />
               </div>
             </li>
           </ul>

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, Neighbor, Seller, Administrator, Product
+from api.models import db, Neighbor, Seller, Administrator, Product, Review
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -15,6 +15,126 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 logging.basicConfig(level=logging.ERROR)
+
+    #registro de vecino
+    
+
+@api.route('/neighbor/registers', methods=['POST'])
+def add_neighbor():
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastname = body.get("lastname", None)
+    floor = body.get("floor",None)
+    #if not re.match(email_regex, email):
+       # return jsonify({"error": "El formato del email no es válido"}), 400
+    if email is None or password is None or name is None or lastname is None or floor is None :
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if Neighbor.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500  
+
+#registro seller
+
+@api.route('/seller/registers', methods=['POST'])
+def add_seller():
+
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastname = body.get("lastname", None)
+    floor = body.get("floor",None)
+    shopName = body.get("shopName",None)
+    if email is None or password is None or name is None or lastname is None or floor is None or shopName is None:
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if Seller.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, shopName = shopName)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Seller creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500 
+
+    # registro administrador    
+
+
+@api.route('/administrator/registers', methods=['POST'])
+def add_administrator():
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastName = body.get("lastName", None)
+    floor = body.get("floor",None)
+    buildingName = body.get("buildingName",None)
+    if email is None or password is None  or name is None or lastName is None or floor is None or buildingName is None:
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if Administrator.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = Administrator(email = email, password = password_hash, name = name, lastName = lastName, floor = floor, buildingName = buildingName)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500                   
+
+
+@api.route('/login', methods=['POST'])
+def login():
+    try:
+        body = request.json
+        email = body.get("email", None)
+        password = body.get("password", None)
+        userType = body.get("userType", None)
+        if email is None or password is None or userType is None:
+            return jsonify({"error": "Email, password, or user type are missing!"}), 400
+
+        if userType == "NEIGHBOR":
+            neighbor = Neighbor.query.filter_by(email=email).first()
+            if not neighbor:
+                return jsonify({"error": "Wrong data!"}), 400
+
+            if not check_password_hash(neighbor.password, password):
+                return jsonify ({"error": "Wrong data!"}), 400
+
+            auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email})
+            return jsonify({"token": auth_token}), 200
+
+        if userType == "SELLER":
+            seller = Seller.query.filter_by(email=email).first()
+            if not seller or not check_password_hash(seller.password, password):
+                return jsonify({"error": "Wrong data!"}), 400
+
+            auth_token = create_access_token({"id": seller.id, "email": seller.email})
+            return jsonify({"token": auth_token}), 200
+
+        if userType == "ADMINISTRATOR":
+            admin = Administrator.query.filter_by(email=email).first()
+            if not admin or not check_password_hash(admin.password, password):
+                return jsonify({"error": "Wrong data!"}), 400
+
+            auth_token = create_access_token({"id": neighbor.id, "email": admin.email})
+            return jsonify({"token": auth_token}), 200
+
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
 
 #Vecinos
 
@@ -285,7 +405,7 @@ def update_business(seller_id, business_id):
     
 @api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['DELETE'])
 # @jwt_required
-def delete_business(seller_id,business_id):
+def delete_business(seller_id, business_id):
     
     business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
     try:
@@ -295,26 +415,98 @@ def delete_business(seller_id,business_id):
         db.session.commit()
         return jsonify({"message": "Business deleted"}), 200
         
-        
     except Exception as error:
         return jsonify({"error": f"{error}"}), 500
 
-@api.route('/register/neihbor', methods=['PUT'])
-def register_neighbor(email,password,name,lastname,floor,role):
-    body = request.json
-    email = body.get("email", None)
-    password = body.get("email", None)
-    name = body.get("email", None)
-    lastname = body.get("email", None)
-    floor = body.get("email", None)
-    role = body.get("role", None)
-
-    if email is None or password is None or name is None or lastname is None or floor is None or role is None:
-        return jsonify({"message": "Complete all the fields"}), 400
+@api.route('/neighbor/<int:neighbor_id>/business/<business_id>/create-review', methods=['POST'])
+#@jwt.required
+def create_review(neighbor_id, business_id):
+    try:
+        body = request.json
+        comment_text = body.get("comment_text", None)
+        stars = body.get("stars", None)
+        
+        if comment_text is None or stars is None:
+            return jsonify({"Missing data!"}), 400
+        
+        review_exists = Review.query.filter_by(neighbor_id=neighbor_id, business_id=business_id).first()
+        if review_exists is not None:
+            return jsonify({"error": "Neighbors can't review twice the same product!"}), 400
+        
+        review = Review(comment_text=comment_text, stars=stars, neighbor_id=neighbor_id, business_id=business_id)
+        
+        db.session.add(review)
+        db.session.commit()
+        db.session.refresh(review)
+        return jsonify({"message": "Review created!"}), 201        
+        
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"})
     
-    email_exist = Neighbor.filter_by(email=email).first()
-
-    if email_exist:
-        return jsonify({"message": "you already have an account"})
+@api.route('business/reviews', methods=['GET'])
+def get_reviews():
+    try:
+        reviews = Review.query.all()
+        serialized_reviews = [review.serialize() for review in reviews]
+        return jsonify({"reviews": serialized_reviews}), 200
+        
+    except Exception as error:
+        return jsonify ({"error": f"{error}"}), 500
+    
+@api.route('business/<int:business_id>/reviews/<int:id>', methods=['GET'])
+def get_single_review(business_id, id):
+     
+    try: 
+        review = Review.query.filter_by(business_id=business_id, id=id).first() 
+        if not review:
+            return jsonify({"Review not found"}), 404
+        return jsonify({"Review": review.serialize()}), 200
+        
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500 
+    
+@api.route('/neighbor/<int:neighbor_id>/business/<int:business_id>/review/<int:review_id>', methods=['PUT'])
+#@jwt.required
+def update_review(neighbor_id, business_id, review_id):
+    
+    review = Review.query.filter_by(neighbor_id=neighbor_id, business_id=business_id, id=review_id).first()
+    try: 
+        if not review:
+            return jsonify({"error": "Review doesn't exist"}), 404
+        body = request.json
+        comment_text = body.get("comment_text", None)
+        stars = body.get("stars", None)
+        
+        if comment_text is None or stars is None:
+            return jsonify({"Missing data!"}), 400
+        
+        review = Review.query.get(review_id)
+        review.comment_text = comment_text
+        review.stars = stars
+        
+        db.session.commit()
+        db.session.refresh(review)
+        return jsonify({"message": "Review updated!"}), 200
+        
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500
+    
+@api.route('/neighbor/<int:neighbor_id>/business/<int:business_id>/review/<int:review_id>', methods=['DELETE'])
+#@jwt_required
+def delete_review(neighbor_id, business_id, review_id):
+    
+    review = Review.query.filter_by(neighbor_id, business_id, id=review_id).first()
+    try:
+        if not review:
+            return jsonify({"error": "Review does not exist"}), 404
+        db.session.delete(review)
+        db.session.commit()
+        return jsonify({"message": "Review deleted"}), 200
+    
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+           
 
 
