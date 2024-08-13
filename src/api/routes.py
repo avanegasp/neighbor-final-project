@@ -509,4 +509,4 @@ def delete_review(neighbor_id, business_id, review_id):
         return jsonify({"error": f"{error}"}), 500
            
 
- 
+

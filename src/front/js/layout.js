@@ -16,6 +16,7 @@ import ProfileEditSeller from "./pages/editProfiles/Seller.jsx";
 import Directory from "./pages/directory/Directory.jsx";
 
 import Login from "./pages/Login.jsx";
+import Register from "./pages/register.jsx";
 
 import injectContext from "./store/appContext";
 
@@ -43,13 +44,14 @@ const Layout = () => {
             <Route element={<ProfileAdmin />} path="/profileAdmin/:id" />
             <Route
               element={<ProfileEditNeighbor />}
-              path="/profileEditNeighbor"
-            />
+              path="/profileEditNeighbor" />
             <Route element={<ProfileEditSeller />} path="/profileEditSeller" />
             <Route element={<ProfileEditAdmin />} path="/profileEditAdmin" />
             <Route element={<Login />} path="/login" />
             <Route element={<Directory />} path="/directory" />
+            <Route element={<Register />} path="/register" />
             <Route element={<Business />} path="/business" />
+
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
