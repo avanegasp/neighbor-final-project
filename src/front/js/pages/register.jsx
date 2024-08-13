@@ -1,10 +1,12 @@
 import React, { act, useContext, useState } from 'react';
 import { Context } from "../store/appContext";
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
     const [name, setName] = useState("Neighbor");
     const { store, actions } = useContext(Context)
+    const navigate = useNavigate()
     const handleTitle = (event) => {
         const selectedValue = event.target.value;
         setName(selectedValue);
@@ -25,7 +27,6 @@ export default function Register() {
     }
 
     const onSubmitAdmin = async (data) => {
-        console.log(data)
         const resp = await actions.registerAdmin(data.email, data.password, data.name, data.lastname, data.floor, data.buildingName)
         console.log(resp)
     }
