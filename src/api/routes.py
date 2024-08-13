@@ -78,16 +78,16 @@ def add_administrator():
     email = body.get("email", None)
     password = body.get("password", None)
     name = body.get("name",None)
-    lastName = body.get("lastName", None)
+    lastname = body.get("lastname", None)
     floor = body.get("floor",None)
     buildingName = body.get("buildingName",None)
-    if email is None or password is None  or name is None or lastName is None or floor is None or buildingName is None:
+    if email is None or password is None  or name is None or lastname is None or floor is None or buildingName is None:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
     if Administrator.query.filter_by(email = email).first() is not None:
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
-        new_user = Administrator(email = email, password = password_hash, name = name, lastName = lastName, floor = floor, buildingName = buildingName)
+        new_user = Administrator(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, buildingName = buildingName)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
@@ -130,7 +130,7 @@ def login():
             if not admin or not check_password_hash(admin.password, password):
                 return jsonify({"error": "Wrong data!"}), 400
 
-            auth_token = create_access_token({"id": neighbor.id, "email": admin.email})
+            auth_token = create_access_token({"id": admin.id, "email": admin.email})
             return jsonify({"token": auth_token}), 200
 
     except Exception as error:
