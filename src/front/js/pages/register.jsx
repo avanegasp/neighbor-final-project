@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { act, useContext, useState } from 'react';
+import { Context } from "../store/appContext";
 import { useForm } from 'react-hook-form';
 
 export default function Register() {
     const [name, setName] = useState("Neighbor");
-
+    const { store, actions } = useContext(Context)
     const handleTitle = (event) => {
         const selectedValue = event.target.value;
         setName(selectedValue);
@@ -13,16 +14,20 @@ export default function Register() {
     const { register: register2, handleSubmit: handleSubmit2 } = useForm()
     const { register: register3, handleSubmit: handleSubmit3 } = useForm()
 
-    const onSubmitNeighbor = (data) => {
-        console.log(data)
+    const onSubmitNeighbor = async (data) => {
+        const resp = await actions.registerNeighbor(data.email, data.password, data.name, data.lastname, data.floor)
+        console.log(resp)
     }
 
-    const onSubmitSeller = (data) => {
-        console.log(data)
+    const onSubmitSeller = async (data) => {
+        const resp = await actions.registerSeller(data.email, data.password, data.name, data.lastname, data.floor, data.shopName)
+        console.log(resp)
     }
 
-    const onSubmitAdmin = (data) => {
+    const onSubmitAdmin = async (data) => {
         console.log(data)
+        const resp = await actions.registerAdmin(data.email, data.password, data.name, data.lastname, data.floor, data.buildingName)
+        console.log(resp)
     }
     return (
         <div className='container-fluid w-50'>
@@ -30,37 +35,37 @@ export default function Register() {
             <div className='w-100 d-flex justify-content-center'>
                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input
-                        value="NEIGHBOR"
+                        value="Neighbor"
                         type="radio"
                         className="btn-check"
                         name="btnradio"
                         id="btnradio1"
                         autoComplete="off"
-                        checked={name === 'NEIGHBOR'}
+                        checked={name === 'Neighbor'}
                         onChange={handleTitle}
                     />
                     <label className="btn btn-outline-primary" htmlFor="btnradio1">Neighbor</label>
 
                     <input
-                        value="SELLER"
+                        value="Seller"
                         type="radio"
                         className="btn-check"
                         name="btnradio"
                         id="btnradio2"
                         autoComplete="off"
-                        checked={name === 'SELLER'}
+                        checked={name === 'Seller'}
                         onChange={handleTitle}
                     />
                     <label className="btn btn-outline-primary" htmlFor="btnradio2">Seller</label>
 
                     <input
-                        value="ADMINISTRATOR"
+                        value="Administrator"
                         type="radio"
                         className="btn-check"
                         name="btnradio"
                         id="btnradio3"
                         autoComplete="off"
-                        checked={name === 'ADMINISTRATOR'}
+                        checked={name === 'Administrator'}
                         onChange={handleTitle}
                     />
                     <label className="btn btn-outline-primary" htmlFor="btnradio3">Administration</label>
@@ -123,7 +128,7 @@ export default function Register() {
                 </form>
             )}
 
-            {name === 'Administration' && (
+            {name === 'Administrator' && (
                 <form className='mt-1' onSubmit={handleSubmit3(onSubmitAdmin)}>
                     <div className="mb-3">
                         <label htmlFor="adminName" className="form-label">Name</label>
@@ -147,7 +152,7 @@ export default function Register() {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="buildingName" className="form-label">Building name</label>
-                        <input type="text" {...register3("building")} className="form-control" id="buildingName" />
+                        <input type="text" {...register3("buildingName")} className="form-control" id="buildingName" />
                     </div>
                     <button type="submit" className="btn btn-primary">Create an account</button>
                 </form>

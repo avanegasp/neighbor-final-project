@@ -1,3 +1,5 @@
+import { faL } from "@fortawesome/free-solid-svg-icons";
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -242,16 +244,55 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error editing seller:", error.message);
         }
       },
-      registerNeighbor: async (email, password, name, lastname, floor, role, userType) => {
+      registerNeighbor: async (email, password, name, lastname, floor) => {
         try {
-          const response = await fetch(process.env.BACKEND_URL + "/api/",
-            {
-              method: "POST",
-              body
+          const response = await fetch(process.env.BACKEND_URL + `/api/neighbor/registers`, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
 
-            })
+            body: JSON.stringify({ email, password, name, lastname, floor }),
+          });
+          if (!response.ok) {
+            return false;
+          }
+          const data = await response.json();
+          return data;
         } catch (error) {
+          console.log(error);
+        }
+      },
+      registerSeller: async (email, password, name, lastname, floor, shopName) => {
+        try {
+          const response = await fetch(process.env.BACKEND_URL + `/api/seller/registers`, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
 
+            body: JSON.stringify({ email, password, name, lastname, floor, shopName }),
+          });
+          if (!response.ok) {
+            return false;
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      registerAdmin: async (email, password, name, lastname, floor, buildingName) => {
+        try {
+          const response = await fetch(process.env.BACKEND_URL + `/api/administrator/registers`, {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+
+            body: JSON.stringify({ email, password, name, lastname, floor, buildingName }),
+          });
+          if (!response.ok) {
+            return false;
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
         }
       }
     },
