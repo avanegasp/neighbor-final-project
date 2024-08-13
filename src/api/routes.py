@@ -299,3 +299,22 @@ def delete_business(seller_id,business_id):
     except Exception as error:
         return jsonify({"error": f"{error}"}), 500
 
+@api.route('/register/neihbor', methods=['PUT'])
+def register_neighbor(email,password,name,lastname,floor,role):
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("email", None)
+    name = body.get("email", None)
+    lastname = body.get("email", None)
+    floor = body.get("email", None)
+    role = body.get("role", None)
+
+    if email is None or password is None or name is None or lastname is None or floor is None or role is None:
+        return jsonify({"message": "Complete all the fields"}), 400
+    
+    email_exist = Neighbor.filter_by(email=email).first()
+
+    if email_exist:
+        return jsonify({"message": "you already have an account"})
+
+
