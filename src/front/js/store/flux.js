@@ -220,6 +220,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error editing seller:", error.message);
         }
       },
+      registerNeighbor: async (email, password, name, lastname, floor, role, userType) => {
+        try {
+          const response = await fetch(process.env.BACKEND_URL + "/api/",
+            {
+              method: "POST",
+              body
+
+            })
+        } catch (error) {
+
+        }
+      }
     },
   };
 };

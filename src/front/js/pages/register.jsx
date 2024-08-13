@@ -10,47 +10,57 @@ export default function Register() {
     };
 
     const { register, handleSubmit } = useForm();
-    const onSubmit = (data) => {
-        console.log(data.name)
+    const { register: register2, handleSubmit: handleSubmit2 } = useForm()
+    const { register: register3, handleSubmit: handleSubmit3 } = useForm()
+
+    const onSubmitNeighbor = (data) => {
+        console.log(data)
     }
 
+    const onSubmitSeller = (data) => {
+        console.log(data)
+    }
+
+    const onSubmitAdmin = (data) => {
+        console.log(data)
+    }
     return (
         <div className='container-fluid w-50'>
             <h1 className='text-center p-2'>Register {name} </h1>
             <div className='w-100 d-flex justify-content-center'>
                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input
-                        value="Neighbor"
+                        value="NEIGHBOR"
                         type="radio"
                         className="btn-check"
                         name="btnradio"
                         id="btnradio1"
                         autoComplete="off"
-                        checked={name === 'Neighbor'}
+                        checked={name === 'NEIGHBOR'}
                         onChange={handleTitle}
                     />
                     <label className="btn btn-outline-primary" htmlFor="btnradio1">Neighbor</label>
 
                     <input
-                        value="Seller"
+                        value="SELLER"
                         type="radio"
                         className="btn-check"
                         name="btnradio"
                         id="btnradio2"
                         autoComplete="off"
-                        checked={name === 'Seller'}
+                        checked={name === 'SELLER'}
                         onChange={handleTitle}
                     />
                     <label className="btn btn-outline-primary" htmlFor="btnradio2">Seller</label>
 
                     <input
-                        value="Administration"
+                        value="ADMINISTRATOR"
                         type="radio"
                         className="btn-check"
                         name="btnradio"
                         id="btnradio3"
                         autoComplete="off"
-                        checked={name === 'Administration'}
+                        checked={name === 'ADMINISTRATOR'}
                         onChange={handleTitle}
                     />
                     <label className="btn btn-outline-primary" htmlFor="btnradio3">Administration</label>
@@ -58,10 +68,14 @@ export default function Register() {
             </div>
 
             {name === 'Neighbor' && (
-                <form className='mt-1' onSubmit={handleSubmit(onSubmit)}>
+                <form className='mt-1' onSubmit={handleSubmit(onSubmitNeighbor)}>
                     <div className="mb-3">
-                        <label htmlFor="neighborName" className="form-label">Name | Lastname</label>
+                        <label htmlFor="neighborName" className="form-label">Name</label>
                         <input type="text" {...register("name")} className="form-control" id="neighborName" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="neighborLastname" className="form-label">Last Name</label>
+                        <input type="text" {...register("lastname")} className="form-control" id="neighborLastName" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="neighborEmail" className="form-label">Email address</label>
@@ -80,52 +94,60 @@ export default function Register() {
             )}
 
             {name === 'Seller' && (
-                <form className='mt-1' onSubmit={Submit}>
+                <form className='mt-1' onSubmit={handleSubmit2(onSubmitSeller)}>
                     <div className="mb-3">
-                        <label htmlFor="sellerName" className="form-label">Name | Lastname</label>
-                        <input type="text" className="form-control" id="sellerName" />
+                        <label htmlFor="sellerName" className="form-label">Name</label>
+                        <input type="text" {...register2("name")} className="form-control" id="sellerName" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="sellerName" className="form-label">Last Name</label>
+                        <input type="text" {...register2("lastname")} className="form-control" id="sellerLastName" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="sellerEmail" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="sellerEmail" aria-describedby="emailHelp" />
+                        <input type="email" {...register2("email")} className="form-control" id="sellerEmail" aria-describedby="emailHelp" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="sellerPassword" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="sellerPassword" />
+                        <input type="password" {...register2("password")} className="form-control" id="sellerPassword" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="sellerFloor" className="form-label">Floor</label>
-                        <input type="text" className="form-control" id="sellerFloor" />
+                        <input type="text" {...register2("floor")} className="form-control" id="sellerFloor" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="shopName" className="form-label">Shop name</label>
-                        <input type="text" className="form-control" id="shopName" />
+                        <input type="text" {...register2("shopName")} className="form-control" id="shopName" />
                     </div>
                     <button type="submit" className="btn btn-primary">Create an account</button>
                 </form>
             )}
 
             {name === 'Administration' && (
-                <form className='mt-1' onSubmit={Submit}>
+                <form className='mt-1' onSubmit={handleSubmit3(onSubmitAdmin)}>
                     <div className="mb-3">
-                        <label htmlFor="adminName" className="form-label">Name | Lastname</label>
-                        <input type="text" className="form-control" id="adminName" />
+                        <label htmlFor="adminName" className="form-label">Name</label>
+                        <input type="text" {...register3("name")} className="form-control" id="adminName" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="adminLastname" className="form-label">Last Name</label>
+                        <input type="text" {...register3("lastname")} className="form-control" id="adminLastName" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="adminEmail" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="adminEmail" aria-describedby="emailHelp" />
+                        <input type="email" {...register3("email")} className="form-control" id="adminEmail" aria-describedby="emailHelp" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="adminPassword" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="adminPassword" />
+                        <input type="password" {...register3("password")} className="form-control" id="adminPassword" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="adminFloor" className="form-label">Floor</label>
-                        <input type="text" className="form-control" id="adminFloor" />
+                        <input type="text" {...register3("floor")} className="form-control" id="adminFloor" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="buildingName" className="form-label">Building name</label>
-                        <input type="text" className="form-control" id="buildingName" />
+                        <input type="text" {...register3("building")} className="form-control" id="buildingName" />
                     </div>
                     <button type="submit" className="btn btn-primary">Create an account</button>
                 </form>
