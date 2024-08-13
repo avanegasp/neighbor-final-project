@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../../store/appContext.js";
 import EditProfileDetails from "../../component/editProfileDetails/EditProfileDetails.jsx";
 
 const ProfileEditNeighbor = () => {
+  const { store } = useContext(Context)
   return (
-    <div className="container d-flex flex-column min-vh-100">
-      <div>
-        <h1>Editar perfil Vecinos</h1>
-      </div>
-      <div>
-        <EditProfileDetails />
+    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+      <div className="col-10 text-center">
+        <EditProfileDetails
+          name={store.neighbor.name}
+          lastname={store.neighbor.lastname}
+          floor={store.neighbor.floor}
+          email={store.neighbor.email}
+          id={store.neighbor.id}
+          role="NEIGHBOR"
+        />
       </div>
     </div>
   );

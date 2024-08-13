@@ -11,7 +11,7 @@ const ProfileNeighbor = () => {
   console.log("here", id);
 
   useEffect(() => {
-    console.log("PARAMS...", id);
+    // console.log("PARAMS...", id);
     actions.getProfileNeighbor(id);
   }, [id]);
 
@@ -24,9 +24,9 @@ const ProfileNeighbor = () => {
         className="d-flex justify-content-center align-items-start"
         style={{ minHeight: "80vh" }}
       >
-        <div className="row w-100 border border-1 border-dark">
+        <div className="row w-100 border border-1 border-dark bg-white">
           <div className="col-md-4 ms-4">
-            <div className="card mt-5">
+            <div className="card mt-5 w-50">
               <img
                 src="https://picsum.photos/200"
                 className="card-img-top"
@@ -51,6 +51,7 @@ const ProfileNeighbor = () => {
               nameProfile={store.neighbor.name}
               lastname={store.neighbor.lastname}
               floor={store.neighbor.floor}
+              email={store.neighbor.email}
             />
           </div>
           <div className="mt-auto text-end mb-5">

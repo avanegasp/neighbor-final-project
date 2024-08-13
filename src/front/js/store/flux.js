@@ -2,43 +2,39 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       // message: null,
-      neighbor: null,
-      seller: null,
-      admin: null,
+      neighbor: {},
+      seller: {},
+      admin: {},
       users: null,
+      favorites: []
     },
     actions: {
+      addToFavorite: (id, name, role) => {
+        const store = getStore();
+        const isFavoriteExist = store.favorites.some(
+          (favorite) => favorite.id === id && favorite.role === role
+        );
+        if (!isFavoriteExist) {
+          setStore({
+            favorites: [...store.favorites, { id, name, role }],
+          });
+        }
+      },
+
+
+      removeToFavorite: (id) => {
+        const store = getStore();
+        const filteredFavorite = store.favorites.filter(
+          (favorite) => favorite.name !== id
+        );
+        setStore({ favorites: filteredFavorite });
+      },
+
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
       },
 
-      // getMessage: async () => {
-      //   try {
-      //     // fetching data from the backend
-      //     const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-      //     const data = await resp.json();
-      //     setStore({ message: data.message });
-      //     // don't forget to return something, that is how the async resolves
-      //     return data;
-      //   } catch (error) {
-      //     console.log("Error loading message from backend", error);
-      //   }
-      // },
-      // changeColor: (index, color) => {
-      //   //get the store
-      //   const store = getStore();
-
-      //   //we have to loop the entire demo array to look for the respective index
-      //   //and change its color
-      //   const demo = store.demo.map((elm, i) => {
-      //     if (i === index) elm.background = color;
-      //     return elm;
-      //   });
-
-      //   //reset the global store
-      //   setStore({ demo: demo });
-      // },
       login: async (email, password, userType) => {
         try {
           const response = await fetch(process.env.BACKEND_URL + "/api/login", {
@@ -58,98 +54,192 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileNeighbor: async (id) => {
-        if (!id) {
-          // console.error("Id is undefined");
-          return;
-        }
-
-        // console.log("Id desde flux", id);
+        console.log("HEREEEE PROFILE", id);
+        if (!id) return;
 
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/neighbor/${id}`
+            `${process.env.BACKEND_URL}/api/neighbor/${id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
           );
-          // console.log("Ruta neighbor", response);
-          if (!response.ok) return false;
+
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
 
           const data = await response.json();
-          console.log("Esto es data de neighbor", data);
-          if (data.error) {
-            console.error(data.error);
-          } else {
-            setStore({
-              neighbor: data,
-            });
-          }
+          setStore({ neighbor: data });
         } catch (error) {
-          console.error("Error fetching neighbor:", error);
+          console.error("Error fetching neighbor:", error.message);
         }
       },
 
       getProfileSeller: async (id) => {
-        if (!id) {
-          console.error("Id es undefined en seller flux", id);
-          return;
-        }
+        if (!id) return;
+
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/seller/${id}`
+            `${process.env.BACKEND_URL}/api/seller/${id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
           );
-          if (!response.ok) return false;
+
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
 
           const data = await response.json();
-          console.log("Data seller flux", data);
-          if (data.error) {
-            console.error(data.error);
-          } else {
-            setStore({
-              seller: data,
-            });
-          }
+          setStore({ seller: data });
         } catch (error) {
-          console.error("Error fetching seller:", error);
+          console.error("Error fetching seller:", error.message);
         }
       },
+
       getProfileAdmin: async (id) => {
-        if (!id) {
-          console.error("id es undefined Seller flux", id);
-          return;
-        }
+        if (!id) return;
+
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/administrator/${id}`
+            `${process.env.BACKEND_URL}/api/administrator/${id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
           );
-          if (!response.ok) return false;
+
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
 
           const data = await response.json();
-          console.log("Data admin flux", data);
-          if (data.error) {
-            console.error(data.error);
-          } else {
-            setStore({
-              admin: data,
-            });
-          }
+          setStore({ admin: data });
         } catch (error) {
-          console.error("Error fetching admin:", error);
+          console.error("Error fetching admin:", error.message);
         }
       },
 
       getAllDirectory: async () => {
         try {
-          const response = await fetch("http://localhost:3001/api/directory", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/directory`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
           if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
           }
+
           const data = await response.json();
           setStore({ users: data });
         } catch (error) {
-          console.error("Error fetching data:", error);
+          console.error("Error fetching directory:", error.message);
+        }
+      },
+      editNeighbor: async (id, fields) => {
+        const actions = getActions();
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/editNeighbor/${id}`,
+            {
+              method: "PUT",
+              body: JSON.stringify({
+                name: fields.name,
+                lastname: fields.lastname,
+                floor: fields.floor,
+                email: fields.email,
+              }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+          const data = await response.json();
+          console.log("DATAAAA", data);
+          actions.getProfileNeighbor(id);
+        } catch (error) {
+          console.error("Error editing neighbor:", error.message);
+        }
+      },
+      editSeller: async (id, fields) => {
+        const actions = getActions();
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/editSeller/${id}`,
+            {
+              method: "PUT",
+              body: JSON.stringify({
+                name: fields.name,
+                lastname: fields.lastname,
+                floor: fields.floor,
+                email: fields.email,
+                shopName: fields.shopName,
+              }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+          const data = await response.json();
+          actions.getProfileSeller(id);
+        } catch (error) {
+          console.error("Error editing seller:", error.message);
+        }
+      },
+      editAdmin: async (id, fields) => {
+        const actions = getActions();
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/editAdministrator/${id}`,
+            {
+              method: "PUT",
+              body: JSON.stringify({
+                name: fields.name,
+                lastname: fields.lastname,
+                floor: fields.floor,
+                email: fields.email,
+                buildingName: fields.buildingName,
+              }),
+              headers: {
+                "Content-type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+          const data = await response.json();
+          actions.getProfileSeller(id);
+        } catch (error) {
+          console.error("Error editing seller:", error.message);
         }
       },
     },

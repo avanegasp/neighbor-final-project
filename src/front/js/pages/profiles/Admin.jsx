@@ -21,9 +21,9 @@ const ProfileAdmin = () => {
         className="d-flex justify-content-center align-items-start"
         style={{ minHeight: "80vh" }}
       >
-        <div className="row w-100 border border-1 border-dark">
+        <div className="row w-100 border border-1 border-dark bg-white">
           <div className="col-md-4 ms-4">
-            <div className="card mt-5 mb-5">
+            <div className="card mt-5 mb-5 w-50">
               <img
                 src="https://picsum.photos/200"
                 className="card-img-top"
@@ -48,17 +48,18 @@ const ProfileAdmin = () => {
               nameProfile={store.admin.name}
               lastname={store.admin.lastname}
               floor={store.admin.floor}
-              buldingname={store.admin.buldingname}
+              buildingName={store.admin.buildingName}
+              email={store.admin.email}
             />
           </div>
           <div className="mt-auto text-end mb-5">
-            <Link to={"/profileEditAdminr"} className="btn btn-success me-5">
+            <Link to={"/profileEditAdmin"} className="btn btn-success me-5">
               Editar información
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
