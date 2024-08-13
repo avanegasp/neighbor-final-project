@@ -32,7 +32,7 @@ export default function Register() {
     }
     return (
         <div className='container-fluid w-50'>
-            <h1 className='text-center p-2'>Register {name} </h1>
+            <h1 className='text-center p-2'>Registro {name} </h1>
             <div className='w-100 d-flex justify-content-center'>
                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input
@@ -88,12 +88,12 @@ export default function Register() {
                         <input type="email" {...register("email")} className="form-control" id="neighborEmail" aria-describedby="emailHelp" />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="neighborPassword" className="form-label">Password</label>
-                        <input type="password" {...register("password")} className="form-control" id="neighborPassword" />
-                    </div>
-                    <div className="mb-3">
                         <label htmlFor="neighborFloor" className="form-label">Floor</label>
                         <input type="text" {...register("floor")} className="form-control" id="neighborFloor" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="neighborPassword" className="form-label">Password</label>
+                        <input type="password" {...register("password")} className="form-control" id="neighborPassword" />
                     </div>
                     <button type="submit" className="btn btn-primary">Create an account</button>
                 </form>
@@ -114,20 +114,20 @@ export default function Register() {
                         <input type="email" {...register2("email")} className="form-control" id="sellerEmail" aria-describedby="emailHelp" />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="sellerPassword" className="form-label">Password</label>
-                        <input type="password" {...register2("password")} className="form-control" id="sellerPassword" />
-                    </div>
-                    <div className="mb-3">
                         <label htmlFor="sellerFloor" className="form-label">Floor</label>
                         <input type="text" {...register2("floor")} className="form-control" id="sellerFloor" />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="shopName" className="form-label">Teléfono</label>
+                        <label htmlFor="shopName" className="form-label">Teléfono(+)</label>
                         <input type="text" {...register2("phone")} className="form-control" id="phone" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="shopName" className="form-label">Shop name</label>
                         <input type="text" {...register2("shopName")} className="form-control" id="shopName" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="sellerPassword" className="form-label">Password</label>
+                        <input type="password" {...register2("password")} className="form-control" id="sellerPassword" />
                     </div>
                     <button type="submit" className="btn btn-primary">Create an account</button>
                 </form>
@@ -148,16 +148,16 @@ export default function Register() {
                         <input type="email" {...register3("email")} className="form-control" id="adminEmail" aria-describedby="emailHelp" />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="adminPassword" className="form-label">Password</label>
-                        <input type="password" {...register3("password")} className="form-control" id="adminPassword" />
-                    </div>
-                    <div className="mb-3">
                         <label htmlFor="adminFloor" className="form-label">Floor</label>
                         <input type="text" {...register3("floor")} className="form-control" id="adminFloor" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="buildingName" className="form-label">Building name</label>
                         <input type="text" {...register3("buildingName")} className="form-control" id="buildingName" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="adminPassword" className="form-label">Password</label>
+                        <input type="password" {...register3("password")} className="form-control" id="adminPassword" />
                     </div>
                     <button type="submit" className="btn btn-primary">Create an account</button>
                 </form>

@@ -108,7 +108,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
         phone ? (
           <div className="mb-3">
             <label htmlFor="phone" className="form-label fs-3">
-              Teléfono
+              Teléfono (+)
             </label>
             <input
               name="phone"
