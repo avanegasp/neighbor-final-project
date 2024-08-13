@@ -6,8 +6,12 @@ const PersonalProfileDetails = ({
   floor,
   shopName,
   buildingName,
-  email
+  email,
+  phone
 }) => {
+
+  const whatsappLink = phone ? `https://wa.me/${phone}` : null;
+
   return (
     <div className="mt-5">
       <p className="fs-4">
@@ -23,6 +27,16 @@ const PersonalProfileDetails = ({
       <p className="fs-4">
         <strong>Correo:</strong> {email}
       </p>
+      {
+        phone ? (
+          <p className="fs-4">
+            <strong>Teléfono:</strong> {" "}
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              {phone}
+            </a>
+          </p>
+        ) : null
+      }
       {shopName ? (
         <p className="fs-4">
           <strong>Emprendimiento:</strong> {shopName}

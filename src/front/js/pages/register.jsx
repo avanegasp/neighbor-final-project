@@ -22,7 +22,7 @@ export default function Register() {
     }
 
     const onSubmitSeller = async (data) => {
-        const resp = await actions.registerSeller(data.email, data.password, data.name, data.lastname, data.floor, data.shopName)
+        const resp = await actions.registerSeller(data.email, data.password, data.name, data.lastname, data.floor, data.phone, data.shopName)
         console.log(resp)
     }
 
@@ -120,6 +120,10 @@ export default function Register() {
                     <div className="mb-3">
                         <label htmlFor="sellerFloor" className="form-label">Floor</label>
                         <input type="text" {...register2("floor")} className="form-control" id="sellerFloor" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="shopName" className="form-label">Teléfono</label>
+                        <input type="text" {...register2("phone")} className="form-control" id="phone" />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="shopName" className="form-label">Shop name</label>

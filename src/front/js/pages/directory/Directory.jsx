@@ -84,6 +84,7 @@ const Directory = () => {
                   floor={user.floor}
                   shopName={user.shopName}
                   email={user.email}
+                  phone={user.phone}
                   id={user.id}
                 />
               </div>

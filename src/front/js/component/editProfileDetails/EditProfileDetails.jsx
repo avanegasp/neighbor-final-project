@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName = "", shopName = "", email = "", id, role = "" }) => {
+const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName = "", shopName = "", email = "", id, role = "", phone = "" }) => {
 
   const { actions } = useContext(Context)
 
@@ -11,7 +11,8 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
     floor,
     email,
     buildingName,
-    shopName
+    shopName,
+    phone
   })
 
   const navigate = useNavigate()
@@ -103,6 +104,23 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
             value={profile.shopName} />
         </div>
       ) : null}
+      {
+        phone ? (
+          <div className="mb-3">
+            <label htmlFor="phone" className="form-label fs-3">
+              Teléfono
+            </label>
+            <input
+              name="phone"
+              onChange={handleChange}
+              type="text"
+              className="form-control"
+              placeholder="phone"
+              value={profile.phone} />
+          </div>
+        ) : null
+      }
+
       {buildingName ? (
         <div className="mb-3">
           <label htmlFor="buildingName" className="form-label fs-3">
