@@ -31,7 +31,7 @@ const PersonalProfileDetails = ({
       {
         phone ? (
           <p className="fs-4">
-            <strong>Teléfono (+) :</strong> {" "}
+            <strong>Whatsapp (+) :</strong> {" "}
             {isValidPhone ? (
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 {phone}

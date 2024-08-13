@@ -118,7 +118,7 @@ export default function Register() {
                         <input type="text" {...register2("floor")} className="form-control" id="sellerFloor" />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="shopName" className="form-label">Teléfono(+)</label>
+                        <label htmlFor="shopName" className="form-label">Whatsapp(+)</label>
                         <input type="text" {...register2("phone")} className="form-control" id="phone" />
                     </div>
                     <div className="mb-3">
