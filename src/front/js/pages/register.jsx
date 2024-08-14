@@ -2,7 +2,9 @@ import React, { act, useContext, useState } from 'react';
 import { Context } from "../store/appContext";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import "../../styles/inputPhone.css";
 export default function Register() {
     const [name, setName] = useState("Neighbor");
     const { store, actions } = useContext(Context)
@@ -118,8 +120,17 @@ export default function Register() {
                         <input type="text" {...register2("floor")} className="form-control" id="sellerFloor" />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="shopName" className="form-label">Whatsapp(+)</label>
-                        <input type="text" {...register2("phone")} className="form-control" id="phone" />
+                        <label htmlFor="phone" className="form-label">Whatsapp</label>
+                        <PhoneInput
+                            onChange={(phone) => register2('phone').onChange({ target: { value: phone } })}
+                            inputProps={{
+                                name: 'phone',
+                                required: true,
+                                autoFocus: true
+                            }}
+                            containerClass="form-control p-0 phone-input"
+                            inputClass="form-control w-100"
+                        />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="shopName" className="form-label">Shop name</label>

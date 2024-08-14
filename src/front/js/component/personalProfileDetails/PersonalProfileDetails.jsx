@@ -31,14 +31,14 @@ const PersonalProfileDetails = ({
       {
         phone ? (
           <p className="fs-4">
-            <strong>Whatsapp (+) :</strong> {" "}
+            <strong>Whatsapp:</strong> {" "}
             {isValidPhone ? (
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 {phone}
               </a>
 
             ) : (
-              <span>{phone} (Falta el + )</span>
+              <span>{phone} (Revisa el # )</span>
             )
             }
           </p>
