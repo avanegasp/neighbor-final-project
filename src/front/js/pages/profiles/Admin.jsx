@@ -4,6 +4,7 @@ import { Context } from "../../store/appContext.js";
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
 
+
 const ProfileAdmin = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
@@ -37,9 +38,9 @@ const ProfileAdmin = () => {
                     <li>Harry Potter</li>
                   </p>
                 </ol>
-                <a href="#" className="btn btn-secondary mt-4">
+                <Link to={"/recommendationAdmin"} className="btn btn-secondary mt-4">
                   Do a recommendation!
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -544,12 +544,12 @@ def neighbor_create_reco(neighbor_id):
         if missing_fields:
             return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
         
-        recommendation_exists = Neighbor.query.filter_by(name=name, lastname=lastname, neighbor_id=neighbor_id).first()
+        recommendation_exists = Recommendation.query.filter_by(name=name, lastname=lastname, neighbor_id=neighbor_id).first()
         if recommendation_exists:
-            return jsonify({"error": f"Neighbor for {name} {lastname} already exists!"}), 400
+            return jsonify({"error": f"Recommendation for {name} {lastname} already exists!"}), 400
         
 
-        recommendation = Neighbor(
+        recommendation = Recommendation(
             name=name, 
             lastname=lastname, 
             phone=phone, 
@@ -560,7 +560,7 @@ def neighbor_create_reco(neighbor_id):
         db.session.add(recommendation)
         db.session.commit()
 
-        return jsonify({"message": f"Neighbor for {recommendation.shopName} created!"}), 201
+        return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
     
     except Exception as error:
         db.session.rollback()
@@ -606,10 +606,10 @@ def seller_create_reco(seller_id):
         db.session.rollback()
         return jsonify({"error": f"{error}"}), 500
 
-@api.route('/admin/<int:admin_id>/createReco', methods=['POST'])
-def admin_create_reco(admin_id):
+@api.route('/administrator/<int:administrator_id>/createReco', methods=['POST'])
+def admin_create_reco(administrator_id):
     try:
-        administrator = Administrator.query.get(admin_id)
+        administrator = Administrator.query.get(administrator_id)
         if not administrator:
             return jsonify({"error": "Admin not found!"}), 404
 
@@ -624,23 +624,24 @@ def admin_create_reco(admin_id):
         if missing_fields:
             return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
         
-        recommendation_exists = Administrator.query.filter_by(name=name, lastname=lastname, admin_id=admin_id).first()
+        recommendation_exists = Recommendation.query.filter_by(name=name, lastname=lastname, administrator_id=administrator_id).first()
         if recommendation_exists:
-            return jsonify({"error": f"Administrator for {name} {lastname} already exists!"}), 400
+            return jsonify({"error": f"Recommendation for {name} {lastname} already exists!"}), 400
         
 
-        recommendation = Administrator(
+        recommendation = Recommendation(
             name=name, 
             lastname=lastname, 
             phone=phone, 
             shopName=shopName, 
-            admin_id=admin_id
+            administrator_id=administrator_id
         )
 
         db.session.add(recommendation)
         db.session.commit()
 
-        return jsonify({"message": f"Administrator for {recommendation.shopName} created!"}), 201
+        return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
+
     
     except Exception as error:
         db.session.rollback()
