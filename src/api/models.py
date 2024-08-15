@@ -37,7 +37,6 @@ class Neighbor(db.Model):
             "name": self.name,
             "lastname": self.lastname,
             "floor": self.floor,
-            "phone": self.phone,
             "role": self.role,
             # do not serialize the password, its a security breach
         }
@@ -97,7 +96,6 @@ class Administrator(db.Model):
             "floor": self.floor,
             "buildingName": self.buildingName,
             "role": self.role,
-            "phone": self.phone,
             'buildings': [building.serialize() for building in self.buildings],
             # do not serialize the password, its a security breach
         }
