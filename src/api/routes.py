@@ -16,85 +16,7 @@ CORS(api)
 
 logging.basicConfig(level=logging.ERROR)
 
-    #registro de vecino
-    
-
-@api.route('/neighbor/registers', methods=['POST'])
-def add_neighbor():
-    body = request.json
-    email = body.get("email", None)
-    password = body.get("password", None)
-    name = body.get("name",None)
-    lastname = body.get("lastname", None)
-    floor = body.get("floor",None)
-    #if not re.match(email_regex, email):
-       # return jsonify({"error": "El formato del email no es válido"}), 400
-    if email is None or password is None or name is None or lastname is None or floor is None :
-        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
-    password_hash = generate_password_hash(password)
-    if Neighbor.query.filter_by(email = email).first() is not None:
-        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
-    try: 
-        new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
-    except Exception as error:
-        db.session.rollback() 
-        return jsonify({"error": f"{error}"}), 500  
-
-#registro seller
-
-@api.route('/seller/registers', methods=['POST'])
-def add_seller():
-
-    body = request.json
-    email = body.get("email", None)
-    password = body.get("password", None)
-    name = body.get("name",None)
-    lastname = body.get("lastname", None)
-    floor = body.get("floor",None)
-    shopName = body.get("shopName",None)
-    if email is None or password is None or name is None or lastname is None or floor is None or shopName is None:
-        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
-    password_hash = generate_password_hash(password)
-    if Seller.query.filter_by(email = email).first() is not None:
-        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
-    try: 
-        new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, shopName = shopName)
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify({"mensaje": "Seller creado exitosamente"}), 201
-    except Exception as error:
-        db.session.rollback() 
-        return jsonify({"error": f"{error}"}), 500 
-
-    # registro administrador    
-
-
-@api.route('/administrator/registers', methods=['POST'])
-def add_administrator():
-    body = request.json
-    email = body.get("email", None)
-    password = body.get("password", None)
-    name = body.get("name",None)
-    lastname = body.get("lastname", None)
-    floor = body.get("floor",None)
-    buildingName = body.get("buildingName",None)
-    if email is None or password is None  or name is None or lastname is None or floor is None or buildingName is None:
-        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
-    password_hash = generate_password_hash(password)
-    if Administrator.query.filter_by(email = email).first() is not None:
-        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
-    try: 
-        new_user = Administrator(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, buildingName = buildingName)
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
-    except Exception as error:
-        db.session.rollback() 
-        return jsonify({"error": f"{error}"}), 500                   
-
+#login
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -135,6 +57,85 @@ def login():
 
     except Exception as error:
         return jsonify({"error": f"{error}"}), 500
+
+
+#registro de vecino
+@api.route('/neighbor/registers', methods=['POST'])
+def add_neighbor():
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastname = body.get("lastname", None)
+    floor = body.get("floor",None)
+    #if not re.match(email_regex, email):
+       # return jsonify({"error": "El formato del email no es válido"}), 400
+    if email is None or password is None or name is None or lastname is None or floor is None :
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if Neighbor.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500  
+
+#registro seller
+
+@api.route('/seller/registers', methods=['POST'])
+def add_seller():
+
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastname = body.get("lastname", None)
+    floor = body.get("floor",None)
+    shopName = body.get("shopName",None)
+    phone = body.get("phone", None)
+    if email is None or password is None or name is None or lastname is None or floor is None or shopName is None or phone is None:
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if Seller.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, phone = phone, shopName = shopName)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Seller creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500 
+
+    # registro administrador    
+
+
+@api.route('/administrator/registers', methods=['POST'])
+def add_administrator():
+    body = request.json
+    email = body.get("email", None)
+    password = body.get("password", None)
+    name = body.get("name",None)
+    lastname = body.get("lastname", None)
+    floor = body.get("floor",None)
+    buildingName = body.get("buildingName",None)
+    if email is None or password is None  or name is None or lastname is None or floor is None or buildingName is None:
+        return jsonify({"error": "Todos los campos deben ser llenados"}), 400
+    password_hash = generate_password_hash(password)
+    if Administrator.query.filter_by(email = email).first() is not None:
+        return jsonify({"error": "Email ya esta siendo utilizado"}), 400
+    try: 
+        new_user = Administrator(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, buildingName = buildingName)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
+    except Exception as error:
+        db.session.rollback() 
+        return jsonify({"error": f"{error}"}), 500                   
 
 #Vecinos
 
@@ -225,7 +226,8 @@ def get_all_users_directory():
     except Exception as e:
         logging.error(f"Error retrieving directory: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
-    
+
+#edit    
 @api.route('/editNeighbor/<int:id>', methods=['PUT'])
 def edit_neighbor(id):
     body = request.json
@@ -275,12 +277,14 @@ def edit_seller(id):
     lastname = body.get("lastname", None)
     floor = body.get("floor", None)
     email = body.get("email", None)
+    phone = body.get("phone", None)
     shopName = body.get("shopName", None)
 
     seller.name = name
     seller.lastname = lastname
     seller.floor = floor
     seller.email = email
+    seller.phone = phone
     seller.shopName = shopName
 
     try:

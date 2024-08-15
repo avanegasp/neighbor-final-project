@@ -36,6 +36,7 @@ class Neighbor(db.Model):
             "name": self.name,
             "lastname": self.lastname,
             "floor": self.floor,
+            "phone": self.phone,
             "role": self.role,
             "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
             # do not serialize the password, its a security breach
@@ -49,6 +50,7 @@ class Seller(db.Model):
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     shopName= db.Column(db.String(80), unique=False, nullable=False)
+    phone= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
 
     products = db.relationship('Product', backref='seller')
@@ -66,6 +68,7 @@ class Seller(db.Model):
             "lastname": self.lastname,
             "floor": self.floor,
             "shopName": self.shopName,
+            "phone": self.phone,
             "role": self.role,
             "orders": [order.serialize() for order in self.orders],
             "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
@@ -97,6 +100,7 @@ class Administrator(db.Model):
             "floor": self.floor,
             "buildingName": self.buildingName,
             "role": self.role,
+            "phone": self.phone,
             'buildings': [building.serialize() for building in self.buildings],
             "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
             # do not serialize the password, its a security breach

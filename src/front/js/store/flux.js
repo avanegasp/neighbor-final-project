@@ -198,6 +198,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 lastname: fields.lastname,
                 floor: fields.floor,
                 email: fields.email,
+                phone: fields.phone,
                 shopName: fields.shopName,
               }),
               headers: {
@@ -261,13 +262,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
-      registerSeller: async (email, password, name, lastname, floor, shopName) => {
+      registerSeller: async (email, password, name, lastname, floor, phone, shopName) => {
         try {
           const response = await fetch(process.env.BACKEND_URL + `/api/seller/registers`, {
             method: "POST",
             headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({ email, password, name, lastname, floor, shopName }),
+            body: JSON.stringify({ email, password, name, lastname, floor, phone, shopName }),
           });
           if (!response.ok) {
             return false;
