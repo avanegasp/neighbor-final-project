@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../../store/appContext.js";
 import { useNavigate } from "react-router-dom";
+import PhoneInput from 'react-phone-input-2';
+import "../../../styles/inputPhone.css";
 const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName = "", shopName = "", email = "", id, role = "", phone = "" }) => {
 
   const { actions } = useContext(Context)
@@ -108,18 +110,30 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
         phone ? (
           <div className="mb-3">
             <label htmlFor="phone" className="form-label fs-3">
-              Whatsapp (+)
+              Whatsapp
             </label>
-            <input
-              name="phone"
-              onChange={handleChange}
-              type="text"
-              className="form-control"
-              placeholder="phone"
-              value={profile.phone} />
+            <PhoneInput
+              country={'us'}
+              value={profile.phone}
+              onChange={(phone) => {
+                setProfile((prevProfile) => ({
+                  ...prevProfile,
+                  phone: phone
+                }));
+              }}
+              inputProps={{
+                name: 'phone',
+                required: true,
+                autoFocus: true
+              }}
+              containerClass="form-control p-0 phone-input"
+              inputClass="form-control w-100"
+            />
           </div>
         ) : null
       }
+
+
 
       {buildingName ? (
         <div className="mb-3">

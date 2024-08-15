@@ -10,7 +10,7 @@ const PersonalProfileDetails = ({
   phone
 }) => {
 
-  const isValidPhone = phone && /^\+[1-9]\d{1,14}$/.test(phone);
+  // const isValidPhone = phone && /^\+[1-9]\d{1,14}$/.test(phone);
   const whatsappLink = phone ? `https://wa.me/${phone}` : null;
 
   return (
@@ -31,16 +31,10 @@ const PersonalProfileDetails = ({
       {
         phone ? (
           <p className="fs-4">
-            <strong>Whatsapp (+) :</strong> {" "}
-            {isValidPhone ? (
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                {phone}
-              </a>
-
-            ) : (
-              <span>{phone} (Falta el + )</span>
-            )
-            }
+            <strong>Whatsapp:</strong> {" "}
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              {phone}
+            </a>
           </p>
         ) : null
       }
