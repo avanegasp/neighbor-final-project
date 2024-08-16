@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext.js";
 import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
-import ModalBodyRecommendation from "../../component/modalRecommendations/ModalBody.jsx";
+import ModalBodyRecommendation from "../../component/modalRecommendationsProfile/ModalBody.jsx";
 const Directory = () => {
   const { store, actions } = useContext(Context);
 
@@ -111,10 +111,6 @@ const Directory = () => {
           })}
         </div>
       </div>
-
-      <footer className="bg-dark text-white text-center py-3">
-        <p>Footer Content Here</p>
-      </footer>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext.js";
 import TagRol from "../tagRol/TagRol.jsx";
 import PersonalProfileDetails from "../personalProfileDetails/PersonalProfileDetails.jsx";
-import ModalButtonRecommendation from "../modalRecommendations/ModalButton.jsx";
+import ModalButtonRecommendation from "../modalRecommendationsProfile/ModalButton.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 

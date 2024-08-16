@@ -15,7 +15,7 @@ import ProfileEditSeller from "./pages/editProfiles/Seller.jsx";
 
 import Directory from "./pages/directory/Directory.jsx";
 
-import Recommendation_Admin from "./pages/recommendations/Admin.jsx";
+import Recommendations from "./pages/recommendations/Recommendations.jsx";
 
 import Login from "./pages/Login.jsx";
 import Register from "./pages/register.jsx";
@@ -49,7 +49,7 @@ const Layout = () => {
               path="/profileEditNeighbor" />
             <Route element={<ProfileEditSeller />} path="/profileEditSeller" />
             <Route element={<ProfileEditAdmin />} path="/profileEditAdmin" />
-            <Route element={<Recommendation_Admin />} path="/recommendationAdmin" />
+            <Route element={<Recommendations />} path="/recommendations" />
             <Route element={<Login />} path="/login" />
             <Route element={<Directory />} path="/directory" />
             <Route element={<Register />} path="/register" />
