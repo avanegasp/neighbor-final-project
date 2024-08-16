@@ -8,7 +8,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       seller: {},
       admin: {},
       users: null,
-      favorites: []
+      favorites: [],
+      business: [],
+      shop: {},
     },
     actions: {
       addToFavorite: (id, name, role) => {
@@ -23,7 +25,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-
       removeToFavorite: (id) => {
         const store = getStore();
         const filteredFavorite = store.favorites.filter(
@@ -37,18 +38,19 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, "green");
       },
 
-      login: async (email, password, userType) => {
+      login: async (email, password, userType, id) => {
         try {
           const response = await fetch(process.env.BACKEND_URL + "/api/login", {
             method: "POST",
             headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({ email, password, userType }),
+            body: JSON.stringify({ email, password, userType, id}),
           });
           if (!response.ok) {
             return false;
           }
           const data = response.json();
+          console.log(data);
           return data;
         } catch (error) {
           console.log(error);
@@ -83,6 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileSeller: async (id) => {
+        console.log("HEREEEE PROFILE", id);
         if (!id) return;
 
         try {
@@ -246,12 +249,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       registerNeighbor: async (email, password, name, lastname, floor) => {
         try {
-          const response = await fetch(process.env.BACKEND_URL + `/api/neighbor/registers`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
+          const response = await fetch(
+            process.env.BACKEND_URL + `/api/neighbor/registers`,
+            {
+              method: "POST",
+              headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({ email, password, name, lastname, floor }),
-          });
+              body: JSON.stringify({ email, password, name, lastname, floor }),
+            }
+          );
           if (!response.ok) {
             return false;
           }
@@ -261,14 +267,31 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
-      registerSeller: async (email, password, name, lastname, floor, shopName) => {
+      registerSeller: async (
+        email,
+        password,
+        name,
+        lastname,
+        floor,
+        shopName
+      ) => {
         try {
-          const response = await fetch(process.env.BACKEND_URL + `/api/seller/registers`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
+          const response = await fetch(
+            process.env.BACKEND_URL + `/api/seller/registers`,
+            {
+              method: "POST",
+              headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({ email, password, name, lastname, floor, shopName }),
-          });
+              body: JSON.stringify({
+                email,
+                password,
+                name,
+                lastname,
+                floor,
+                shopName,
+              }),
+            }
+          );
           if (!response.ok) {
             return false;
           }
@@ -278,14 +301,31 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
-      registerAdmin: async (email, password, name, lastname, floor, buildingName) => {
+      registerAdmin: async (
+        email,
+        password,
+        name,
+        lastname,
+        floor,
+        buildingName
+      ) => {
         try {
-          const response = await fetch(process.env.BACKEND_URL + `/api/administrator/registers`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
+          const response = await fetch(
+            process.env.BACKEND_URL + `/api/administrator/registers`,
+            {
+              method: "POST",
+              headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({ email, password, name, lastname, floor, buildingName }),
-          });
+              body: JSON.stringify({
+                email,
+                password,
+                name,
+                lastname,
+                floor,
+                buildingName,
+              }),
+            }
+          );
           if (!response.ok) {
             return false;
           }
@@ -294,7 +334,31 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error);
         }
-      }
+      },
+
+      getSingleBusiness: async (seller_id, business_id) => {
+        if (!seller_id || !business_id) return;
+        // const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${business_id}`,
+            {
+              method: "GET",
+              headers: {
+                // authorization: `Bearer ${jwt}`
+              },
+            }
+          );
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+          const data = await response.json();
+          setStore({ shop: data });
+        } catch (error) {
+          console.log(error);
+        }
+      },
     },
   };
 };

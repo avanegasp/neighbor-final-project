@@ -9,28 +9,33 @@ const Login = () => {
   const [userType, setUserType] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e, id) => {
     e.preventDefault();
-    const response = await actions.login(email, password, userType);
+    const response = await actions.login(email, password, userType, id);
+    console.log(email, password, userType, id);
     console.log(response);
     if (response) {
       switch (userType) {
         case "NEIGHBOR":
-          navigate("/profileNeighbor");
+          navigate("/profileNeighbor/:id");
           return;
         case "SELLER":
-          navigate("/profileSeller");
+          navigate(`/profileSeller/${id}`);
           return;
         case "ADMINISTRATOR":
-          navigate("/profileAdmin");
+          navigate("/profileAdmin/:id");
           return;
       }
     }
+    else{
+      alert("Login failed");
+    }
   };
+
   return (
     <div className="container d-flex flex-column min-vh-100">
       <div className="m-2">
-        <h1>Login</h1>
+        <h1>Iniciar sesión</h1>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -58,7 +63,7 @@ const Login = () => {
           </label>
         </div>
         <div className="form-group justify-content-center align-items-start">
-          <label htmlFor="LoginEmail">Email address</label>
+          <label htmlFor="LoginEmail">Correo electrónico</label>
           <input
             type="email"
             className="form-control"
@@ -69,11 +74,11 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <small id="emailHelp" className="form-text text-muted">
-            We'll never share your email with anyone else.
+            Nunca compartiremos tu correo con nadie.
           </small>
         </div>
         <div className="form-group">
-          <label htmlFor="LoginPassword">Password</label>
+          <label htmlFor="LoginPassword">Contraseña</label>
           <input
             type="password"
             className="form-control"
@@ -84,12 +89,12 @@ const Login = () => {
           />
         </div>
         <button type="submit my-2" className="btn btn-primary">
-          Submit
+          Iniciar sesión
         </button>
       </form>
       <div>
         {" "}
-        <Link to={"/register"}>Have you registered yet? Click here!</Link>
+        <Link to={"/register"}>No tienes una cuenta? Regístrate aquí!</Link>
       </div>
     </div>
   );

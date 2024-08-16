@@ -366,7 +366,7 @@ def get_all_businesses():
 @api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['GET'])
 def get_single_business(seller_id, business_id):
     try:
-        business = Product.query.get(seller_id=seller_id, id=business_id)
+        business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
         if not business:
             return jsonify({"Business not found"}), 404
         return jsonify({"Business": business.serialize()}), 200

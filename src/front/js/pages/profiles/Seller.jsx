@@ -39,6 +39,9 @@ const ProfileSeller = () => {
                 <a href="#" className="btn btn-secondary mt-4">
                   Do a recommendation!
                 </a>
+                <a href="#" className="btn btn-secondary mt-4">
+                  Crea un negocio
+                </a>
               </div>
             </div>
           </div>
@@ -55,6 +58,14 @@ const ProfileSeller = () => {
             <Link to={"/profileEditSeller"} className="btn btn-success me-5">
               Editar información
             </Link>
+            <div>
+              {" "}
+              <Link to={"/register"}>Have you registered yet? Click here!</Link>
+            </div>
+            <div>
+              {" "}
+              {/* <Link to={="seller/:seller_id/shop/:business_id"}>Visita su tienda</Link> */}
+            </div>
           </div>
         </div>
       </div>
