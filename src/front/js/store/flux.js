@@ -45,16 +45,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({email, password, userType}),
+            body: JSON.stringify({ email, password, userType }),
           });
           if (!response.ok) {
             return false;
           }
           const data = await response.json();
-          setStore({currentUser: data.user})
+          setStore({ currentUser: data.user })
           localStorage.setItem('token', data.token);
-          console.log(data);
-          console.log(getStore().currentUser);
+          // console.log(data);
+          // console.log(getStore().currentUser);
           return data;
         } catch (error) {
           console.log(error);
@@ -278,37 +278,39 @@ const getState = ({ getStore, getActions, setStore }) => {
         name,
         lastname,
         floor,
+        phone,
         shopName
       ) => {
-      registerSeller: async (email, password, name, lastname, floor, phone, shopName) => {
         try {
+          console.log("seller flux Fab", phone)
           const response = await fetch(
             process.env.BACKEND_URL + `/api/seller/registers`,
             {
               method: "POST",
               headers: { "Content-type": "application/json" },
-
               body: JSON.stringify({
                 email,
                 password,
                 name,
                 lastname,
                 floor,
+                phone,
                 shopName,
               }),
             }
           );
-            body: JSON.stringify({ email, password, name, lastname, floor, phone, shopName }),
-          });
+
           if (!response.ok) {
             return false;
           }
           const data = await response.json();
+          console.log("seller response", data)
           return data;
         } catch (error) {
           console.log(error);
         }
       },
+
       registerAdmin: async (
         email,
         password,
@@ -371,7 +373,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (!business_id) return;
         const token = localStorage.getItem("token");
         try {
-          const response = await fetch (
+          const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${neighbor_id}/business/${business_id}`,
             {
               methods: "POST",
@@ -381,33 +383,33 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
             }
           );
-          if(!response.ok){
+          if (!response.ok) {
             return false;
           }
           const data = response.json();
           return data;
         } catch (error) {
-          return(error);
+          return (error);
         }
       },
 
-      getCurrentUser: async () =>{
+      getCurrentUser: async () => {
         const token = localStorage("token");
         try {
-          const response = await fetch ( `${process.env.BACKEND_URL} + /me`,{
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-        setStore({currentUser: data});
+          const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          setStore({ currentUser: data });
 
         } catch (error) {
           console.log(error);
         }
       }
 
-      
+
 
     },
   };

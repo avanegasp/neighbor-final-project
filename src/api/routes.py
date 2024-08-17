@@ -79,7 +79,7 @@ def add_neighbor():
         new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
+        return jsonify({"mensaje": "Neighbor creado exitosamente", "user":{"id":new_user.id}}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500  
@@ -106,7 +106,7 @@ def add_seller():
         new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, phone = phone, shopName = shopName)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Seller creado exitosamente"}), 201
+        return jsonify({"mensaje": "Seller creado exitosamente", "user":{"id":new_user.id}}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500 
@@ -132,7 +132,7 @@ def add_administrator():
         new_user = Administrator(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, buildingName = buildingName)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
+        return jsonify({"mensaje": "Administrador creado exitosamente","user":{"id":new_user.id}}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500                   
