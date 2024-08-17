@@ -319,6 +319,25 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching recommendations", error.message)
         }
       },
+      createRecommendationAdmin: async (administrator_id) => {
+        const store = getStore()
+        try {
+          const response = await fetch(process.env.BACKEND_URL + `/api/administrator/administrator_id/createReco`, {
+            method: "POST",
+            body: JSON.stringify({
+              administrator_id
+            }),
+            headers: {
+              "Content-type": "application/json",
+            },
+          })
+          if (response.ok) {
+            console.log("Recomendación desde Admin creada")
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }
     },
   };
 };

@@ -527,7 +527,7 @@ def get_all_recommendations():
         return jsonify({"error": f"{error}"}),500
 
 @api.route('/neighbor/<int:neighbor_id>/createReco', methods=['POST'])
-def neighbor_create_reco(neighbor_id):
+def neighbor_create_recommendation(neighbor_id):
     try:
         neighbor = Neighbor.query.get(neighbor_id)
         if not neighbor:
@@ -567,7 +567,7 @@ def neighbor_create_reco(neighbor_id):
         return jsonify({"error": f"{error}"}), 500  
 
 @api.route('/seller/<int:seller_id>/createReco', methods=['POST'])
-def seller_create_reco(seller_id):
+def seller_create_recommendation(seller_id):
     try:
         seller = Seller.query.get(seller_id)
         if not seller:
@@ -607,7 +607,7 @@ def seller_create_reco(seller_id):
         return jsonify({"error": f"{error}"}), 500
 
 @api.route('/administrator/<int:administrator_id>/createReco', methods=['POST'])
-def admin_create_reco(administrator_id):
+def admin_create_recommendation(administrator_id):
     try:
         administrator = Administrator.query.get(administrator_id)
         if not administrator:
