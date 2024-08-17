@@ -38,7 +38,7 @@ const ProfileSeller = () => {
                   </p>
                 </ol>
                 <a href="#" className="btn btn-secondary mt-4">
-                  Do a recommendation!
+                  Haz una recomendación!
                 </a>
                 <a href="#" className="btn btn-secondary mt-4">
                   Crea un negocio

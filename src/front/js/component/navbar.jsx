@@ -9,17 +9,17 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const location = useLocation();
   const navigate = useNavigate();
-const handleLogout = () => {
-   localStorage.removeItem("token");
-   navigate('/login'); 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate('/login');
 
-}
+  }
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = () => {
     setIsAuthenticated(true);
   };
- 
+
 
   return (
     <nav className="navbar">
@@ -50,7 +50,7 @@ const handleLogout = () => {
         </div>
       </div>
 
-      {location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/"  ?
+      {location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/" ?
         null
         :
         <div className="dropdown dropstart">
@@ -78,6 +78,12 @@ const handleLogout = () => {
                 <Link className="text-success fs-5 mx-1 my-1" to="/business">
                   <i className="text-success fs-5 mx-1 my-1 fa-solid fa-store"></i>{" "}
                   Tienda
+                </Link>
+              </div>
+              <div className="dropdown-item">
+                <Link className="text-success fs-5 mx-1 my-1" to="/recommendations">
+                  <i className="text-success fs-5 mx-1 my-1 fa-solid fa-comments"></i>{" "}
+                  Recomendaciones
                 </Link>
               </div>
               <div className="dropdown-divider"></div>

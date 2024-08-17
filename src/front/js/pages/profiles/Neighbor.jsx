@@ -41,7 +41,7 @@ const ProfileNeighbor = () => {
                   </p>
                 </ol>
                 <a href="#" className="btn btn-secondary mt-4">
-                  Do a recommendation!
+                  Haz una recomendación!
                 </a>
               </div>
             </div>

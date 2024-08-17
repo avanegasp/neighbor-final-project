@@ -11,7 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: [],
       business: [],
       shop: {},
-      currentUser: {}
+      currentUser: {},
+      recommendations: []
     },
     actions: {
       addToFavorite: (id, name, role) => {
@@ -45,13 +46,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({email, password, userType}),
+            body: JSON.stringify({ email, password, userType }),
           });
           if (!response.ok) {
             return false;
           }
           const data = await response.json();
-          setStore({currentUser: data.user})
+          setStore({ currentUser: data.user })
           localStorage.setItem('token', data.token);
           console.log(data);
           console.log(getStore().currentUser);
@@ -278,28 +279,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         name,
         lastname,
         floor,
+        phone,
         shopName
       ) => {
-      registerSeller: async (email, password, name, lastname, floor, phone, shopName) => {
         try {
           const response = await fetch(
             process.env.BACKEND_URL + `/api/seller/registers`,
             {
               method: "POST",
               headers: { "Content-type": "application/json" },
-
               body: JSON.stringify({
                 email,
                 password,
                 name,
                 lastname,
                 floor,
+                phone,
                 shopName,
               }),
             }
           );
-            body: JSON.stringify({ email, password, name, lastname, floor, phone, shopName }),
-          });
+
           if (!response.ok) {
             return false;
           }
@@ -309,6 +309,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
+
       registerAdmin: async (
         email,
         password,
@@ -371,7 +372,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (!business_id) return;
         const token = localStorage.getItem("token");
         try {
-          const response = await fetch (
+          const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${neighbor_id}/business/${business_id}`,
             {
               methods: "POST",
@@ -381,33 +382,57 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
             }
           );
-          if(!response.ok){
+          if (!response.ok) {
             return false;
           }
           const data = response.json();
           return data;
         } catch (error) {
-          return(error);
+          return (error);
         }
       },
 
-      getCurrentUser: async () =>{
+      getCurrentUser: async () => {
         const token = localStorage("token");
         try {
-          const response = await fetch ( `${process.env.BACKEND_URL} + /me`,{
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-        setStore({currentUser: data});
+          const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          setStore({ currentUser: data });
 
         } catch (error) {
           console.log(error);
         }
-      }
+      },
 
-      
+      getAllRecommendations: async () => {
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/recommendations`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+
+          const data = await response.json();
+          setStore({ recommendations: data.recommendations });
+        } catch (error) {
+          console.error("Error fetching recommendations:", error.message);
+        }
+      },
+
+
 
     },
   };
