@@ -60,10 +60,10 @@ const ProfileSeller = () => {
             <Link to={"/profileEditSeller"} className="btn btn-success me-5">
               Editar información
             </Link>
-            <div>
+            {/* <div>
               {" "}
               <Link to={"/register"}>Have you registered yet? Click here!</Link>
-            </div>
+            </div> */}
             <div>
               {" "}
               {/* <Link to={="seller/:seller_id/shop/:business_id"}>Visita su tienda</Link>  */}

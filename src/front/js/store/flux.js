@@ -54,8 +54,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
           setStore({ currentUser: data.user })
           localStorage.setItem('token', data.token);
-          console.log(data);
-          console.log(getStore().currentUser);
+          // console.log(data);
+          // console.log(getStore().currentUser);
           return data;
         } catch (error) {
           console.log(error);
@@ -283,6 +283,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         shopName
       ) => {
         try {
+          console.log("seller flux Fab", phone)
           const response = await fetch(
             process.env.BACKEND_URL + `/api/seller/registers`,
             {
@@ -304,6 +305,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log("seller response", data)
           return data;
         } catch (error) {
           console.log(error);
@@ -431,9 +433,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching recommendations:", error.message);
         }
       },
-
-
-
     },
   };
 };
