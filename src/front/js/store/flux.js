@@ -1,5 +1,3 @@
-import { faL } from "@fortawesome/free-solid-svg-icons";
-
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -47,11 +45,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             headers: { "Content-type": "application/json" },
 
             body: JSON.stringify({ email, password, userType }),
+            body: JSON.stringify({ email, password, userType }),
           });
           if (!response.ok) {
             return false;
           }
           const data = await response.json();
+          setStore({ currentUser: data.user })
           setStore({ currentUser: data.user })
           localStorage.setItem('token', data.token);
           // console.log(data);
@@ -67,25 +67,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (!id) return;
 
         try {
+          const token = localStorage.getItem("token")
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${id}`,
             {
               method: "GET",
               headers: {
-                "Content-Type": "application/json",
+                // "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
               },
             }
           );
 
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ neighbor: data });
+            return data
+          } else {
+            return { error: "Unauthorization access" }
           }
-
-          const data = await response.json();
-          setStore({ neighbor: data });
         } catch (error) {
           console.error("Error fetching neighbor:", error.message);
+          return { error: "An error ocurred" }
         }
       },
 
@@ -301,9 +304,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
+
           if (!response.ok) {
             return false;
           }
+
           const data = await response.json();
           console.log("seller response", data)
           return data;
@@ -311,6 +316,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
+
 
       registerAdmin: async (
         email,
@@ -395,21 +401,21 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getCurrentUser: async () => {
-        const token = localStorage("token");
-        try {
-          const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          });
-          const data = await response.json();
-          setStore({ currentUser: data });
-
-        } catch (error) {
-          console.log(error);
+        getCurrentUser: async () => {
+          const token = localStorage("token");
+          try {
+            const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            });
+            const data = await response.json();
+            setStore({ currentUser: data });
+          } catch (error) {
+            console.log(error);
+          }
         }
       },
-
       getAllRecommendations: async () => {
         try {
           const response = await fetch(
@@ -433,6 +439,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching recommendations:", error.message);
         }
       },
+
+
     },
   };
 };
