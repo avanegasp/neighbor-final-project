@@ -80,6 +80,12 @@ export const Navbar = () => {
                   Tienda
                 </Link>
               </div>
+              <div className="dropdown-item">
+                <Link className="text-success fs-5 mx-1 my-1" to="/recommendations">
+                  <i className="text-success fs-5 mx-1 my-1 fa-solid fa-comments"></i>{" "}
+                  Recomendaciones
+                </Link>
+              </div>
               <div className="dropdown-divider"></div>
               <div className="dropdown-item">
                 <a

@@ -406,7 +406,31 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error);
         }
-      }
+      },
+
+      getAllRecommendations: async () => {
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/recommendations`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+
+          const data = await response.json();
+          setStore({ recommendations: data.recommendations });
+        } catch (error) {
+          console.error("Error fetching recommendations:", error.message);
+        }
+      },
 
 
 

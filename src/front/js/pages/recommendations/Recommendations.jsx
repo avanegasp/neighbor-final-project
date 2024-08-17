@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import RecommendationsExtern from "../../component/recommnedationsExtern/RecommnedationsExtern.jsx";
-import RecommendationSearch from "../../component/recommendationSearch/RecommendationSearch.jsx";
+// import RecommendationSearch from "../../component/recommendationSearch/RecommendationSearch.jsx";
 
 
 const Recommendations = () => {
