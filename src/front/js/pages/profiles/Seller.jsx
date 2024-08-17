@@ -64,7 +64,7 @@ const ProfileSeller = () => {
             </div>
             <div>
               {" "}
-              {/* <Link to={="seller/:seller_id/shop/:business_id"}>Visita su tienda</Link> */}
+              {/* <Link to={="seller/:seller_id/shop/:business_id"}>Visita su tienda</Link>  */}
             </div>
           </div>
         </div>

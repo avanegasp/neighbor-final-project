@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: [],
       business: [],
       shop: {},
+      currentUser: {}
     },
     actions: {
       addToFavorite: (id, name, role) => {
@@ -38,19 +39,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, "green");
       },
 
-      login: async (email, password, userType, id) => {
+      login: async (email, password, userType) => {
         try {
           const response = await fetch(process.env.BACKEND_URL + "/api/login", {
             method: "POST",
             headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({ email, password, userType, id}),
+            body: JSON.stringify({email, password, userType}),
           });
           if (!response.ok) {
             return false;
           }
-          const data = response.json();
+          const data = await response.json();
+          setStore({currentUser: data.user})
+          localStorage.setItem('token', data.token);
           console.log(data);
+          console.log(getStore().currentUser);
           return data;
         } catch (error) {
           console.log(error);
@@ -359,6 +363,48 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
+      createReview: async (business_id) => {
+        if (!business_id) return;
+        const token = localStorage.getItem("token");
+        try {
+          const response = await fetch (
+            `${process.env.BACKEND_URL}/api/neighbor/${neighbor_id}/business/${business_id}`,
+            {
+              methods: "POST",
+              headers: {
+                "Content-type": "appliaction/json",
+                authorization: `Bearer ${token}`
+              },
+            }
+          );
+          if(!response.ok){
+            return false;
+          }
+          const data = response.json();
+          return data;
+        } catch (error) {
+          return(error);
+        }
+      },
+
+      getCurrentUser: async () =>{
+        const token = localStorage("token");
+        try {
+          const response = await fetch ( `${process.env.BACKEND_URL} + /me`,{
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        setStore({currentUser: data});
+
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      
+
     },
   };
 };

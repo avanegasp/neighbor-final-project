@@ -9,21 +9,21 @@ const Login = () => {
   const [userType, setUserType] = useState("");
   const navigate = useNavigate();
 
-    const handleSubmit = async (e, id) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await actions.login(email, password, userType, id);
-    console.log(email, password, userType, id);
+    const response = await actions.login(email, password, userType);
+    console.log(email, password, userType);
     console.log(response);
     if (response) {
       switch (userType) {
         case "NEIGHBOR":
-          navigate("/profileNeighbor/:id");
+          navigate(`/profileNeighbor/${response.user.id}`);
           return;
         case "SELLER":
-          navigate(`/profileSeller/${id}`);
+          navigate(`/profileSeller/${response.user.id}`);
           return;
         case "ADMINISTRATOR":
-          navigate("/profileAdmin/:id");
+          navigate(`/profileAdmin/${response.user.id}`);
           return;
       }
     }

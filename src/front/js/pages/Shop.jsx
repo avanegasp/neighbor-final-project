@@ -16,7 +16,7 @@ const Shop = (shop) => {
   return (
     <div className="App">
         
-      <h1>Añade una reseña</h1>
+        <h2>Añade una reseña</h2>
       <StarsRating />
     </div>
   );
