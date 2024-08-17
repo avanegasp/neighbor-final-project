@@ -49,6 +49,7 @@ class Seller(db.Model):
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     shopName= db.Column(db.String(80), unique=False, nullable=False)
+    phone= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
 
     products = db.relationship('Product', backref='seller')
@@ -65,6 +66,7 @@ class Seller(db.Model):
             "lastname": self.lastname,
             "floor": self.floor,
             "shopName": self.shopName,
+            "phone": self.phone,
             "role": self.role,
             "orders": [order.serialize() for order in self.orders]
         } 
@@ -98,36 +100,6 @@ class Administrator(db.Model):
             # do not serialize the password, its a security breach
         }
 
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(580), unique=False, nullable=False)
-    name = db.Column(db.String(80), unique=False, nullable=False)
-    lastname = db.Column(db.String(80), unique=False, nullable=False)
-    floor = db.Column(db.String(80), unique=False, nullable=False)
-    buildingName = db.Column(db.String(80), unique=False, nullable=False)
-    role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
-
-    building = db.relationship('Building')
-
-
-
-    def __repr__(self):
-        return f'<ADMINISTRATOR {self.email}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            "name": self.name,
-            "lastname": self.lastname,
-            "floor": self.floor,
-            "buildingName": self.buildingName,
-            "role": self.role,
-            'buildings': [building.serialize() for building in self.buildings],
-
-            # do not serialize the password, its a security breach
-        }               
-
 class Building(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     buildingName = db.Column(db.String(80), unique=False, nullable=False)
@@ -140,25 +112,7 @@ class Building(db.Model):
         return {
             "id": self.id,
             "buildingName": self.buildingName,
-        }
-
-    id = db.Column(db.Integer, primary_key=True)
-
-    buildingName = db.Column(db.String(80), unique=False, nullable=False)
-    administrator_id = db.Column(db.Integer,db.ForeignKey('administrator.id'))
-
-
-    def __repr__(self):
-        return f'<BUILDING {self.email}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "buildingName": self.buildingName,
-            
-            # do not serialize the password, its a security breach
-        }               
-      
+        }         
 #uno a muchos entre seller y productos
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -13,6 +13,7 @@ const ProfileEditSeller = () => {
           floor={store.seller.floor}
           email={store.seller.email}
           id={store.seller.id}
+          phone={store.seller.phone}
           shopName={store.seller.shopName}
           role="SELLER"
         />

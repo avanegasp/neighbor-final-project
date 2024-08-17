@@ -13,6 +13,7 @@ const AllUsersInfo = ({
   buildingName,
   floor,
   email,
+  phone,
   id
 }) => {
   const { actions } = useContext(Context)
@@ -43,6 +44,7 @@ const AllUsersInfo = ({
           shopName={shopName}
           buildingName={buildingName}
           email={email}
+          phone={phone}
         />
       </div>
     </div>

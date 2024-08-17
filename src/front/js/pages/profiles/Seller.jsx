@@ -13,6 +13,7 @@ const ProfileSeller = () => {
   }, [id]);
 
   if (!store.seller) return <div>Loading...</div>;
+
   return (
     <div className="container d-flex flex-column min-vh-100">
       <TitleProfiles title={store.seller.role} />
@@ -52,6 +53,7 @@ const ProfileSeller = () => {
               floor={store.seller.floor}
               shopName={store.seller.shopName}
               email={store.seller.email}
+              phone={store.seller.phone}
             />
           </div>
           <div className="mt-auto text-end mb-5">
