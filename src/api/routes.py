@@ -36,7 +36,7 @@ def login():
             if not check_password_hash(neighbor.password, password):
                 return jsonify ({"error": "Wrong data!"}), 400
 
-            auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email})
+            auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email, "userType": neighbor.role})
             return jsonify({"token": auth_token}), 200
 
         if userType == "SELLER":
@@ -44,19 +44,19 @@ def login():
             if not seller or not check_password_hash(seller.password, password):
                 return jsonify({"error": "Wrong data!"}), 400
 
-            auth_token = create_access_token({"id": seller.id, "email": seller.email})
-            return jsonify({"token": auth_token}), 200
+            auth_token = create_access_token({"id": seller.id, "email": seller.email, "userType": seller.role})
+            return jsonify({"token": auth_token, "user": seller.serialize()}), 200
 
         if userType == "ADMINISTRATOR":
             admin = Administrator.query.filter_by(email=email).first()
             if not admin or not check_password_hash(admin.password, password):
                 return jsonify({"error": "Wrong data!"}), 400
 
-            auth_token = create_access_token({"id": admin.id, "email": admin.email})
+            auth_token = create_access_token({"id": admin.id, "email": admin.email, "userType": admin.role})
             return jsonify({"token": auth_token}), 200
 
     except Exception as error:
-        return jsonify({"error": f"{error}"}), 500
+         return jsonify({"error": f"{error}"}), 500
 
 
 #registro de vecino
@@ -372,7 +372,7 @@ def get_all_businesses():
 @api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['GET'])
 def get_single_business(seller_id, business_id):
     try:
-        business = Product.query.get(seller_id=seller_id, id=business_id)
+        business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
         if not business:
             return jsonify({"Business not found"}), 404
         return jsonify({"Business": business.serialize()}), 200
@@ -513,6 +513,32 @@ def delete_review(neighbor_id, business_id, review_id):
     
     except Exception as error:
         return jsonify({"error": f"{error}"}), 500
+
+@api.route("/me", methods=['GET'])
+@jwt_required
+def get_user_data():
+    
+    user_data = get_jwt_identity()
+    if user_data["userType"] == "NEIGHBOR":
+        user = Neighbor.query.get(user_data["id"])
+        return jsonify(user.serialize()), 200
+    
+    elif user_data["userType"] == "SELLER":
+        user = Seller.query.get(user_data["id"])
+        user_business = Product.query.filter_by(seller_id=user.id).all()
+        return jsonify(user.serialize(), user_business.serialize()), 200
+    
+    elif user_data["userType"] == "ADMINISTRATOR":
+        user = Administrator.query.get(user_data["id"])
+        return jsonify(user.serialize()), 200
+    
+    else:
+        return jsonify({"error": "User not found!"}), 404
+    
+    
+
+
+
     
 #recommendations    
     

@@ -9,6 +9,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       admin: {},
       users: null,
       favorites: [],
+      business: [],
+      shop: {},
+      currentUser: {},
       recommendations: []
     },
     actions: {
@@ -23,7 +26,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
         }
       },
-
 
       removeToFavorite: (id) => {
         const store = getStore();
@@ -49,7 +51,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!response.ok) {
             return false;
           }
-          const data = response.json();
+          const data = await response.json();
+          setStore({ currentUser: data.user })
+          localStorage.setItem('token', data.token);
+          console.log(data);
+          console.log(getStore().currentUser);
           return data;
         } catch (error) {
           console.log(error);
@@ -84,6 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileSeller: async (id) => {
+        console.log("HEREEEE PROFILE", id);
         if (!id) return;
 
         try {
@@ -248,12 +255,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       registerNeighbor: async (email, password, name, lastname, floor) => {
         try {
-          const response = await fetch(process.env.BACKEND_URL + `/api/neighbor/registers`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
+          const response = await fetch(
+            process.env.BACKEND_URL + `/api/neighbor/registers`,
+            {
+              method: "POST",
+              headers: { "Content-type": "application/json" },
 
-            body: JSON.stringify({ email, password, name, lastname, floor }),
-          });
+              body: JSON.stringify({ email, password, name, lastname, floor }),
+            }
+          );
           if (!response.ok) {
             return false;
           }
@@ -263,81 +273,143 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
-      registerSeller: async (email, password, name, lastname, floor, phone, shopName) => {
-        try {
-          const response = await fetch(process.env.BACKEND_URL + `/api/seller/registers`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-
-            body: JSON.stringify({ email, password, name, lastname, floor, phone, shopName }),
-          });
-          if (!response.ok) {
-            return false;
-          }
-          const data = await response.json();
-          return data;
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      registerAdmin: async (email, password, name, lastname, floor, buildingName) => {
-        try {
-          const response = await fetch(process.env.BACKEND_URL + `/api/administrator/registers`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-
-            body: JSON.stringify({ email, password, name, lastname, floor, buildingName }),
-          });
-          if (!response.ok) {
-            return false;
-          }
-          const data = await response.json();
-          return data;
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      getAllRecommendations: async () => {
+      registerSeller: async (
+        email,
+        password,
+        name,
+        lastname,
+        floor,
+        phone,
+        shopName
+      ) => {
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/recommendations`,
+            process.env.BACKEND_URL + `/api/seller/registers`,
+            {
+              method: "POST",
+              headers: { "Content-type": "application/json" },
+              body: JSON.stringify({
+                email,
+                password,
+                name,
+                lastname,
+                floor,
+                phone,
+                shopName,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            return false;
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      registerAdmin: async (
+        email,
+        password,
+        name,
+        lastname,
+        floor,
+        buildingName
+      ) => {
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + `/api/administrator/registers`,
+            {
+              method: "POST",
+              headers: { "Content-type": "application/json" },
+
+              body: JSON.stringify({
+                email,
+                password,
+                name,
+                lastname,
+                floor,
+                buildingName,
+              }),
+            }
+          );
+          if (!response.ok) {
+            return false;
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      getSingleBusiness: async (seller_id, business_id) => {
+        if (!seller_id || !business_id) return;
+        // const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${business_id}`,
             {
               method: "GET",
               headers: {
-                "Content-Type": "application/json",
-              }
+                // authorization: `Bearer ${jwt}`
+              },
             }
-          )
+          );
           if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`)
+            console.error(`Error: ${response.status} ${response.statusText}`);
             return false;
           }
-          const data = await response.json()
-          console.log("recommendations flux", data)
-          setStore({ recommendations: data.recommendations })
+          const data = await response.json();
+          setStore({ shop: data });
         } catch (error) {
-          console.error("Error fetching recommendations", error.message)
+          console.log(error);
         }
       },
-      createRecommendationAdmin: async (administrator_id) => {
-        const store = getStore()
+      createReview: async (business_id) => {
+        if (!business_id) return;
+        const token = localStorage.getItem("token");
         try {
-          const response = await fetch(process.env.BACKEND_URL + `/api/administrator/administrator_id/createReco`, {
-            method: "POST",
-            body: JSON.stringify({
-              administrator_id
-            }),
-            headers: {
-              "Content-type": "application/json",
-            },
-          })
-          if (response.ok) {
-            console.log("Recomendación desde Admin creada")
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/neighbor/${neighbor_id}/business/${business_id}`,
+            {
+              methods: "POST",
+              headers: {
+                "Content-type": "appliaction/json",
+                authorization: `Bearer ${token}`
+              },
+            }
+          );
+          if (!response.ok) {
+            return false;
           }
+          const data = response.json();
+          return data;
         } catch (error) {
-          console.error(error)
+          return (error);
+        }
+      },
+
+      getCurrentUser: async () => {
+        const token = localStorage("token");
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          setStore({ currentUser: data });
+
+        } catch (error) {
+          console.log(error);
         }
       }
+
+
+
     },
   };
 };

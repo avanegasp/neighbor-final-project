@@ -19,7 +19,7 @@ import Recommendations from "./pages/recommendations/Recommendations.jsx";
 
 import Login from "./pages/Login.jsx";
 import Register from "./pages/register.jsx";
-
+import Shop from "./pages/Shop.jsx"
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar.jsx";
@@ -53,6 +53,7 @@ const Layout = () => {
             <Route element={<Login />} path="/login" />
             <Route element={<Directory />} path="/directory" />
             <Route element={<Register />} path="/register" />
+            <Route element={<Shop />} path="seller/:seller_id/shop/:business_id"/>
             <Route element={<Business />} path="/business" />
 
             <Route element={<h1>Not found!</h1>} />
