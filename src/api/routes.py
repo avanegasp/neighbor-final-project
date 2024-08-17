@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, Neighbor, Seller, Administrator, Product, Review
+from api.models import db, Neighbor, Seller, Administrator, Product, Review, Recommendation
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -132,7 +132,7 @@ def add_administrator():
         new_user = Administrator(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, buildingName = buildingName)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Administrador creado exitosamente", "user":{"id":new_user.id}}), 201
+        return jsonify({"mensaje": "Administrador creado exitosamente","user":{"id":new_user.id}}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500                   
@@ -334,7 +334,9 @@ def edit_admin(id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"error": str(error)}),500
+    
 
+    
 
 @api.route('/seller/<int:seller_id>/create-business', methods=['POST'])
 #@jwt.required
@@ -362,7 +364,7 @@ def create_business(seller_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"error": f"{error}"}), 500
-
+    
 @api.route('/businesses', methods=['GET'])
 def get_all_businesses():
     try:
@@ -542,3 +544,137 @@ def get_user_data():
     
 
 
+
+    
+#recommendations    
+    
+@api.route('/recommendations', methods=['GET'])
+def get_all_recommendations():
+    try:
+        recommendations = Recommendation.query.all()
+        serialized_recommendations = [recommendation.serialize() for recommendation in recommendations]
+        return jsonify({"recommendations": serialized_recommendations}), 200
+
+    except Exception as error:
+        return jsonify({"error": f"{error}"}),500
+
+@api.route('/neighbor/<int:neighbor_id>/createReco', methods=['POST'])
+def neighbor_create_recommendation(neighbor_id):
+    try:
+        neighbor = Neighbor.query.get(neighbor_id)
+        if not neighbor:
+            return jsonify({"error": "Neighbor not found!"}), 404
+
+        body = request.json
+        name = body.get("name")
+        lastname = body.get("lastname")
+        phone = body.get("phone")
+        shopName = body.get("shopName")
+
+        required_fields = ["name", "lastname", "phone", "shopName"]
+        missing_fields = [field for field in required_fields if not body.get(field)]
+        if missing_fields:
+            return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+        
+        recommendation_exists = Recommendation.query.filter_by(name=name, lastname=lastname, neighbor_id=neighbor_id).first()
+        if recommendation_exists:
+            return jsonify({"error": f"Recommendation for {name} {lastname} already exists!"}), 400
+        
+
+        recommendation = Recommendation(
+            name=name, 
+            lastname=lastname, 
+            phone=phone, 
+            shopName=shopName, 
+            neighbor_id=neighbor_id
+        )
+
+        db.session.add(recommendation)
+        db.session.commit()
+
+        return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500  
+
+@api.route('/seller/<int:seller_id>/createReco', methods=['POST'])
+def seller_create_recommendation(seller_id):
+    try:
+        seller = Seller.query.get(seller_id)
+        if not seller:
+            return jsonify({"error": "Seller not found!"}), 404
+
+        body = request.json
+        name = body.get("name")
+        lastname = body.get("lastname")
+        phone = body.get("phone")
+        shopName = body.get("shopName")
+
+        required_fields = ["name", "lastname", "phone", "shopName"]
+        missing_fields = [field for field in required_fields if not body.get(field)]
+        if missing_fields:
+            return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+        
+        recommendation_exists = Recommendation.query.filter_by(name=name, lastname=lastname, seller_id=seller_id).first()
+        if recommendation_exists:
+            return jsonify({"error": f"Recommendation for {name} {lastname} already exists!"}), 400
+        
+
+        recommendation = Recommendation(
+            name=name, 
+            lastname=lastname, 
+            phone=phone, 
+            shopName=shopName, 
+            seller_id=seller_id
+        )
+
+        db.session.add(recommendation)
+        db.session.commit()
+
+        return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500
+
+@api.route('/administrator/<int:administrator_id>/createReco', methods=['POST'])
+def admin_create_recommendation(administrator_id):
+    try:
+        administrator = Administrator.query.get(administrator_id)
+        if not administrator:
+            return jsonify({"error": "Admin not found!"}), 404
+
+        body = request.json
+        name = body.get("name")
+        lastname = body.get("lastname")
+        phone = body.get("phone")
+        shopName = body.get("shopName")
+
+        required_fields = ["name", "lastname", "phone", "shopName"]
+        missing_fields = [field for field in required_fields if not body.get(field)]
+        if missing_fields:
+            return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+        
+        recommendation_exists = Recommendation.query.filter_by(name=name, lastname=lastname, administrator_id=administrator_id).first()
+        if recommendation_exists:
+            return jsonify({"error": f"Recommendation for {name} {lastname} already exists!"}), 400
+        
+
+        recommendation = Recommendation(
+            name=name, 
+            lastname=lastname, 
+            phone=phone, 
+            shopName=shopName, 
+            administrator_id=administrator_id
+        )
+
+        db.session.add(recommendation)
+        db.session.commit()
+
+        return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
+
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500

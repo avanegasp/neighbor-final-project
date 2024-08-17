@@ -18,6 +18,7 @@ export default function Register() {
     const { register, setValue, handleSubmit } = useForm();
 
     const onSubmit = async (data) => {
+        console.log("SELER FAB", data)
         let response
         if (role === 'Neighbor') {
             response = await actions.registerNeighbor(data.email, data.password, data.name, data.lastname, data.floor);
@@ -111,7 +112,11 @@ export default function Register() {
                         <div className="mb-3">
                             <label htmlFor="phone" className="form-label">Whatsapp</label>
                             <PhoneInput
-                                onChange={(phone) => setValue('phone', phone)}
+                                onChange={(phone) => {
+                                    console.log('hhhh', phone)
+                                    setValue('phone', phone)
+                                }
+                                }
                                 inputProps={{
                                     name: 'phone',
                                     required: true,

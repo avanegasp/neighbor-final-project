@@ -9,7 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: [],
       business: [],
       shop: {},
-      currentUser: {}
+      currentUser: {},
+      recommendations: []
     },
     actions: {
       addToFavorite: (id, name, role) => {
@@ -44,15 +45,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             headers: { "Content-type": "application/json" },
 
             body: JSON.stringify({ email, password, userType }),
+            body: JSON.stringify({ email, password, userType }),
           });
           if (!response.ok) {
             return false;
           }
           const data = await response.json();
           setStore({ currentUser: data.user })
+          setStore({ currentUser: data.user })
           localStorage.setItem('token', data.token);
-          console.log(data);
-          console.log(getStore().currentUser);
+          // console.log(data);
+          // console.log(getStore().currentUser);
           return data;
         } catch (error) {
           console.log(error);
@@ -283,6 +286,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         shopName
       ) => {
         try {
+          console.log("seller flux Fab", phone)
           const response = await fetch(
             process.env.BACKEND_URL + `/api/seller/registers`,
             {
@@ -300,16 +304,19 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
+
           if (!response.ok) {
             return false;
           }
 
           const data = await response.json();
+          console.log("seller response", data)
           return data;
         } catch (error) {
           console.log(error);
         }
       },
+
 
       registerAdmin: async (
         email,
@@ -394,21 +401,44 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getCurrentUser: async () => {
-        const token = localStorage("token");
-        try {
-          const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          });
-          const data = await response.json();
-          setStore({ currentUser: data });
-
-        } catch (error) {
-          console.log(error);
+        getCurrentUser: async () => {
+          const token = localStorage("token");
+          try {
+            const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            });
+            const data = await response.json();
+            setStore({ currentUser: data });
+          } catch (error) {
+            console.log(error);
+          }
         }
-      }
+      },
+      getAllRecommendations: async () => {
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/recommendations`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
+          if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            return false;
+          }
+
+          const data = await response.json();
+          setStore({ recommendations: data.recommendations });
+        } catch (error) {
+          console.error("Error fetching recommendations:", error.message);
+        }
+      },
 
 
     },

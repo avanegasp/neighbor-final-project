@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext.js";
 import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
-
+import ModalBodyRecommendation from "../../component/modalRecommendationsProfile/ModalBody.jsx";
 const Directory = () => {
   const { store, actions } = useContext(Context);
 
@@ -48,7 +48,13 @@ const Directory = () => {
                   buildingName={user.buildingName}
                   email={user.email}
                   id={user.id}
+                  recommendation={user.recommendations}
                 />
+                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <ModalBodyRecommendation
+                    user={user}
+                    recommendations={user.recommendations} />
+                </div>
               </div>
             );
           })}
@@ -66,12 +72,19 @@ const Directory = () => {
                   floor={user.floor}
                   email={user.email}
                   id={user.id}
+                  recommendation={user.recommendations}
                 />
+                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <ModalBodyRecommendation
+                    user={user}
+                    recommendations={user.recommendations} />
+                </div>
               </div>
             );
           })}
           {store.users.seller.map((user) => {
             // console.log("USERRRRR", user);
+            // console.log("modal", user.recommendations)
             return (
               <div
                 className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
@@ -86,16 +99,18 @@ const Directory = () => {
                   email={user.email}
                   phone={user.phone}
                   id={user.id}
+                  recommendation={user.recommendations}
                 />
+                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <ModalBodyRecommendation
+                    user={user}
+                    recommendations={user.recommendations} />
+                </div>
               </div>
             );
           })}
         </div>
       </div>
-
-      <footer className="bg-dark text-white text-center py-3">
-        <p>Footer Content Here</p>
-      </footer>
     </div>
   );
 };
