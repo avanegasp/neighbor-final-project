@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext.js";
 import TagRol from "../tagRol/TagRol.jsx";
 import PersonalProfileDetails from "../personalProfileDetails/PersonalProfileDetails.jsx";
+import ModalButtonRecommendation from "../modalRecommendationsProfile/ModalButton.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,9 +15,16 @@ const AllUsersInfo = ({
   floor,
   email,
   phone,
-  id
+  id,
+  recommendation
 }) => {
   const { actions } = useContext(Context)
+
+
+  // console.log("store.recommedaions", numberReco)
+  useEffect(() => {
+    actions.getAllRecommendations()
+  }, [])
   // console.log("allusersINFO...", id)
   return (
     <div className="row w-100 border border-1 border-dark justify-content-center bg-white">
@@ -34,7 +42,11 @@ const AllUsersInfo = ({
             <FontAwesomeIcon icon={faHeart} />
           </button>
         </div>
+        <div className="mb-5">
+          <ModalButtonRecommendation recommendation={recommendation} role={role} />
+        </div>
       </div>
+
       <div className="col-md-7 mt-5 mb-5">
         <TagRol role={role} />
         <PersonalProfileDetails
