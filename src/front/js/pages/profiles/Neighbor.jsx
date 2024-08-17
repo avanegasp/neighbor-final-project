@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext.js";
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
@@ -7,12 +7,18 @@ import PersonalProfileDetails from "../../component/personalProfileDetails/Perso
 const ProfileNeighbor = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
+  const navigate = useNavigate()
 
   console.log("here", id);
 
   useEffect(() => {
     // console.log("PARAMS...", id);
-    actions.getProfileNeighbor(id);
+    actions.getProfileNeighbor(id)
+      .then((data) => {
+        if (!data || data.error) {
+          navigate("/register")
+        }
+      })
   }, [id]);
 
   if (!store.neighbor) return <div>Loading...</div>;

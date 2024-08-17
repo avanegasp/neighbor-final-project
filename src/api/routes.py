@@ -79,7 +79,7 @@ def add_neighbor():
         new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
+        return jsonify({"mensaje": "Neighbor creado exitosamente", "user":{"id":new_user.id}}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500  
@@ -106,7 +106,7 @@ def add_seller():
         new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, phone = phone, shopName = shopName)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Seller creado exitosamente"}), 201
+        return jsonify({"mensaje": "Seller creado exitosamente", "user":{"id":new_user.id}}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500 
@@ -132,7 +132,7 @@ def add_administrator():
         new_user = Administrator(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, buildingName = buildingName)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
+        return jsonify({"mensaje": "Administrador creado exitosamente", "user":{"id":new_user.id}}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500                   
@@ -151,11 +151,17 @@ def get_all_neighbors():
 
 
 @api.route('/neighbor/<int:id>', methods=['GET'])
+@jwt_required()
 def get_neighbor(id):
     try:
+        current_user = get_jwt_identity()
         neighbor = Neighbor.query.get(id)
+
         if neighbor is None:
             return jsonify({"error": "neighbor not found"}), 404
+        if current_user['id'] != neighbor.id:
+            return jsonify({"error": "Unauthorized access"}), 403
+
         return jsonify(neighbor.serialize()), 200
     except Exception as e:
         logging.error(f"Error retrieving neighbor {id}: {e}")

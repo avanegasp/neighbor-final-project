@@ -15,7 +15,7 @@ export default function Register() {
         setRole(event.target.value);
     };
 
-    const { register, handleSubmit } = useForm();
+    const { register, setValue, handleSubmit } = useForm();
 
     const onSubmit = async (data) => {
         let response
@@ -26,7 +26,7 @@ export default function Register() {
         } else if (role === 'Administrator') {
             response = await actions.registerAdmin(data.email, data.password, data.name, data.lastname, data.floor, data.buildingName);
         }
-        if (response) {
+        if (response && response.user && response.user.id) {
             switch (role) {
                 case "Neighbor":
                     navigate(`/profileNeighbor/${response.user.id}`);
@@ -111,7 +111,7 @@ export default function Register() {
                         <div className="mb-3">
                             <label htmlFor="phone" className="form-label">Whatsapp</label>
                             <PhoneInput
-                                onChange={(phone) => register('phone').onChange({ target: { value: phone } })}
+                                onChange={(phone) => setValue('phone', phone)}
                                 inputProps={{
                                     name: 'phone',
                                     required: true,
