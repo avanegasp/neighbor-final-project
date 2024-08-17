@@ -29,13 +29,13 @@ export default function Register() {
         if (response) {
             switch (role) {
                 case "Neighbor":
-                    navigate("/profileNeighbor");
+                    navigate(`/profileNeighbor/${response.user.id}`);
                     return;
                 case "Seller":
-                    navigate("/profileSeller");
+                    navigate(`/profileSeller/${response.user.id}`);
                     return;
                 case "Administrator":
-                    navigate("/profileAdmin");
+                    navigate(`/profileAdmin/${response.user.id}`);
                     return;
             }
         }
