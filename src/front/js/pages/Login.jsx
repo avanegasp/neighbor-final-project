@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Login = () => {
@@ -9,11 +9,11 @@ const Login = () => {
   const [userType, setUserType] = useState("");
   const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await actions.login(email, password, userType);
     console.log(email, password, userType);
-    console.log(response);
+    console.log("respuesta", response);
     if (response) {
       switch (userType) {
         case "NEIGHBOR":
@@ -27,7 +27,7 @@ const Login = () => {
           return;
       }
     }
-    else{
+    else {
       alert("Login failed");
     }
   };
