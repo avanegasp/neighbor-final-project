@@ -1,14 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
+import { useNavigate } from "react-router-dom";
 import RecommendationsExtern from "../../component/recommnedationsExtern/RecommnedationsExtern.jsx";
 
 
 const Recommendations = () => {
     const { store, actions } = useContext(Context)
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
     console.log("recommendations", store.recommendations)
 
     useEffect(() => {
         actions.getAllRecommendations()
+            .then((data) => {
+                console.log('hereee', data)
+                setError(data?.error || "Error fetching profile")
+                if (data?.error && data.error === 'No token found') {
+                    navigate("/register")
+                }
+            })
     }, [])
 
     if (!store.recommendations) return <div>Loading...</div>

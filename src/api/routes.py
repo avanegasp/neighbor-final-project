@@ -30,14 +30,11 @@ def login():
 
         if userType == "NEIGHBOR":
             neighbor = Neighbor.query.filter_by(email=email).first()
-            if not neighbor:
+            if not neighbor or not check_password_hash(neighbor.password, password):
                 return jsonify({"error": "Wrong data!"}), 400
 
-            if not check_password_hash(neighbor.password, password):
-                return jsonify ({"error": "Wrong data!"}), 400
-
             auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email, "userType": neighbor.role})
-            return jsonify({"token": auth_token}), 200
+            return jsonify({"token": auth_token, "user": neighbor.serialize()}), 200
 
         if userType == "SELLER":
             seller = Seller.query.filter_by(email=email).first()
@@ -49,13 +46,16 @@ def login():
 
         if userType == "ADMINISTRATOR":
             admin = Administrator.query.filter_by(email=email).first()
+            print("ADMIN", admin)
             if not admin or not check_password_hash(admin.password, password):
                 return jsonify({"error": "Wrong data!"}), 400
 
             auth_token = create_access_token({"id": admin.id, "email": admin.email, "userType": admin.role})
-            return jsonify({"token": auth_token}), 200
+            print("auth_token", auth_token)
+            return jsonify({"token": auth_token, "user": admin.serialize()}), 200
 
     except Exception as error:
+         print("error", error)
          return jsonify({"error": f"{error}"}), 500
 
 
@@ -151,11 +151,22 @@ def get_all_neighbors():
 
 
 @api.route('/neighbor/<int:id>', methods=['GET'])
+@jwt_required()
 def get_neighbor(id):
     try:
+        current_user = get_jwt_identity()
         neighbor = Neighbor.query.get(id)
+        print(current_user, id)
+
         if neighbor is None:
             return jsonify({"error": "neighbor not found"}), 404
+        
+        if current_user['id'] != neighbor.id:
+            return jsonify({"error": "Unauthorized access"}), 403
+        
+        if current_user['userType'] != "NEIGHBOR":
+            return jsonify({"error": "It's a different role"}), 403
+
         return jsonify(neighbor.serialize()), 200
     except Exception as e:
         logging.error(f"Error retrieving neighbor {id}: {e}")
@@ -173,11 +184,21 @@ def get_all_sellers():
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 @api.route('/seller/<int:id>', methods=['GET'])
+@jwt_required()
 def get_seller(id):
     try:
+        current_user = get_jwt_identity()
         seller = Seller.query.get(id)
+
         if seller is None:
             return jsonify({"error": "seller not found"}), 404
+        
+        if current_user['id'] != seller.id:
+            return jsonify({"error": "Unauthorized access"}), 403
+        
+        if current_user['userType'] != "SELLER":
+            return jsonify({"error": "It's a different role"}), 403
+
         return jsonify(seller.serialize()), 200
     except Exception as e:
         logging.error(f"Error retrieving seller {id}: {e}")
@@ -195,12 +216,20 @@ def get_all_administrators():
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
     #administrador
+
 @api.route('/administrator/<int:id>', methods=['GET'])
+@jwt_required()
 def get_administrator(id):
     try:
+        current_user = get_jwt_identity()
         administrator = Administrator.query.get(id)
+
         if administrator is None:
             return jsonify({"error": "administrator not found"}), 404
+        
+        if current_user['id'] != administrator.id:
+            return jsonify({"error": "Unauthorized access"}),403
+
         return jsonify(administrator.serialize()), 200
     
     except Exception as e:
@@ -210,14 +239,22 @@ def get_administrator(id):
 
 # Directorio
 @api.route('/directory', methods=['GET'])
+@jwt_required()
 def get_all_users_directory():
     try:
+        current_user = get_jwt_identity()
+        print(current_user, id)
+
         administrators = Administrator.query.all()
         serialize_administrators = [administrator.serialize() for administrator in administrators]
         sellers = Seller.query.all()
         serialize_sellers = [seller.serialize() for seller in sellers]
         neighbors = Neighbor.query.all()
         serialize_neighbors = [neighbor.serialize() for neighbor in neighbors]
+        
+        if not current_user:
+            return jsonify({"error": "Unauthorized access"}), 403
+        
         return jsonify({
             "administrator": serialize_administrators, 
             "seller": serialize_sellers, 
@@ -543,14 +580,24 @@ def get_user_data():
 #recommendations    
     
 @api.route('/recommendations', methods=['GET'])
+@jwt_required()
 def get_all_recommendations():
     try:
+        current_user = get_jwt_identity()
+        print("Recommendations current", current_user)
+        
+        if not current_user:
+            return jsonify({"error": "Unauthorized access"}), 403
+
         recommendations = Recommendation.query.all()
         serialized_recommendations = [recommendation.serialize() for recommendation in recommendations]
+
         return jsonify({"recommendations": serialized_recommendations}), 200
 
     except Exception as error:
-        return jsonify({"error": f"{error}"}),500
+        logging.error(f"Error retrieving recommendations: {error}")
+        return jsonify({"error": str(error)}), 500
+
 
 @api.route('/neighbor/<int:neighbor_id>/createReco', methods=['POST'])
 def neighbor_create_recommendation(neighbor_id):
