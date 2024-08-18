@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext.js";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -11,9 +11,17 @@ import PersonalProfileDetails from "../../component/personalProfileDetails/Perso
 const ProfileAdmin = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    actions.getProfileAdmin(id);
+    actions.getProfileAdmin(id)
+      .then((data) => {
+        if (!data || data.error) {
+          setError(data.error || "Error fetching profile");
+          navigate("/register");
+        }
+      });
   }, [id]);
 
   if (!store.admin) return <div>Loading...</div>;
@@ -45,7 +53,7 @@ const ProfileAdmin = () => {
                   Haz una recomendación
                 </button>
 
-                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div className="modal-dialog">
                     <div className="modal-content">
                       <div className="modal-header">

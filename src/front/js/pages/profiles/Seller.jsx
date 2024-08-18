@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext.js";
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
@@ -7,9 +7,17 @@ import PersonalProfileDetails from "../../component/personalProfileDetails/Perso
 const ProfileSeller = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    actions.getProfileSeller(id);
+    actions.getProfileSeller(id)
+      .then((data) => {
+        if (!data || data.error) {
+          setError(data.error || "Error fetching profile");
+          navigate("/register");
+        }
+      });
   }, [id]);
 
   if (!store.seller) return <div>Loading...</div>;
