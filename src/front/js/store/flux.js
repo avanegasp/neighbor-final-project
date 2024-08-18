@@ -104,31 +104,47 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("HEREEEE PROFILE", id);
         if (!id) return;
 
+        const token = localStorage.getItem("token")
+        if (!token) {
+          console.error("No token found")
+          return { error: "No token found" }
+        }
+
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/seller/${id}`,
             {
               method: "GET",
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           );
 
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ seller: data });
+            return data;
+          } else {
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error")
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ seller: data });
         } catch (error) {
-          console.error("Error fetching seller:", error.message);
+          console.error("Error fetching seller:", error.message)
+          return { error: "An error occurred" };
         }
       },
 
       getProfileAdmin: async (id) => {
         if (!id) return;
+
+        const token = localStorage.getItem("token")
+        if (!token) {
+          console.error("No token found")
+          return { error: "No token found" }
+        }
 
         try {
           const response = await fetch(
@@ -136,20 +152,24 @@ const getState = ({ getStore, getActions, setStore }) => {
             {
               method: "GET",
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           );
 
           if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
+            const data = await response.json();
+            setStore({ admin: data });
             return false;
+          } else {
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error")
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ admin: data });
         } catch (error) {
-          console.error("Error fetching admin:", error.message);
+          console.error("Error fetching admin:", error.message)
+          return { error: "An error occurred" };
         }
       },
 
@@ -434,30 +454,36 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       getAllRecommendations: async () => {
+        const token = localStorage.getItem("token")
+        if (!token) {
+          console.error("No token found")
+          return { error: "No token found" }
+        }
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/recommendations`,
             {
               method: "GET",
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           );
 
           if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+            const data = await response.json();
+            setStore({ recommendations: data.recommendations });
+            return data;
+          } else {
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error");
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ recommendations: data.recommendations });
         } catch (error) {
           console.error("Error fetching recommendations:", error.message);
         }
       },
-
-
     },
   };
 };
