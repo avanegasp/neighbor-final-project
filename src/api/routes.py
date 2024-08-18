@@ -37,7 +37,7 @@ def login():
                 return jsonify ({"error": "Wrong data!"}), 400
 
             auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email, "userType": neighbor.role})
-            return jsonify({"token": auth_token}), 200
+            return jsonify({"token": auth_token, "user": neighbor.serialize()}), 200
 
         if userType == "SELLER":
             seller = Seller.query.filter_by(email=email).first()
@@ -53,7 +53,7 @@ def login():
                 return jsonify({"error": "Wrong data!"}), 400
 
             auth_token = create_access_token({"id": admin.id, "email": admin.email, "userType": admin.role})
-            return jsonify({"token": auth_token}), 200
+            return jsonify({"token": auth_token, "user": admin.serialize()}), 200
 
     except Exception as error:
          return jsonify({"error": f"{error}"}), 500
@@ -156,11 +156,16 @@ def get_neighbor(id):
     try:
         current_user = get_jwt_identity()
         neighbor = Neighbor.query.get(id)
+        print(current_user, id)
 
         if neighbor is None:
             return jsonify({"error": "neighbor not found"}), 404
+        
         if current_user['id'] != neighbor.id:
             return jsonify({"error": "Unauthorized access"}), 403
+        
+        if current_user['userType'] != "NEIGHBOR":
+            return jsonify({"error": "It's different role"}), 403
 
         return jsonify(neighbor.serialize()), 200
     except Exception as e:
@@ -216,14 +221,22 @@ def get_administrator(id):
 
 # Directorio
 @api.route('/directory', methods=['GET'])
+@jwt_required()
 def get_all_users_directory():
     try:
+        current_user = get_jwt_identity()
+        print(current_user, id)
+
         administrators = Administrator.query.all()
         serialize_administrators = [administrator.serialize() for administrator in administrators]
         sellers = Seller.query.all()
         serialize_sellers = [seller.serialize() for seller in sellers]
         neighbors = Neighbor.query.all()
         serialize_neighbors = [neighbor.serialize() for neighbor in neighbors]
+        
+        if not current_user:
+            return jsonify({"error": "Unauthorized access"}), 403
+        
         return jsonify({
             "administrator": serialize_administrators, 
             "seller": serialize_sellers, 

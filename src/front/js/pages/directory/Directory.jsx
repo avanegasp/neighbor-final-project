@@ -1,13 +1,23 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext.js";
+import { useNavigate } from "react-router-dom";
 import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
 import ModalBodyRecommendation from "../../component/modalRecommendationsProfile/ModalBody.jsx";
 const Directory = () => {
   const { store, actions } = useContext(Context);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    actions.getAllDirectory();
+    actions.getAllDirectory()
+      .then((data) => {
+        if (!data || data.error) {
+          setError(data.error || "Error fetching profile");
+          navigate("/register");
+        }
+      });
+
   }, []);
 
   if (!store.users) return <div>Loading...</div>;

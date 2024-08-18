@@ -45,17 +45,20 @@ const getState = ({ getStore, getActions, setStore }) => {
             headers: { "Content-type": "application/json" },
 
             body: JSON.stringify({ email, password, userType }),
-            body: JSON.stringify({ email, password, userType }),
           });
+          console.log("responseloginflux", response)
           if (!response.ok) {
             return false;
           }
           const data = await response.json();
-          setStore({ currentUser: data.user })
-          setStore({ currentUser: data.user })
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
           localStorage.setItem('token', data.token);
-          // console.log(data);
-          // console.log(getStore().currentUser);
           return data;
         } catch (error) {
           console.log(error);
@@ -66,31 +69,36 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("HEREEEE PROFILE", id);
         if (!id) return;
 
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found");
+          return { error: "No token found" };
+        }
+
         try {
-          const token = localStorage.getItem("token")
-          const response = await fetch(
-            `${process.env.BACKEND_URL}/api/neighbor/${id}`,
-            {
-              method: "GET",
-              headers: {
-                // "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-              },
-            }
-          );
+          const response = await fetch(`${process.env.BACKEND_URL}/api/neighbor/${id}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
 
           if (response.ok) {
             const data = await response.json();
             setStore({ neighbor: data });
-            return data
+            return data;
           } else {
-            return { error: "Unauthorization access" }
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error");
+            return { error: errorData.error || "Authorization error" };
           }
         } catch (error) {
           console.error("Error fetching neighbor:", error.message);
-          return { error: "An error ocurred" }
+          return { error: "An error occurred" };
         }
       },
+
 
       getProfileSeller: async (id) => {
         console.log("HEREEEE PROFILE", id);
@@ -146,24 +154,33 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getAllDirectory: async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found");
+          return { error: "No token found" };
+        }
+
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/directory`,
             {
               method: "GET",
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           );
 
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ users: data });
+            return data;
+          } else {
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error");
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ users: data });
         } catch (error) {
           console.error("Error fetching directory:", error.message);
         }
