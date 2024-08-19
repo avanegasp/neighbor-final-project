@@ -12,6 +12,23 @@ export const Navbar = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const name = localStorage.getItem("name")
+  function roleLink() {
+    const role = localStorage.getItem("role")
+    const id = localStorage.getItem("id")
+
+    if (role && id) {
+      switch (role) {
+        case "NEIGHBOR":
+          return `/profileNeighbor/${id}`;
+        case "SELLER":
+          return `/profileSeller/${id}`;
+        case "ADMINISTRATOR":
+          return `/profileAdmin/${id}`;
+      }
+    }
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -20,7 +37,7 @@ export const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setIsAuthenticated(false);
     navigate('/login');
   };
@@ -34,7 +51,15 @@ export const Navbar = () => {
       <div className="d-flex justify-content-end align-items-center flex-grow-1">
         {location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/" ? null : (
           <>
-            <div className="btn-group me-5"> 
+            <div className="d-flex justify-content-center flex-grow-1">
+              <span><strong className="fs-2 text">Sesión de :</strong></span>
+              <span className="ms-3">
+                <Link className="fs-2 text" to={roleLink()}>
+                  {name}
+                </Link>
+              </span>
+            </div>
+            <div className="btn-group me-5">
               <button
                 className="btn text-white fs-1"
                 type="button"
