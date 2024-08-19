@@ -13,8 +13,9 @@ const Recommendations = () => {
     useEffect(() => {
         actions.getAllRecommendations()
             .then((data) => {
-                if (!data || data.error) {
-                    setError(data.error || "Error fetching profile")
+                console.log('hereee', data)
+                setError(data?.error || "Error fetching profile")
+                if (data?.error && data.error === 'No token found') {
                     navigate("/register")
                 }
             })
@@ -38,7 +39,7 @@ const Recommendations = () => {
                     {store.recommendations.map((recommendation, index) => {
 
                         return (
-                            <div class="accordion" id={`accordionPanelsStayOpenExample${index}`}>
+                            <div className="accordion" key={index} id={`accordionPanelsStayOpenExample${index}`}>
                                 <RecommendationsExtern name={recommendation.name}
                                     lastname={recommendation.lastname}
                                     shopName={recommendation.shopName}

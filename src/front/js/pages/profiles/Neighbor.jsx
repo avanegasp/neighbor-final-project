@@ -13,9 +13,11 @@ const ProfileNeighbor = () => {
   useEffect(() => {
     actions.getProfileNeighbor(id)
       .then((data) => {
-        if (!data || data.error) {
+        if (data?.error) {
           setError(data.error || "Error fetching profile");
-          navigate("/register");
+          if (data.error === "Unknown error") {
+            navigate("/register");
+          }
         }
       });
   }, []);

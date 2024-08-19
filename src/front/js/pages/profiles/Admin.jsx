@@ -14,15 +14,39 @@ const ProfileAdmin = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
+
+  const [recommendation, setRecommendation] = useState({
+    name: "",
+    lastname: "",
+    shopName: "",
+    phone: ""
+  })
+
+  function handleChange(e) {
+    setRecommendation({ ...recommendation, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (id) {
+      await actions.createAdminRecommendation(id, recommendation)
+      navigate("/recommendations")
+    }
+  }
+
   useEffect(() => {
     actions.getProfileAdmin(id)
       .then((data) => {
-        if (!data || data.error) {
+        if (data?.error) {
           setError(data.error || "Error fetching profile");
-          navigate("/register");
+          if (data.error === "Unknown error") {
+            navigate("/register");
+          }
         }
       });
-  }, [id]);
+  }, []);
+
+
 
   if (!store.admin) return <div>Loading...</div>;
 
@@ -44,12 +68,10 @@ const ProfileAdmin = () => {
               <div className="card-body text-center">
                 <h5 className="card-title mb-4">Libros Favoritos</h5>
                 <ol className="list-unlysted">
-                  <p className="card-text">
-                    <li>Lord Rings</li>
-                    <li>Harry Potter</li>
-                  </p>
+                  <li>Lord Rings</li>
+                  <li>Harry Potter</li>
                 </ol>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Haz una recomendación
                 </button>
 
@@ -61,19 +83,33 @@ const ProfileAdmin = () => {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div className="modal-body">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                           <div className="mb-3">
-                            <label for="exampleInputName" className="form-label">Nombre:</label>
-                            <input type="text" className="form-control" id="exampleInputName" />
+                            <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
+                            <input
+                              name="name"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              value={recommendation.name}
+                              id="exampleInputName" />
                           </div>
                           <div className="mb-3">
-                            <label for="exampleInputLastname" className="form-label">Apellido:</label>
-                            <input type="text" className="form-control" id="exampleInputLastName" />
+                            <label htmlFor="exampleInputLastname" className="form-label">Apellido:</label>
+                            <input
+                              name="lastname"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              value={recommendation.lastname}
+                              id="exampleInputLastName" />
                           </div>
                           <div className="mb-3">
                             <label htmlFor="exampleInputPhone" className="form-label">Whatsapp:</label>
                             <PhoneInput
                               country={'us'}
+                              onChange={(phone) => setRecommendation({ ...recommendation, phone })}
+                              value={recommendation.phone}
                               inputProps={{
                                 name: 'phone',
                                 id: 'exampleInputPhone',
@@ -84,11 +120,17 @@ const ProfileAdmin = () => {
                             />
                           </div>
                           <div className="mb-3">
-                            <label for="exampleInputShopName" className="form-label">Nombre del comercio:</label>
-                            <input type="text" className="form-control" id="exampleInputShopName" placeholder="Ferretería Mis llaves" />
+                            <label htmlFor="exampleInputShopName" className="form-label">Nombre del comercio:</label>
+                            <input
+                              name="shopName"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              id="exampleInputShopName"
+                              placeholder="Ferretería Mis llaves" />
                             <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
                           </div>
-                          <button type="submit" className="btn btn-primary">Submit</button>
+                          <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
                         </form>
 
                       </div>

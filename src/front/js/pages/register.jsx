@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Context } from "../store/appContext";
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import "../../styles/inputPhone.css";
@@ -143,6 +143,10 @@ export default function Register() {
 
                 <button type="submit" className="btn btn-primary">Create an account</button>
             </form>
+            <div>
+                {" "}
+                <Link to={"/login"}>Ya te registraste? Ingresa por acá!</Link>
+            </div>
         </div>
     );
 }

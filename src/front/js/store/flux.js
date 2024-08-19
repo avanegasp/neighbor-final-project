@@ -47,45 +47,48 @@ const getState = ({ getStore, getActions, setStore }) => {
             body: JSON.stringify({ email, password, userType }),
           });
           console.log("responseloginflux", response)
-          if (!response.ok) {
-            return false;
-          }
+          // if (!response.ok) {
+          //   return false;
+          // }
           const data = await response.json();
           console.log("data completa del login", data);
 
           if (data.user) {
             setStore({ currentUser: data.user });
+            localStorage.setItem('token', data.token);
+            return data;
           } else {
-            console.log("El objeto 'user' no está presente en la respuesta");
+            console.log("El objeto 'user' no está presente en la respuesta")
+            return false
           }
-          localStorage.setItem('token', data.token);
-          return data;
         } catch (error) {
-          console.log(error);
+          console.log(error)
+          return false
         }
       },
 
       getProfileNeighbor: async (id) => {
         console.log("HEREEEE PROFILE", id);
-        if (!id) return;
-
-        const token = localStorage.getItem("token");
-        if (!token) {
-          console.error("No token found");
-          return { error: "No token found" };
-        }
+        // if (!id) return;
 
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/api/neighbor/${id}`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          });
+          const token = localStorage.getItem("token")
+          console.log("TOKEN NEIGHBOR", token)
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/neighbor/${id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+              },
+            }
+          );
 
+          console.log("response", response)
           if (response.ok) {
             const data = await response.json();
+            console.log("data neighbor", data)
             setStore({ neighbor: data });
             return data;
           } else {
@@ -138,12 +141,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileAdmin: async (id) => {
-        if (!id) return;
+        if (!id) {
+          console.error("No ID provided");
+          return { error: "No ID provided" };
+        }
 
-        const token = localStorage.getItem("token")
+        const token = localStorage.getItem("token");
         if (!token) {
-          console.error("No token found")
-          return { error: "No token found" }
+          console.error("No token found");
+          return { error: "No token found" };
         }
 
         try {
@@ -158,20 +164,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
-          if (!response.ok) {
+          if (response.ok) {
             const data = await response.json();
             setStore({ admin: data });
-            return false;
+            return data;
           } else {
-            const errorData = await response.json()
-            console.error("Authorization error:", errorData.error || "Unknown error")
+            const errorData = await response.json();
+            console.error("Authorization error:", errorData.error || "Unknown error");
             return { error: errorData.error || "Authorization error" };
           }
         } catch (error) {
-          console.error("Error fetching admin:", error.message)
+          console.error("Error fetching admin:", error.message);
           return { error: "An error occurred" };
         }
       },
+
 
       getAllDirectory: async () => {
         const token = localStorage.getItem("token");
@@ -308,6 +315,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log("data completa del registerNeighbor", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
@@ -341,18 +356,24 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
-
           if (!response.ok) {
             return false;
           }
-
           const data = await response.json();
-          console.log("seller response", data)
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
         }
       },
+
 
 
       registerAdmin: async (
@@ -384,6 +405,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
@@ -451,6 +480,22 @@ const getState = ({ getStore, getActions, setStore }) => {
           } catch (error) {
             console.log(error);
           }
+          getCurrentUser: async () => {
+            getCurrentUser: async () => {
+              const token = localStorage("token");
+              try {
+                const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                  },
+                });
+                const data = await response.json();
+                setStore({ currentUser: data });
+              } catch (error) {
+                console.log(error);
+              }
+            }
+          }
         }
       },
       getAllRecommendations: async () => {
@@ -471,7 +516,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
-          if (!response.ok) {
+          if (response.ok) {
             const data = await response.json();
             setStore({ recommendations: data.recommendations });
             return data;
@@ -484,6 +529,39 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching recommendations:", error.message);
         }
       },
+
+      createAdminRecommendation: async (id, { name, shopName, lastname, phone }) => {
+        if (!id) return;
+        // const token = localStorage.getItem("token");
+        try {
+          const response = await
+            fetch(
+              `${process.env.BACKEND_URL}/api/administrator/${id}/createReco`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization:`Bearer ${localStorage.getItem("token")}`
+              },
+              body: JSON.stringify({
+                name,
+                lastname,
+                shopName,
+                phone
+              })
+            })
+          if (response.ok) {
+            alert("Recommendation created successfully!");
+          } else {
+            alert(response.error || "Failed to create recommendation");
+          }
+          const data = response.json()
+          return data
+        } catch (error) {
+          console.error("Error:", error)
+        }
+      }
+
+
     },
   };
 };

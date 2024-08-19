@@ -6,10 +6,10 @@ const RecommendationsExtern = ({ shopName, phone, name, lastname, numIndex }) =>
     const whatsappLink = `https://wa.me/${phone}`;
     return (
         <>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
+            <div className="accordion-item">
+                <h2 className="accordion-header">
                     <button
-                        class="accordion-button collapsed"
+                        className="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target={`#panelsStayOpen-collapseOne-${numIndex}`}
@@ -21,9 +21,9 @@ const RecommendationsExtern = ({ shopName, phone, name, lastname, numIndex }) =>
                 </h2>
                 <div
                     id={`panelsStayOpen-collapseOne-${numIndex}`}
-                    class="accordion-collapse collapse"
+                    className="accordion-collapse collapse"
                     data-bs-parent={`#accordionPanelsStayOpenExample${numIndex}`}>
-                    <div class="accordion-body">
+                    <div className="accordion-body">
                         <ul>
 
                             <li>
