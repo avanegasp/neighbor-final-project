@@ -37,13 +37,15 @@ const ProfileAdmin = () => {
   useEffect(() => {
     actions.getProfileAdmin(id)
       .then((data) => {
-        // console.log('hereee', data)
-        setError(data?.error || "Error fetching profile")
-        if (data?.error && data.error === 'No token found') {
-          navigate("/register")
+        if (data?.error) {
+          setError(data.error || "Error fetching profile");
+          if (data.error === "Unknown error") {
+            navigate("/register");
+          }
         }
-      })
+      });
   }, []);
+
 
 
   if (!store.admin) return <div>Loading...</div>;
@@ -66,10 +68,8 @@ const ProfileAdmin = () => {
               <div className="card-body text-center">
                 <h5 className="card-title mb-4">Libros Favoritos</h5>
                 <ol className="list-unlysted">
-                  <p className="card-text">
-                    <li>Lord Rings</li>
-                    <li>Harry Potter</li>
-                  </p>
+                  <li>Lord Rings</li>
+                  <li>Harry Potter</li>
                 </ol>
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Haz una recomendación

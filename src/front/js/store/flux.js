@@ -141,12 +141,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileAdmin: async (id) => {
-        if (!id) return;
+        if (!id) {
+          console.error("No ID provided");
+          return { error: "No ID provided" };
+        }
 
-        const token = localStorage.getItem("token")
+        const token = localStorage.getItem("token");
         if (!token) {
-          console.error("No token found")
-          return { error: "No token found" }
+          console.error("No token found");
+          return { error: "No token found" };
         }
 
         try {
@@ -164,16 +167,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const data = await response.json();
             setStore({ admin: data });
+            return data;
           } else {
-            const errorData = await response.json()
-            console.error("Authorization error:", errorData.error || "Unknown error")
+            const errorData = await response.json();
+            console.error("Authorization error:", errorData.error || "Unknown error");
             return { error: errorData.error || "Authorization error" };
           }
         } catch (error) {
-          console.error("Error fetching admin:", error.message)
+          console.error("Error fetching admin:", error.message);
           return { error: "An error occurred" };
         }
       },
+
 
       getAllDirectory: async () => {
         const token = localStorage.getItem("token");
@@ -306,9 +311,9 @@ const getState = ({ getStore, getActions, setStore }) => {
               body: JSON.stringify({ email, password, name, lastname, floor }),
             }
           );
-          // if (!response.ok) {
-          //   return false;
-          // }
+          if (!response.ok) {
+            return false;
+          }
           const data = await response.json();
           console.log("data completa del registerNeighbor", data);
 

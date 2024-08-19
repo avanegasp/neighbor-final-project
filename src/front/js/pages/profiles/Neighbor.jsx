@@ -14,13 +14,11 @@ const ProfileNeighbor = () => {
     actions.getProfileNeighbor(id)
       .then((data) => {
         if (data?.error) {
-          setError(data?.error || "Error fetching profile");
-          if (data.error === "Authorization error") {
-            console.log("data", data)
+          setError(data.error || "Error fetching profile");
+          if (data.error === "Unknown error") {
             navigate("/register");
           }
         }
-
       });
   }, []);
 
