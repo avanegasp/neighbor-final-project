@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import "../../styles/index.css"; // Asegúrate de crear un archivo CSS personalizado
 
 const Login = () => {
   const { store, actions } = useContext(Context);
@@ -9,7 +10,7 @@ const Login = () => {
   const [userType, setUserType] = useState("");
   const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await actions.login(email, password, userType);
     console.log(email, password, userType);
@@ -26,75 +27,61 @@ const Login = () => {
           navigate(`/profileAdmin/${response.user.id}`);
           return;
       }
-    }
-    else{
+    } else {
       alert("Login failed");
     }
   };
 
   return (
-    <div className="container d-flex flex-column min-vh-100">
-      <div className="m-2">
-        <h1>Iniciar sesión</h1>
-      </div>
+    <div className="login-container">
+      <h1>Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
-        <div
-          className="btn-group btn-group-toggle"
-          data-toggle="buttons"
-          onChange={(e) => setUserType(e.target.value)}
-        >
-          <label className="btn btn-secondary ">
-            <input type="radio" name="options" id="option1" value="NEIGHBOR" />
-            {"Neighbor"}
+        <div className="user-type-group" onChange={(e) => setUserType(e.target.value)}>
+          <label className="user-type-option">
+            <input type="radio" name="options" value="NEIGHBOR" />
+            Neighbor
           </label>
-          <label className="btn btn-secondary">
-            <input type="radio" name="options" id="option2" value="SELLER" />
-            {"Seller"}
+          <label className="user-type-option">
+            <input type="radio" name="options" value="SELLER" />
+            Seller
           </label>
-          <label className="btn btn-secondary">
-            <input
-              type="radio"
-              name="options"
-              id="option3"
-              value="ADMINISTRATOR"
-            />
-            {"Admin"}
+          <label className="user-type-option">
+            <input type="radio" name="options" value="ADMINISTRATOR" />
+            Admin
           </label>
         </div>
-        <div className="form-group justify-content-center align-items-start">
+
+        <div className="form-group">
           <label htmlFor="LoginEmail">Correo electrónico</label>
           <input
             type="email"
-            className="form-control"
             id="LoginEmail"
             value={email}
-            aria-describedby="emailHelp"
             placeholder="Enter email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <small id="emailHelp" className="form-text text-muted">
-            Nunca compartiremos tu correo con nadie.
-          </small>
+          <small id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
         </div>
+
         <div className="form-group">
           <label htmlFor="LoginPassword">Contraseña</label>
           <input
             type="password"
-            className="form-control"
             id="LoginPassword"
             value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit my-2" className="btn btn-primary">
+
+        <button type="submit" className="login-button">
           Iniciar sesión
         </button>
       </form>
+
       <div>
-        {" "}
-        <Link to={"/register"}>No tienes una cuenta? Regístrate aquí!</Link>
+        <Link to={"/register"}>¿No tienes una cuenta? Regístrate aquí!</Link>
       </div>
     </div>
   );
