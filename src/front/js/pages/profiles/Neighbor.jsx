@@ -13,11 +13,14 @@ const ProfileNeighbor = () => {
   useEffect(() => {
     actions.getProfileNeighbor(id)
       .then((data) => {
-        setError(data?.error || "Error fetching profile");
-        if (data?.error && data.error === "Authorization error") {
-          console.log("data", data)
-          navigate("/register");
+        if (data?.error) {
+          setError(data?.error || "Error fetching profile");
+          if (data.error === "Authorization error") {
+            console.log("data", data)
+            navigate("/register");
+          }
         }
+
       });
   }, []);
 

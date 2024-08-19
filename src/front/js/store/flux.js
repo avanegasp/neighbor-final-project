@@ -69,10 +69,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getProfileNeighbor: async (id) => {
         console.log("HEREEEE PROFILE", id);
-        if (!id) return;
+        // if (!id) return;
 
         try {
           const token = localStorage.getItem("token")
+          console.log("TOKEN NEIGHBOR", token)
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${id}`,
             {
@@ -84,8 +85,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
+          console.log("response", response)
           if (response.ok) {
             const data = await response.json();
+            console.log("data neighbor", data)
             setStore({ neighbor: data });
             return data;
           } else {
@@ -303,10 +306,18 @@ const getState = ({ getStore, getActions, setStore }) => {
               body: JSON.stringify({ email, password, name, lastname, floor }),
             }
           );
-          if (!response.ok) {
-            return false;
-          }
+          // if (!response.ok) {
+          //   return false;
+          // }
           const data = await response.json();
+          console.log("data completa del registerNeighbor", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
@@ -340,15 +351,18 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
-
-
           if (!response.ok) {
             return false;
           }
-
-
           const data = await response.json();
-          console.log("seller response", data)
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
@@ -386,6 +400,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
