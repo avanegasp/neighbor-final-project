@@ -554,8 +554,67 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else {
             alert(response.error || "Failed to create recommendation");
           }
-          const data = response.json()
-          return data
+          return
+        } catch (error) {
+          console.error("Error:", error)
+        }
+      },
+
+      createNeighborRecommendation: async (id, { name, shopName, lastname, phone }) => {
+        if (!id) return;
+        // const token = localStorage.getItem("token");
+        try {
+          const response = await
+            fetch(
+              `${process.env.BACKEND_URL}/api/neighbor/${id}/createReco`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization:`Bearer ${localStorage.getItem("token")}`
+              },
+              body: JSON.stringify({
+                name,
+                lastname,
+                shopName,
+                phone
+              })
+            })
+          if (response.ok) {
+            alert("Recommendation created successfully!");
+          } else {
+            alert(response.error || "Failed to create recommendation");
+          }
+          return
+        } catch (error) {
+          console.error("Error:", error)
+        }
+      },
+
+      createSellerRecommendation: async (id, { name, shopName, lastname, phone }) => {
+        if (!id) return;
+        // const token = localStorage.getItem("token");
+        try {
+          const response = await
+            fetch(
+              `${process.env.BACKEND_URL}/api/seller/${id}/createReco`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization:`Bearer ${localStorage.getItem("token")}`
+              },
+              body: JSON.stringify({
+                name,
+                lastname,
+                shopName,
+                phone
+              })
+            })
+          if (response.ok) {
+            alert("Recommendation created successfully!");
+          } else {
+            alert(response.error || "Failed to create recommendation");
+          }
+          return
         } catch (error) {
           console.error("Error:", error)
         }
