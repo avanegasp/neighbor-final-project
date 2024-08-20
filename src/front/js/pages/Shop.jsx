@@ -1,14 +1,22 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import StarsRating from "../component/StarsRating.jsx";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 const Shop = ({}) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    actions.getSingleBusiness(params.seller_id, params.business_id);
+    const getSingleBusiness = async () =>{
+      const data = await actions.getSingleBusiness(params.seller_id, params.business_id);
+      if (!data){
+        navigate(`/profileSeller/${params.seller_id}`);
+      }
+    }
+    getSingleBusiness();
   }, []);
   console.log(store.shop);
 
@@ -43,9 +51,9 @@ const Shop = ({}) => {
                     <strong>Horario: </strong>{store.shop?.schedule}
                   </p>
                 </div>
-                <div className="container-fluid text-center">
+                {/* <div className="container-fluid text-center">
                   <StarsRating />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

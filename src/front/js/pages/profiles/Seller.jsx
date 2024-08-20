@@ -53,6 +53,7 @@ const ProfileSeller = () => {
                 <a aria-labelledby="ModalBusiness">
                   <ModalBusiness
                   shopName={store.seller.shopName}
+                  id = {id}
                     />
                 </a>
               </div>

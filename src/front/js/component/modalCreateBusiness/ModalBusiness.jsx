@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Context } from "../../store/appContext";
 
-const ModalBusiness = ({ shopName }) => {
+const ModalBusiness = ({ shopName, id }) => {
+  const { store, actions } = useContext(Context);
   const [price, setPrice] = useState("");
   const [schedule, setSchedule] = useState("");
-  const { id } = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await actions.createBusiness(id, shopName, price, schedule);
-    console.log(shopName, price, schedule);
+    console.log(id, shopName, price, schedule);
     console.log(response);
   };
 
@@ -36,7 +36,7 @@ const ModalBusiness = ({ shopName }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                {shopName}
+                {shopName}. Your id: {id}
               </h1>
               <button
                 type="button"
@@ -79,14 +79,11 @@ const ModalBusiness = ({ shopName }) => {
             </div>
             <div className="modal-footer">
               <button
-                type="button"
+                type="button submit"
                 className="btn btn-primary"
                 data-bs-dismiss="modal"
               >
                 Crear
-              </button>
-              <button type="button" className="btn btn-secondary">
-                Cancelar
               </button>
             </div>
           </div>

@@ -373,7 +373,7 @@ def edit_admin(id):
 def create_business(seller_id):
     try:
         body = request.json
-        name = body.get("name", None)
+        name = body.get("shopName", None)
         price = body.get("price", None)
         schedule = body.get("schedule", None)
         
@@ -405,10 +405,10 @@ def get_all_businesses():
     except Exception as error:
         return jsonify ({"error": f"{error}"}), 500
     
-@api.route('seller/<int:seller_id>/business/<string:business_name>', methods=['GET'])
-def get_single_business(seller_id, business_name):
+@api.route('seller/<int:seller_id>/business/<string:product_name>', methods=['GET'])
+def get_single_business(seller_id, product_name):
     try:
-        business = Product.query.filter_by(seller_id=seller_id, name=business_name).first()
+        business = Product.query.filter_by(seller_id=seller_id, name=product_name).first()
         if not business:
             return jsonify({"Business not found"}), 404
         return jsonify({"Business": business.serialize()}), 200

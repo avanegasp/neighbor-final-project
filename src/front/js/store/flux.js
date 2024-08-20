@@ -126,6 +126,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const data = await response.json();
             setStore({ seller: data });
             console.log(data);
+            console.log(token);
             return data;
           } else {
             const errorData = await response.json()
@@ -391,12 +392,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      getSingleBusiness: async (seller_id, business_name) => {
-        if (!seller_id || !business_name) return;
+      getSingleBusiness: async (seller_id, product_name) => {
+        if (!seller_id || !product_name) return;
         //const jwt = localStorage.getItem("token");
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${business_name}`,
+            `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${product_name}`,
             {
               method: "GET",
               headers: {
@@ -410,6 +411,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await response.json();
           setStore({ shop: data.Business });
+          return true;
         } catch (error) {
           console.log(error);
         }
@@ -484,7 +486,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching recommendations:", error.message);
         }
       },
-      createBusiness: async({id}) =>{
+      createBusiness: async(id, shopName, price, schedule) =>{
         const token = localStorage.getItem("token")
         if (!token) {
           console.error("No token found")
@@ -503,13 +505,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
           if (!response.ok) {
-            return false;
+            console.log(response);
           } else {
             const data = await response.json();
             return data;
           }
         } catch (error) {
-          consolele.log(error);
+          console.log(error);
         }
 
       }
