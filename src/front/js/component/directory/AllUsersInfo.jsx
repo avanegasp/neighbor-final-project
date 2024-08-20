@@ -43,7 +43,7 @@ const AllUsersInfo = ({
           </button>
         </div>
         <div className="mb-5">
-          <ModalButtonRecommendation recommendation={recommendation} role={role} />
+          <ModalButtonRecommendation recommendation={recommendation} role={role} id={id} />
         </div>
       </div>
 

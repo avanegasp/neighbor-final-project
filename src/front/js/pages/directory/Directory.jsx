@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-import Search from "../../component/search/Search.jsx";
+// import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
 import ModalBodyRecommendation from "../../component/modalRecommendationsProfile/ModalBody.jsx";
 const Directory = () => {
@@ -12,9 +12,11 @@ const Directory = () => {
   useEffect(() => {
     actions.getAllDirectory()
       .then((data) => {
-        if (!data || data.error) {
+        if (data?.error) {
           setError(data.error || "Error fetching profile");
-          navigate("/register");
+          if (data.error === "Unauthorized access") {
+            navigate("/register");
+          }
         }
       });
 
@@ -35,7 +37,7 @@ const Directory = () => {
           <h1 className="d-flex justify-context-center">Directorio</h1>
 
           <div className="input-group mb-3 inputSearch w-25">
-            <Search />
+            {/* <Search /> */}
           </div>
         </div>
 
@@ -60,7 +62,7 @@ const Directory = () => {
                   id={user.id}
                   recommendation={user.recommendations}
                 />
-                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <ModalBodyRecommendation
                     user={user}
                     recommendations={user.recommendations} />
@@ -84,7 +86,7 @@ const Directory = () => {
                   id={user.id}
                   recommendation={user.recommendations}
                 />
-                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <ModalBodyRecommendation
                     user={user}
                     recommendations={user.recommendations} />
@@ -111,7 +113,7 @@ const Directory = () => {
                   id={user.id}
                   recommendation={user.recommendations}
                 />
-                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <ModalBodyRecommendation
                     user={user}
                     recommendations={user.recommendations} />
