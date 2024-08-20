@@ -12,6 +12,10 @@ class RoleEnum(enum.Enum):
     NEIGHBOR = "NEIGHBOR"
     SELLER = "SELLER"
 
+class StatusEnum(enum.Enum):
+    APPROVED ="APPROVED"
+    REJECTED = "REJECTED"
+    PENDING = "PENDING"
 
 class Neighbor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +25,7 @@ class Neighbor(db.Model):
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.NEIGHBOR.value)
+    status = db.Column(db.String(50), nullable=False, default=StatusEnum.PENDING.value)
     
     review = db.relationship('Review', backref='Neighbor', uselist=False)
     recommendations = db.relationship('Recommendation', backref='neighbor')
@@ -37,7 +42,8 @@ class Neighbor(db.Model):
             "lastname": self.lastname,
             "floor": self.floor,
             "role": self.role,
-            "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
+            "recommendations": [recommendation.serialize() for recommendation in self.recommendations],
+            "status": self.status
             # do not serialize the password, its a security breach
         }
 
@@ -51,6 +57,7 @@ class Seller(db.Model):
     shopName= db.Column(db.String(80), unique=False, nullable=False)
     phone= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
+    status = db.Column(db.String(50), nullable=False, default=StatusEnum.PENDING.value)
 
     products = db.relationship('Product', backref='seller')
     orders = db.relationship('Order', backref='seller')
@@ -70,7 +77,8 @@ class Seller(db.Model):
             "phone": self.phone,
             "role": self.role,
             "orders": [order.serialize() for order in self.orders],
-            "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
+            "recommendations": [recommendation.serialize() for recommendation in self.recommendations],
+            "status": self.status
         } 
 
 class Administrator(db.Model):

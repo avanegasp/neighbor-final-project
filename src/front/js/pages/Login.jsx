@@ -25,11 +25,15 @@ const Login = () => {
           return;
         case "ADMINISTRATOR":
           navigate(`/profileAdmin/${response.user.id}`);
-          return
+          return;
+
+
       }
-    } else {
+    }
+    else {
       alert("Login failed");
     }
+
   };
 
   return (
