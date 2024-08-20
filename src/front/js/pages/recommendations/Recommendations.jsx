@@ -1,15 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
+import { useNavigate } from "react-router-dom";
 import RecommendationsExtern from "../../component/recommnedationsExtern/RecommnedationsExtern.jsx";
-// import RecommendationSearch from "../../component/recommendationSearch/RecommendationSearch.jsx";
 
 
 const Recommendations = () => {
     const { store, actions } = useContext(Context)
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
     console.log("recommendations", store.recommendations)
 
     useEffect(() => {
         actions.getAllRecommendations()
+            .then((data) => {
+                console.log('hereee', data)
+                setError(data?.error || "Error fetching profile")
+                if (data?.error && data.error === 'No token found') {
+                    navigate("/register")
+                }
+            })
     }, [])
 
     if (!store.recommendations) return <div>Loading...</div>
@@ -22,10 +31,6 @@ const Recommendations = () => {
                     style={{ minHeight: "20vh" }}
                 >
                     <h1 className="d-flex justify-context-center">Recomendaciones de mis vecinos</h1>
-
-                    {/* <div className="input-group mb-3 inputSearch w-25">
-                        <RecommendationSearch />
-                    </div> */}
                 </div>
                 <div
                     className="flex-grow-1 overflow-auto border border-white p-3"
@@ -34,7 +39,9 @@ const Recommendations = () => {
                     {store.recommendations.map((recommendation, index) => {
 
                         return (
-                            <div className="accordion" id={`accordionPanelsStayOpenExample${index}`}>
+
+                            <div className="accordion" key={index} id={`accordionPanelsStayOpenExample${index}`}>
+
                                 <RecommendationsExtern name={recommendation.name}
                                     lastname={recommendation.lastname}
                                     shopName={recommendation.shopName}

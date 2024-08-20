@@ -1,5 +1,3 @@
-import { faL } from "@fortawesome/free-solid-svg-icons";
-
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -48,50 +46,72 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             body: JSON.stringify({ email, password, userType }),
           });
-          if (!response.ok) {
-            return false;
-          }
+          console.log("responseloginflux", response)
+          // if (!response.ok) {
+          //   return false;
+          // }
           const data = await response.json();
-          setStore({ currentUser: data.user })
-          localStorage.setItem('token', data.token);
-          // console.log(data);
-          // console.log(getStore().currentUser);
-          return data;
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+            localStorage.setItem('token', data.token);
+            return data;
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta")
+            return false
+          }
         } catch (error) {
-          console.log(error);
+          console.log(error)
+          return false
         }
       },
 
       getProfileNeighbor: async (id) => {
         console.log("HEREEEE PROFILE", id);
-        if (!id) return;
+        // if (!id) return;
 
         try {
+          const token = localStorage.getItem("token")
+          console.log("TOKEN NEIGHBOR", token)
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${id}`,
             {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
               },
             }
           );
 
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+          console.log("response", response)
+          if (response.ok) {
+            const data = await response.json();
+            console.log("data neighbor", data)
+            setStore({ neighbor: data });
+            return data;
+          } else {
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error");
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ neighbor: data });
         } catch (error) {
           console.error("Error fetching neighbor:", error.message);
+          return { error: "An error occurred" };
         }
       },
+
 
       getProfileSeller: async (id) => {
         console.log("HEREEEE PROFILE", id);
         if (!id) return;
+
+        const token = localStorage.getItem("token")
+        if (!token) {
+          console.error("No token found")
+          return { error: "No token found" }
+        }
 
         try {
           const response = await fetch(
@@ -99,25 +119,38 @@ const getState = ({ getStore, getActions, setStore }) => {
             {
               method: "GET",
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           );
 
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ seller: data });
+            return data;
+          } else {
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error")
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ seller: data });
         } catch (error) {
-          console.error("Error fetching seller:", error.message);
+          console.error("Error fetching seller:", error.message)
+          return { error: "An error occurred" };
         }
       },
 
       getProfileAdmin: async (id) => {
-        if (!id) return;
+        if (!id) {
+          console.error("No ID provided");
+          return { error: "No ID provided" };
+        }
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found");
+          return { error: "No token found" };
+        }
 
         try {
           const response = await fetch(
@@ -125,42 +158,56 @@ const getState = ({ getStore, getActions, setStore }) => {
             {
               method: "GET",
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           );
 
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ admin: data });
+            return data;
+          } else {
+            const errorData = await response.json();
+            console.error("Authorization error:", errorData.error || "Unknown error");
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ admin: data });
         } catch (error) {
           console.error("Error fetching admin:", error.message);
+          return { error: "An error occurred" };
         }
       },
 
+
       getAllDirectory: async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found");
+          return { error: "No token found" };
+        }
+
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/directory`,
             {
               method: "GET",
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           );
 
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ users: data });
+            return data;
+          } else {
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error");
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ users: data });
         } catch (error) {
           console.error("Error fetching directory:", error.message);
         }
@@ -268,6 +315,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log("data completa del registerNeighbor", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
@@ -305,12 +360,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          console.log("seller response", data)
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
         }
       },
+
+
 
       registerAdmin: async (
         email,
@@ -341,6 +405,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
           return data;
         } catch (error) {
           console.log(error);
@@ -395,44 +467,160 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getCurrentUser: async () => {
-        const token = localStorage("token");
-        try {
-          const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          });
-          const data = await response.json();
-          setStore({ currentUser: data });
-
-        } catch (error) {
-          console.log(error);
+        getCurrentUser: async () => {
+          const token = localStorage("token");
+          try {
+            const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            });
+            const data = await response.json();
+            setStore({ currentUser: data });
+          } catch (error) {
+            console.log(error);
+          }
+          getCurrentUser: async () => {
+            getCurrentUser: async () => {
+              const token = localStorage("token");
+              try {
+                const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                  },
+                });
+                const data = await response.json();
+                setStore({ currentUser: data });
+              } catch (error) {
+                console.log(error);
+              }
+            }
+          }
         }
       },
-
       getAllRecommendations: async () => {
+        const token = localStorage.getItem("token")
+        if (!token) {
+          console.error("No token found")
+          return { error: "No token found" }
+        }
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/recommendations`,
             {
               method: "GET",
               headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
             }
           );
 
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ recommendations: data.recommendations });
+            return data;
+          } else {
+            const errorData = await response.json()
+            console.error("Authorization error:", errorData.error || "Unknown error");
+            return { error: errorData.error || "Authorization error" };
           }
-
-          const data = await response.json();
-          setStore({ recommendations: data.recommendations });
         } catch (error) {
           console.error("Error fetching recommendations:", error.message);
         }
       },
+
+      createAdminRecommendation: async (id, { name, shopName, lastname, phone }) => {
+        if (!id) return;
+        // const token = localStorage.getItem("token");
+        try {
+          const response = await
+            fetch(
+              `${process.env.BACKEND_URL}/api/administrator/${id}/createReco`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization:`Bearer ${localStorage.getItem("token")}`
+              },
+              body: JSON.stringify({
+                name,
+                lastname,
+                shopName,
+                phone
+              })
+            })
+          if (response.ok) {
+            alert("Recommendation created successfully!");
+          } else {
+            alert(response.error || "Failed to create recommendation");
+          }
+          return
+        } catch (error) {
+          console.error("Error:", error)
+        }
+      },
+
+      createNeighborRecommendation: async (id, { name, shopName, lastname, phone }) => {
+        if (!id) return;
+        // const token = localStorage.getItem("token");
+        try {
+          const response = await
+            fetch(
+              `${process.env.BACKEND_URL}/api/neighbor/${id}/createReco`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization:`Bearer ${localStorage.getItem("token")}`
+              },
+              body: JSON.stringify({
+                name,
+                lastname,
+                shopName,
+                phone
+              })
+            })
+          if (response.ok) {
+            alert("Recommendation created successfully!");
+          } else {
+            alert(response.error || "Failed to create recommendation");
+          }
+          return
+        } catch (error) {
+          console.error("Error:", error)
+        }
+      },
+
+      createSellerRecommendation: async (id, { name, shopName, lastname, phone }) => {
+        if (!id) return;
+        // const token = localStorage.getItem("token");
+        try {
+          const response = await
+            fetch(
+              `${process.env.BACKEND_URL}/api/seller/${id}/createReco`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization:`Bearer ${localStorage.getItem("token")}`
+              },
+              body: JSON.stringify({
+                name,
+                lastname,
+                shopName,
+                phone
+              })
+            })
+          if (response.ok) {
+            alert("Recommendation created successfully!");
+          } else {
+            alert(response.error || "Failed to create recommendation");
+          }
+          return
+        } catch (error) {
+          console.error("Error:", error)
+        }
+      }
+
+
     },
   };
 };

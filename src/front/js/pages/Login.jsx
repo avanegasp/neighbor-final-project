@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     const response = await actions.login(email, password, userType);
     console.log(email, password, userType);
-    console.log(response);
+    console.log("respuesta", response);
     if (response) {
       switch (userType) {
         case "NEIGHBOR":
@@ -26,10 +26,13 @@ const Login = () => {
         case "ADMINISTRATOR":
           navigate(`/profileAdmin/${response.user.id}`);
           return;
-      }
-    } else {
-      alert("Login failed");
+  
+
     }
+    else {
+
+      alert("Login failed");
+    
   };
 
   return (
