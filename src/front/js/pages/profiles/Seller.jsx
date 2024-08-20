@@ -52,7 +52,7 @@ const ProfileSeller = () => {
         className="container-profiles"
         
       >
-        <div className="row w-100">
+        <div className="row">
           <div className="col-md-4 ms-4">
             <div className="card-N">
               <img
@@ -140,7 +140,7 @@ const ProfileSeller = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-7 d-flex flex-column justify-content-center">
+          <div className="col-md-4 d-flex flex-column justify-content-center m-0">
             <PersonalProfileDetails
               nameProfile={store.seller.name}
               lastname={store.seller.lastname}
@@ -150,8 +150,8 @@ const ProfileSeller = () => {
               phone={store.seller.phone}
             />
           </div>
-          <div className="mb-3 text-end">
-            <Link to={"/profileEditSeller"} className="btn btn-success me-5">
+          <div className="mt-auto mb-3 text-end">
+            <Link to={"/profileEditSeller"} className="btn btn-success me-1">
               Editar información
             </Link>
             {/* <div>
