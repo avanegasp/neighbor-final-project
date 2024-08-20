@@ -125,6 +125,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const data = await response.json();
             setStore({ seller: data });
+            console.log(data);
             return data;
           } else {
             const errorData = await response.json()
@@ -390,16 +391,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      getSingleBusiness: async (seller_id, business_id) => {
-        if (!seller_id || !business_id) return;
-        // const jwt = localStorage.getItem("token");
+      getSingleBusiness: async (seller_id, business_name) => {
+        if (!seller_id || !business_name) return;
+        //const jwt = localStorage.getItem("token");
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${business_id}`,
+            `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${business_name}`,
             {
               method: "GET",
               headers: {
-                // authorization: `Bearer ${jwt}`
+                //authorization: `Bearer ${jwt}`
               },
             }
           );
@@ -408,7 +409,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          setStore({ shop: data });
+          setStore({ shop: data.Business });
         } catch (error) {
           console.log(error);
         }
@@ -437,7 +438,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      getCurrentUser: async () => {
         getCurrentUser: async () => {
           const token = localStorage("token");
           try {
@@ -451,8 +451,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           } catch (error) {
             console.log(error);
           }
-        }
-      },
+        },
+        
       getAllRecommendations: async () => {
         const token = localStorage.getItem("token")
         if (!token) {
@@ -484,6 +484,35 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching recommendations:", error.message);
         }
       },
+      createBusiness: async({id}) =>{
+        const token = localStorage.getItem("token")
+        if (!token) {
+          console.error("No token found")
+          return { error: "No token found" }
+        }
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/seller/${id}/create-business`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({shopName, price, schedule}),
+            }
+          );
+          if (!response.ok) {
+            return false;
+          } else {
+            const data = await response.json();
+            return data;
+          }
+        } catch (error) {
+          consolele.log(error);
+        }
+
+      }
     },
   };
 };

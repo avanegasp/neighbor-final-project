@@ -45,7 +45,7 @@ const StarsRating = () => {
           );
         })}
       </div>
-      <div className="form-group">
+      <div className="form-group fs-2">
         <label htmlFor="reviewText">Añade un comentario</label>
         <textarea
           className="form-control"

@@ -63,11 +63,11 @@ const ProfileAdmin = () => {
                       <div className="modal-body">
                         <form>
                           <div className="mb-3">
-                            <label for="exampleInputName" className="form-label">Nombre:</label>
+                            <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
                             <input type="text" className="form-control" id="exampleInputName" />
                           </div>
                           <div className="mb-3">
-                            <label for="exampleInputLastname" className="form-label">Apellido:</label>
+                            <label htmlFor="exampleInputLastname" className="form-label">Apellido:</label>
                             <input type="text" className="form-control" id="exampleInputLastName" />
                           </div>
                           <div className="mb-3">
@@ -84,7 +84,7 @@ const ProfileAdmin = () => {
                             />
                           </div>
                           <div className="mb-3">
-                            <label for="exampleInputShopName" className="form-label">Nombre del comercio:</label>
+                            <label htmlFor="exampleInputShopName" className="form-label">Nombre del comercio:</label>
                             <input type="text" className="form-control" id="exampleInputShopName" placeholder="Ferretería Mis llaves" />
                             <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
                           </div>

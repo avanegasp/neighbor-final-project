@@ -3,19 +3,21 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext.js";
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
+import ModalBusiness from "../../component/modalCreateBusiness/ModalBusiness.jsx";
 
 const ProfileSeller = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     actions.getProfileSeller(id)
       .then((data) => {
         if (!data || data.error) {
           setError(data.error || "Error fetching profile");
-          navigate("/register");
+          navigate("/");
         }
       });
   }, [id]);
@@ -48,8 +50,10 @@ const ProfileSeller = () => {
                 <a href="#" className="btn btn-secondary mt-4">
                   Haz una recomendación!
                 </a>
-                <a href="#" className="btn btn-secondary mt-4">
-                  Crea un negocio
+                <a aria-labelledby="ModalBusiness">
+                  <ModalBusiness
+                  shopName={store.seller.shopName}
+                    />
                 </a>
               </div>
             </div>
@@ -68,14 +72,7 @@ const ProfileSeller = () => {
             <Link to={"/profileEditSeller"} className="btn btn-success me-5">
               Editar información
             </Link>
-            {/* <div>
-              {" "}
-              <Link to={"/register"}>Have you registered yet? Click here!</Link>
-            </div> */}
-            <div>
-              {" "}
-              {/* <Link to={="seller/:seller_id/shop/:business_id"}>Visita su tienda</Link>  */}
-            </div>
+            
           </div>
         </div>
       </div>
