@@ -12,6 +12,10 @@ class RoleEnum(enum.Enum):
     NEIGHBOR = "NEIGHBOR"
     SELLER = "SELLER"
 
+class StatusEnum(enum.Enum):
+    APPROVED ="APPROVED"
+    REJECTED = "REJECTED"
+    PENDING = "PENDING"
 
 class Neighbor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +25,7 @@ class Neighbor(db.Model):
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.NEIGHBOR.value)
+    status = db.Column(db.String(50), nullable=False, default=StatusEnum.PENDING.value)
     
     review = db.relationship('Review', backref='Neighbor', uselist=False)
     recommendations = db.relationship('Recommendation', backref='neighbor')
@@ -51,6 +56,7 @@ class Seller(db.Model):
     shopName= db.Column(db.String(80), unique=False, nullable=False)
     phone= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
+    status = db.Column(db.String(50), nullable=False, default=StatusEnum.PENDING.value)
 
     products = db.relationship('Product', backref='seller')
     orders = db.relationship('Order', backref='seller')

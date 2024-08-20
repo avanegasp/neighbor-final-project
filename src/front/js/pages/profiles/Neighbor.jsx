@@ -18,6 +18,7 @@ const ProfileNeighbor = () => {
     shopName: "",
     phone: ""
   })
+  const [status, setStatus] = useState()
 
   function handleChange(e) {
     setRecommendation({ ...recommendation, [e.target.name]: e.target.value });
@@ -31,6 +32,13 @@ const ProfileNeighbor = () => {
     }
   }
 
+  const checkStatus = async () => {
+    const resp = await actions.chekingStatus()
+    setStatus(resp.status)
+  }
+
+
+
   useEffect(() => {
     actions.getProfileNeighbor(id)
       .then((data) => {
@@ -41,13 +49,15 @@ const ProfileNeighbor = () => {
           }
         }
       });
+    checkStatus()
   }, []);
 
   if (error) return <div className="alert alert-danger">{error}</div>;
   if (!store.neighbor) return <div>Loading...</div>;
 
   return (
-    <div className="container d-flex flex-column min-vh-100 mb-5">
+
+    <div div className="container d-flex flex-column min-vh-100 mb-5" >
       <TitleProfiles title={store.neighbor.role} />
       <div
         className="d-flex justify-content-center align-items-start"
@@ -153,7 +163,7 @@ const ProfileNeighbor = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
