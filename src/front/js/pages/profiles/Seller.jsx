@@ -31,7 +31,8 @@ const ProfileSeller = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-  const [status, setStatus] = useState()  const cldImg = cld.image('sample');
+  const [status, setStatus] = useState();
+  const cldImg = cld.image('sample');
 
   const [recommendation, setRecommendation] = useState({
     name: "",
