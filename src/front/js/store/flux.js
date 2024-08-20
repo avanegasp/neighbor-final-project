@@ -46,7 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             body: JSON.stringify({ email, password, userType }),
           });
-          console.log("responseloginflux", response)
+          // console.log("responseloginflux", response)
           // if (!response.ok) {
           //   return false;
           // }
@@ -56,6 +56,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (data.user) {
             setStore({ currentUser: data.user });
             localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.user.role)
+            localStorage.setItem('name', data.user.name)
+            localStorage.setItem('id', data.user.id)
+
             return data;
           } else {
             console.log("El objeto 'user' no está presente en la respuesta")

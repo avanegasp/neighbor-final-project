@@ -12,9 +12,11 @@ const Directory = () => {
   useEffect(() => {
     actions.getAllDirectory()
       .then((data) => {
-        if (!data || data.error) {
+        if (data?.error) {
           setError(data.error || "Error fetching profile");
-          navigate("/register");
+          if (data.error === "Unauthorized access") {
+            navigate("/register");
+          }
         }
       });
 
@@ -35,7 +37,7 @@ const Directory = () => {
           <h1 className="d-flex justify-context-center">Directorio</h1>
 
           <div className="input-group mb-3 inputSearch w-25">
-            <Search />
+            {/* <Search /> */}
           </div>
         </div>
 
