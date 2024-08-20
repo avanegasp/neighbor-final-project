@@ -39,7 +39,9 @@ const Recommendations = () => {
                     {store.recommendations.map((recommendation, index) => {
 
                         return (
+
                             <div className="accordion" key={index} id={`accordionPanelsStayOpenExample${index}`}>
+
                                 <RecommendationsExtern name={recommendation.name}
                                     lastname={recommendation.lastname}
                                     shopName={recommendation.shopName}
