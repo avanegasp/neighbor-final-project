@@ -156,6 +156,9 @@ const ProfileAdmin = () => {
             <Link to={"/profileEditAdmin"} className="btn btn-success me-5">
               Editar información
             </Link>
+            <Link to={"/buildingUsers"} className="btn btn-success me-5">
+              Ver miembros del edificio
+            </Link>
           </div>
         </div>
       </div>
