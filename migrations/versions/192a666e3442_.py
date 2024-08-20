@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: dbe40f80aa63
+Revision ID: 192a666e3442
 Revises: 
-Create Date: 2024-08-12 21:41:42.940215
+Create Date: 2024-08-14 22:16:25.297361
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dbe40f80aa63'
+revision = '192a666e3442'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -66,7 +66,7 @@ def upgrade():
     sa.Column('buyer_name', sa.String(length=80), nullable=False),
     sa.Column('amount', sa.Integer(), nullable=False),
     sa.Column('seller_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['seller_id'], ['seller.id'], ),
+    sa.ForeignKeyConstraint(['seller_id'], ['seller.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('product',
@@ -75,7 +75,7 @@ def upgrade():
     sa.Column('price', sa.Float(precision=30), nullable=False),
     sa.Column('schedule', sa.String(length=50), nullable=False),
     sa.Column('seller_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['seller_id'], ['seller.id'], ),
+    sa.ForeignKeyConstraint(['seller_id'], ['seller.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('order_product',
@@ -92,7 +92,7 @@ def upgrade():
     sa.Column('stars', sa.Integer(), nullable=False),
     sa.Column('neighbor_id', sa.Integer(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['neighbor_id'], ['neighbor.id'], ),
+    sa.ForeignKeyConstraint(['neighbor_id'], ['neighbor.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('neighbor_id'),

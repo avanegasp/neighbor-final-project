@@ -88,3 +88,32 @@ body::before {
   font-size: 1.5rem; 
 }
 
+.people {
+  color: white;
+  margin-top: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+
+}
+
+.cardPeople{
+  color: white;
+  margin-top: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 10 px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  
+}
+
+.my-13{
+  height: 100%;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: auto
+}
+

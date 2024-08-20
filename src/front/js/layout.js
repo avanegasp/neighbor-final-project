@@ -18,6 +18,9 @@ import Directory from "./pages/directory/Directory.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/register.jsx";
 
+import AdminDeleteUser from "./component/adminDeleteUser/AdminDeleteUser.jsx";
+import DeleteUser from "./pages/deleteUser/DeleteUser.jsx";
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar.jsx";
@@ -51,6 +54,8 @@ const Layout = () => {
             <Route element={<Directory />} path="/directory" />
             <Route element={<Register />} path="/register" />
             <Route element={<Business />} path="/business" />
+            <Route element={<DeleteUser  />} path="/adminDeleteUser" />
+            
 
             <Route element={<h1>Not found!</h1>} />
           </Routes>
