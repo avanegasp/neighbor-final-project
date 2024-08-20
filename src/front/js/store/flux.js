@@ -72,12 +72,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileNeighbor: async (id) => {
-        console.log("HEREEEE PROFILE", id);
+        // console.log("HEREEEE PROFILE", id);
         // if (!id) return;
 
         try {
           const token = localStorage.getItem("token")
-          console.log("TOKEN NEIGHBOR", token)
+          // console.log("TOKEN NEIGHBOR", token)
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${id}`,
             {
@@ -89,10 +89,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
-          console.log("response", response)
+          // console.log("response", response)
           if (response.ok) {
             const data = await response.json();
-            console.log("data neighbor", data)
+            // console.log("data neighbor", data)
             setStore({ neighbor: data });
             return data;
           } else {
@@ -108,7 +108,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
       getProfileSeller: async (id) => {
-        console.log("HEREEEE PROFILE", id);
+        // console.log("HEREEEE PROFILE", id);
         if (!id) return;
 
         const token = localStorage.getItem("token")
@@ -239,7 +239,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          console.log("DATAAAA", data);
+          // console.log("DATAAAA", data);
           actions.getProfileNeighbor(id);
         } catch (error) {
           console.error("Error editing neighbor:", error.message);
@@ -319,7 +319,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          console.log("data completa del registerNeighbor", data);
+          // console.log("data completa del registerNeighbor", data);
 
           if (data.user) {
             setStore({ currentUser: data.user });
@@ -342,7 +342,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         shopName
       ) => {
         try {
-          console.log("seller flux Fab", phone)
+          // console.log("seller flux Fab", phone)
           const response = await fetch(
             process.env.BACKEND_URL + `/api/seller/registers`,
             {
