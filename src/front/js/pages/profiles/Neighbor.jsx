@@ -47,15 +47,15 @@ const ProfileNeighbor = () => {
   if (!store.neighbor) return <div>Loading...</div>;
 
   return (
-    <div className="container d-flex flex-column min-vh-100 mb-5">
+    <div className="">
       <TitleProfiles title={store.neighbor.role} />
       <div
-        className="d-flex justify-content-center align-items-start"
-        style={{ minHeight: "80vh" }}
+        className="container-profiles"
+        
       >
-        <div className="row w-100 border border-1 border-dark bg-white">
+        <div className="row w-100">
           <div className="col-md-4 ms-4">
-            <div className="card mt-5 w-50">
+            <div className="card-N ">
               <img
                 src="https://picsum.photos/200"
                 className="card-img-top"
@@ -67,7 +67,7 @@ const ProfileNeighbor = () => {
                   <li>Lord Rings</li>
                   <li>Harry Potter</li>
                 </ol>
-                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Haz una recomendación
                 </button>
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,7 +146,7 @@ const ProfileNeighbor = () => {
               email={store.neighbor.email}
             />
           </div>
-          <div className="mt-auto text-end mb-5">
+          <div className="mb-3 text-end">
             <Link to={"/profileEditNeighbor"} className="btn btn-success me-5">
               Editar información
             </Link>

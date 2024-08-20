@@ -46,15 +46,15 @@ const ProfileSeller = () => {
   if (!store.seller) return <div>Loading...</div>;
 
   return (
-    <div className="container d-flex flex-column min-vh-100">
+    <div className="">
       <TitleProfiles title={store.seller.role} />
       <div
-        className="d-flex justify-content-center align-items-start"
-        style={{ minHeight: "80vh" }}
+        className="container-profiles"
+        
       >
-        <div className="row w-100 border border-1 border-dark bg-white">
+        <div className="row w-100">
           <div className="col-md-4 ms-4">
-            <div className="card mt-5 mb-5 w-50">
+            <div className="card-N">
               <img
                 src="https://picsum.photos/200"
                 className="card-img-top"
@@ -66,7 +66,7 @@ const ProfileSeller = () => {
                   <li>Lord Rings</li>
                   <li>Harry Potter</li>
                 </ol>
-                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Haz una recomendación
                 </button>
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -124,17 +124,17 @@ const ProfileSeller = () => {
                               placeholder="Ferretería Mis llaves" />
                             <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
                           </div>
-                          <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
+                          <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Submit</button>
                         </form>
 
                       </div>
                       <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-success" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <a href="#" className="btn btn-secondary mt-4">
+                <a href="#" className="btn btn-success mt-4">
                   Crea un negocio
                 </a>
               </div>
@@ -150,7 +150,7 @@ const ProfileSeller = () => {
               phone={store.seller.phone}
             />
           </div>
-          <div className="mt-auto text-end mb-5">
+          <div className="mb-3 text-end">
             <Link to={"/profileEditSeller"} className="btn btn-success me-5">
               Editar información
             </Link>

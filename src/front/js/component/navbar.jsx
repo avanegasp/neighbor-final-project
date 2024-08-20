@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "../../styles/navbar.css";
 import "../../styles/index.css";
 import Favorite from "./favorite/Favorite.jsx";
 
@@ -52,7 +51,7 @@ export const Navbar = () => {
         {location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/" ? null : (
           <>
             <div className="d-flex justify-content-center flex-grow-1">
-              <span><strong className="fs-2 text">Sesión de :</strong></span>
+              <span><strong className="fs-2 text"><i className="fa-solid fa-user-large"></i></strong></span>
               <span className="ms-3">
                 <Link className="fs-2 text" to={roleLink()}>
                   {name}

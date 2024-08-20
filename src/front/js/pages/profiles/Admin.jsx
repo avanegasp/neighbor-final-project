@@ -51,7 +51,7 @@ const ProfileAdmin = () => {
   if (!store.admin) return <div>Loading...</div>;
 
   return (
-    <div className="container d-flex flex-column min-vh-100">
+    <div className="container-profiles">
       <TitleProfiles title={store.admin.role} />
       <div
         className="d-flex justify-content-center align-items-start"
