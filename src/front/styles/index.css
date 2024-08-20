@@ -1,58 +1,186 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
-
 body {
-    background-color: rgba(143, 143, 143, 1);
-    margin: 0;
-    font-family: Arial, sans-serif;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("https://ideogram.ai/assets/progressive-image/balanced/response/cBOFsQXnTsqxgu8BCw4KoA");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(6px);
-    z-index: -1;
-  }
-  
-  .btn-edit{
-    background-color: #30e390;
-  }
+  background-color: rgba(143, 143, 143, 1);
+  margin: 0;
+  font-family: Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
 
-  .table{
-  color:white;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://ideogram.ai/assets/progressive-image/balanced/response/cBOFsQXnTsqxgu8BCw4KoA");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: blur(6px);
+  z-index: -1;
+}
+
+.btn-edit {
+  background-color: #30e390;
+}
+
+.table {
+  color: white;
   margin-top: 1rem;
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 1rem; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
-  }
-  .review{
-  color:white;
+}
+
+.review {
+  color: white;
   margin-top: 1rem;
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 1rem; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
-  }
-  .business{
-    color:white;
-    margin-top: 1rem;
-    background-color: rgba(0, 0, 0, 0.6); 
-    padding: 1rem; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+}
+
+.business {
+  color: white;
+  margin-top: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.navbar {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.5);
+  height: 70px; 
+  padding: 0 20px; 
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  position: relative;
+}
+
+.navbar .dropdown {
+  position: absolute;
+  right: 30px; 
+}
+
+.navbar-brand {
+  position: absolute;
+  left: 30px;
+}
+
+.icon-n {
+  font-size: 60px;
+  font-weight: bold;
+  color: white;
+}
+
+.dropdown button {
+  font-size: 1.5rem; 
+}
+/* el css del login comienza aqui */
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  min-height: 50vh;
+
   
-    }
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.user-type-group {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.user-type-option {
+  font-size: 1rem;
+  cursor: pointer;
+  color: #555;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.login-button {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+a {
+  margin-top: 10px;
+  font-size: 0.875rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* el estilo del footer  */
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}

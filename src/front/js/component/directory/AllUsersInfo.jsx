@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { Context } from "../../store/appContext.js";
 import TagRol from "../tagRol/TagRol.jsx";
 import PersonalProfileDetails from "../personalProfileDetails/PersonalProfileDetails.jsx";
+import ModalButtonRecommendation from "../modalRecommendationsProfile/ModalButton.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,8 +13,19 @@ const AllUsersInfo = ({
   shopName,
   buildingName,
   floor,
+  email,
+  phone,
+  id,
+  recommendation
 }) => {
-  console.log("allusersINFO...", shopName)
+  const { actions } = useContext(Context)
+
+
+  // console.log("store.recommedaions", numberReco)
+  useEffect(() => {
+    actions.getAllRecommendations()
+  }, [])
+  // console.log("allusersINFO...", id)
   return (
     <div className="row w-100 border border-1 border-dark justify-content-center bg-white">
       <div className="col-md-4">
@@ -22,11 +35,18 @@ const AllUsersInfo = ({
             className="card-img-top"
             alt="..."
           />
-          <button className="btn btn-outline-warning position-relative bottom-0 end-0 mt-3">
+          <button
+            type="button"
+            className="btn btn-outline-warning position-relative bottom-0 end-0 mt-3"
+            onClick={() => actions.addToFavorite(id, nameProfile, role)}>
             <FontAwesomeIcon icon={faHeart} />
           </button>
         </div>
+        <div className="mb-5">
+          <ModalButtonRecommendation recommendation={recommendation} role={role} id={id} />
+        </div>
       </div>
+
       <div className="col-md-7 mt-5 mb-5">
         <TagRol role={role} />
         <PersonalProfileDetails
@@ -35,6 +55,8 @@ const AllUsersInfo = ({
           floor={floor}
           shopName={shopName}
           buildingName={buildingName}
+          email={email}
+          phone={phone}
         />
       </div>
     </div>

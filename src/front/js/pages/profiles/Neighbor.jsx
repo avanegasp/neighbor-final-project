@@ -1,20 +1,49 @@
-import React, { useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext.js";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
 
 const ProfileNeighbor = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  console.log("here", id);
+  const [recommendation, setRecommendation] = useState({
+    name: "",
+    lastname: "",
+    shopName: "",
+    phone: ""
+  })
+
+  function handleChange(e) {
+    setRecommendation({ ...recommendation, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (id) {
+      await actions.createNeighborRecommendation(id, recommendation)
+      navigate("/recommendations")
+    }
+  }
 
   useEffect(() => {
-    // console.log("PARAMS...", id);
-    actions.getProfileNeighbor(id);
-  }, [id]);
+    actions.getProfileNeighbor(id)
+      .then((data) => {
+        if (data?.error) {
+          setError(data.error || "Error fetching profile");
+          if (data.error === "Unknown error") {
+            navigate("/register");
+          }
+        }
+      });
+  }, []);
 
+  if (error) return <div className="alert alert-danger">{error}</div>;
   if (!store.neighbor) return <div>Loading...</div>;
 
   return (
@@ -35,14 +64,77 @@ const ProfileNeighbor = () => {
               <div className="card-body text-center">
                 <h5 className="card-title mb-4">Libros Favoritos</h5>
                 <ol className="list-unlysted">
-                  <p className="card-text">
-                    <li>Lord Rings</li>
-                    <li>Harry Potter</li>
-                  </p>
+                  <li>Lord Rings</li>
+                  <li>Harry Potter</li>
                 </ol>
-                <a href="#" className="btn btn-secondary mt-4">
-                  Do a recommendation!
-                </a>
+                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Haz una recomendación
+                </button>
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="exampleModalLabel">Quiero recomendar a:</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body">
+                        <form onSubmit={handleSubmit}>
+                          <div className="mb-3">
+                            <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
+                            <input
+                              name="name"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              value={recommendation.name}
+                              id="exampleInputName" />
+                          </div>
+                          <div className="mb-3">
+                            <label htmlFor="exampleInputLastname" className="form-label">Apellido:</label>
+                            <input
+                              name="lastname"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              value={recommendation.lastname}
+                              id="exampleInputLastName" />
+                          </div>
+                          <div className="mb-3">
+                            <label htmlFor="exampleInputPhone" className="form-label">Whatsapp:</label>
+                            <PhoneInput
+                              country={'us'}
+                              onChange={(phone) => setRecommendation({ ...recommendation, phone })}
+                              value={recommendation.phone}
+                              inputProps={{
+                                name: 'phone',
+                                id: 'exampleInputPhone',
+                                className: 'form-control w-100',
+                              }}
+                              containerStyle={{ width: '100%' }}
+                              inputStyle={{ width: '100%' }}
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label htmlFor="exampleInputShopName" className="form-label">Nombre del comercio:</label>
+                            <input
+                              name="shopName"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              id="exampleInputShopName"
+                              placeholder="Ferretería Mis llaves" />
+                            <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
+                          </div>
+                          <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
+                        </form>
+
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -51,6 +143,7 @@ const ProfileNeighbor = () => {
               nameProfile={store.neighbor.name}
               lastname={store.neighbor.lastname}
               floor={store.neighbor.floor}
+              email={store.neighbor.email}
             />
           </div>
           <div className="mt-auto text-end mb-5">
@@ -65,3 +158,4 @@ const ProfileNeighbor = () => {
 };
 
 export default ProfileNeighbor;
+
