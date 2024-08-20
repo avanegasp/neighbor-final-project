@@ -13,8 +13,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await actions.login(email, password, userType);
-    console.log(email, password, userType);
-    console.log("respuesta", response);
+    // console.log(email, password, userType);
+    // console.log("respuesta", response);
     if (response) {
       switch (userType) {
         case "NEIGHBOR":

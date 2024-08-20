@@ -7,7 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 const Favorite = ({ favorites, removeToFavorite }) => {
     return (
         <>
-            {favorites.map((favorite, index) => {
+            {favorites.length > 0 ? (favorites.map((favorite, index) => {
                 let path = "/";
                 if (favorite.role === "NEIGHBOR") {
                     path = "/profileNeighbor";
@@ -29,7 +29,9 @@ const Favorite = ({ favorites, removeToFavorite }) => {
                         </span>
                     </div>
                 );
-            })}
+            })) : (
+                <p className="d-flex justify-content-center ">No tienes fav</p>
+            )}
         </>
     );
 };
