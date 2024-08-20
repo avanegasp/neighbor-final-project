@@ -644,6 +644,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error)
         }
+      },
+
+      changeStatus: async (id, role, status) => {
+        const token = localStorage.getItem("token")
+        try {
+          const response = await fetch(process.env.BACKEND_URL + "/api/changeStatus",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+              },
+              body: JSON.stringify({ id, role, status })
+            }
+
+          )
+          const data = await response.json()
+          return data
+        } catch (error) {
+          console.log(error)
+        }
       }
 
 

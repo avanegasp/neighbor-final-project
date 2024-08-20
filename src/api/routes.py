@@ -742,7 +742,40 @@ def checkingStatus():
         neighbor =Neighbor.query.filter_by(id=current_user['id']).first()
         return jsonify({"status": neighbor.status})
        if userType == "SELLER":
-        neighbor =Neighbor.query.filter_by(id=current_user['id']).first()
-        return jsonify({"status": neighbor.status})
+        seller =Seller.query.filter_by(id=current_user['id']).first()
+        return jsonify({"status": seller.status})
     except Exception as e:
-        return jsonify({"error": f"An error occurred raa: {str(e)}"}), 500
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
+@api.route('/changeStatus', methods=['PUT'])
+@jwt_required()
+def changeStatus():
+    body = request.json
+    id = body.get("id", None)
+    role = body.get("role", None)
+    status = body.get("status", None)
+
+    if id is None or role is None or status is None:
+        return jsonify({"error": "Fill out all the fields"}), 400
+    try:
+        if role == "NEIGHBOR":
+            neighbor=Neighbor.query.filter_by(id=id).first()
+            neighbor.status = status
+            try:
+                db.session.commit()
+                db.session.refresh(neighbor)
+                return jsonify({"status": f"update status to {neighbor.status}"}),202
+            except Exception as e:
+                return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+        
+        if role == "SELLER":
+            seller=Seller.query.filter_by(id=id).first()
+            seller.status = status
+            try:
+                db.session.commit()
+                db.session.refresh(seller)
+                return jsonify({"status": f"update status to {seller.status}"})
+            except Exception as e:
+                return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+    except Exception as error:
+        return jsonify({"error": f"An error occurred: {str(error)}"}), 500

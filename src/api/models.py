@@ -42,7 +42,8 @@ class Neighbor(db.Model):
             "lastname": self.lastname,
             "floor": self.floor,
             "role": self.role,
-            "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
+            "recommendations": [recommendation.serialize() for recommendation in self.recommendations],
+            "status": self.status
             # do not serialize the password, its a security breach
         }
 
@@ -76,7 +77,8 @@ class Seller(db.Model):
             "phone": self.phone,
             "role": self.role,
             "orders": [order.serialize() for order in self.orders],
-            "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
+            "recommendations": [recommendation.serialize() for recommendation in self.recommendations],
+            "status": self.status
         } 
 
 class Administrator(db.Model):

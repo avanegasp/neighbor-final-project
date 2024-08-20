@@ -1,20 +1,23 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from "../../store/appContext.js";
 function BuildingUsers() {
     const { store, actions } = useContext(Context);
-
     useEffect(() => {
         actions.getAllDirectory();
     }, []);
 
     if (!store.users) return <div>Loading...</div>;
 
-    const acceptUser = () => {
-
+    const ApprovedStatus = async (user) => {
+        const status = "APPROVED"
+        const resp = await actions.changeStatus(user.id, user.role, status)
     }
-    const declineUser = () => {
 
+    const RejectedStatus = async (user) => {
+        const status = "REJECTED"
+        const resp = await actions.changeStatus(user.id, user.role, status)
     }
+
     return (
         <div className="d-flex flex-column min-vh-100" style={{ height: '200px', overflow: 'scroll' }}>
             <h3 className='text-white pt-3'>Lista de vecinos</h3>
@@ -36,10 +39,22 @@ function BuildingUsers() {
                                 <td className="text-white">{user.lastname}</td>
                                 <td className="text-white">{user.floor}</td>
                                 <td className="text-white">{user.email}</td>
-                                <td>
-                                    <button type="button" className="btn btn-primary m-2" onClick={acceptUser}>Aceptar</button>
-                                    <button type="button" className="btn btn-danger m-2" onClick={declineUser}>Rechazar</button>
-                                </td>
+                                {user.status === "PENDING" && (
+                                    <td>
+                                        <button type="button" className="btn btn-primary m-2" onClick={() => ApprovedStatus(user)}>Aceptar</button>
+                                        <button type="button" className="btn btn-danger m-2" onClick={() => RejectedStatus(user)}>Rechazar</button>
+                                    </td>
+                                )}
+                                {(user.status === "APPROVED" || user.status === "REJECTED") && (
+                                    <td>
+                                        <button type="button"
+                                            className={`btn ${user.status === "APPROVED" ? "btn-success" : "btn-danger"} m-2`} disabled
+                                        >
+                                            {user.status}
+                                        </button>
+                                    </td>
+                                )}
+
                             </tr>
                         ))}
                     </tbody>
@@ -57,7 +72,7 @@ function BuildingUsers() {
                             <th scope="col" className="text-white">Piso</th>
                             <th scope="col" className="text-white">Email</th>
                             <th scope="col" className="text-white">Shopname</th>
-
+                            <th scope="col" className="text-white">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,10 +83,21 @@ function BuildingUsers() {
                                 <td className="text-white">{user.floor}</td>
                                 <td className="text-white">{user.email}</td>
                                 <td className="text-white">{user.shopName}</td>
-                                <td>
-                                    <button type="button" className="btn btn-primary m-2" onClick={acceptUser}>Aceptar</button>
-                                    <button type="button" className="btn btn-danger m-2" onClick={declineUser}>Rechazar</button>
-                                </td>
+                                {user.status === "PENDING" && (
+                                    <td>
+                                        <button type="button" className="btn btn-primary m-2" onClick={() => ApprovedStatus(user)}>Aceptar</button>
+                                        <button type="button" className="btn btn-danger m-2" onClick={() => RejectedStatus(user)}>Rechazar</button>
+                                    </td>
+                                )}
+                                {(user.status === "APPROVED" || user.status === "REJECTED") && (
+                                    <td>
+                                        <button type="button"
+                                            className={`btn ${user.status === "APPROVED" ? "btn-success" : "btn-danger"} m-2`} disabled
+                                        >
+                                            {user.status}
+                                        </button>
+                                    </td>
+                                )}
                             </tr>
                         ))}
                     </tbody>
