@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-import Search from "../../component/search/Search.jsx";
+// import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
 import ModalBodyRecommendation from "../../component/modalRecommendationsProfile/ModalBody.jsx";
 const Directory = () => {
@@ -62,7 +62,7 @@ const Directory = () => {
                   id={user.id}
                   recommendation={user.recommendations}
                 />
-                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <ModalBodyRecommendation
                     user={user}
                     recommendations={user.recommendations} />
@@ -86,7 +86,7 @@ const Directory = () => {
                   id={user.id}
                   recommendation={user.recommendations}
                 />
-                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <ModalBodyRecommendation
                     user={user}
                     recommendations={user.recommendations} />
@@ -113,7 +113,7 @@ const Directory = () => {
                   id={user.id}
                   recommendation={user.recommendations}
                 />
-                <div className="modal fade" id={`modal-${user.role}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <ModalBodyRecommendation
                     user={user}
                     recommendations={user.recommendations} />
