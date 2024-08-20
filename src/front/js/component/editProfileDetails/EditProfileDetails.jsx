@@ -19,7 +19,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
 
   const navigate = useNavigate()
 
-  console.log('HEREEE', id)
+  // console.log('HEREEE', id)
 
   function handleChange(e) {
     setProfile({ ...profile, [e.target.name]: e.target.value })
@@ -41,7 +41,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
     }
   }
 
-  console.log("ROLEEEEE", role)
+  // console.log("ROLEEEEE", role)
 
   return (
     <form onSubmit={handleSubmit}>
