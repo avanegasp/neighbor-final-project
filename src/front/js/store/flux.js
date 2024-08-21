@@ -753,7 +753,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //     actions.getAllUser();
       //   }
        },
-    },
+    };
   };
 
 

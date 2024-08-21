@@ -19,7 +19,7 @@ const ModalBusiness = ({ shopName, id }) => {
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#CreateBusiness"
       >
         Crear negocio
       </button>
@@ -27,15 +27,15 @@ const ModalBusiness = ({ shopName, id }) => {
       <form
         onSubmit={handleSubmit}
         className="modal fade"
-        id="exampleModal"
+        id="CreateBusiness"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="CreateBusinessLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
+              <h1 className="modal-title fs-5" id="CreateBusinessLabel">
                 {shopName}. Your id: {id}
               </h1>
               <button

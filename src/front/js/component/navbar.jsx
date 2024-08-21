@@ -13,10 +13,7 @@ export const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const name = localStorage.getItem("name");
-  const name = localStorage.getItem("name");
   function roleLink() {
-    const role = localStorage.getItem("role");
-    const id = localStorage.getItem("id");
     const role = localStorage.getItem("role");
     const id = localStorage.getItem("id");
 
