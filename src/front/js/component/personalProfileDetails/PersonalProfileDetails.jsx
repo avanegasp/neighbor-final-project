@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const PersonalProfileDetails = ({
   nameProfile,
@@ -11,7 +12,10 @@ const PersonalProfileDetails = ({
 }) => {
 
   // const isValidPhone = phone && /^\+[1-9]\d{1,14}$/.test(phone);
+  const params = useParams();
+
   const whatsappLink = phone ? `https://wa.me/${phone}` : null;
+  const shopLink = shopName ? `/seller/${params.id}/shop/${shopName}` : null
 
   return (
     <div className="mt-5">
@@ -28,6 +32,7 @@ const PersonalProfileDetails = ({
       <p className="fs-4">
         <strong>Correo:</strong> {email}
       </p>
+
       {
         phone ? (
           <p className="fs-4">
@@ -40,7 +45,9 @@ const PersonalProfileDetails = ({
       }
       {shopName ? (
         <p className="fs-4">
-          <strong>Emprendimiento:</strong> {shopName}
+          <strong>Emprendimiento: </strong> 
+          <a href = {shopLink} target>{shopName}
+          </a>
         </p>
       ) : null}
       {buildingName ? (
@@ -48,6 +55,7 @@ const PersonalProfileDetails = ({
           <strong>Edificio:</strong> {buildingName}
         </p>
       ) : null}
+      
     </div>
   );
 };

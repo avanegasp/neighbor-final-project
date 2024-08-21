@@ -25,35 +25,39 @@ const Login = () => {
           return;
         case "ADMINISTRATOR":
           navigate(`/profileAdmin/${response.user.id}`);
-          return
+          return;
+
+
       }
-    } else {
+    }
+    else {
       alert("Login failed");
     }
+
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container" style={{ minHeight: '80vh' }}>
       <h1>Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
         <div className="user-type-group" onChange={(e) => setUserType(e.target.value)}>
-          <label className="user-type-option">
+          <label className="user-type-option text-dark">
             <input type="radio" name="options" value="NEIGHBOR" />
             Neighbor
           </label>
-          <label className="user-type-option">
+          <label className="user-type-option text-dark">
             <input type="radio" name="options" value="SELLER" />
             Seller
           </label>
-          <label className="user-type-option">
+          <label className="user-type-option text-dark">
             <input type="radio" name="options" value="ADMINISTRATOR" />
             Admin
           </label>
         </div>
 
         <div className="form-group">
-          <label htmlFor="LoginEmail">Correo electrónico</label>
+          <label className="text-dark" htmlFor="LoginEmail">Correo electrónico</label>
           <input
             type="email"
             id="LoginEmail"
@@ -61,11 +65,11 @@ const Login = () => {
             placeholder="Enter email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <small id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
+          <small className="text-dark" id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
         </div>
 
         <div className="form-group">
-          <label htmlFor="LoginPassword">Contraseña</label>
+          <label className="text-dark" htmlFor="LoginPassword">Contraseña</label>
           <input
             type="password"
             id="LoginPassword"
@@ -76,12 +80,12 @@ const Login = () => {
         </div>
 
         <button type="submit" className="login-button">
-          Iniciar sesión
+          Inicia sesión
         </button>
       </form>
 
       <div>
-        <Link to={"/register"}>¿No tienes una cuenta? Regístrate aquí!</Link>
+        <Link className="text-primary" to={"/register"}>¿No tienes una cuenta? Regístrate aquí!</Link>
       </div>
     </div>
   );
