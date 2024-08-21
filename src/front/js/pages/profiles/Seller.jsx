@@ -27,7 +27,6 @@ const imgCloudinary = [
   'samples/landscapes/nature-mountains',
   'samples/animals/cat'
 ]
- dev
 
 const ProfileSeller = () => {
   const { store, actions } = useContext(Context);
@@ -178,12 +177,12 @@ const ProfileSeller = () => {
                         </div>
                       </div>
                     </div>
-                   <a aria-labelledby="ModalBusiness">
-                  <ModalBusiness
-                  shopName={store.seller.shopName}
-                  id = {id}
-                    />
-                </a>
+                    <a aria-labelledby="ModalBusiness">
+                      <ModalBusiness
+                        shopName={store.seller.shopName}
+                        id={id}
+                      />
+                    </a>
                   </div>
                 </div>
               </div>
