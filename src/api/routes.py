@@ -80,9 +80,17 @@ def add_neighbor():
         new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
         db.session.add(new_user)
         db.session.commit()
-        print("authhhhh", new_user)
+        # print("authhhhh", new_user)
         auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
-        return jsonify({"mensaje": "Neighbor creado exitosamente", "user":{"id":new_user.id}, "token": auth_token}), 201
+        return jsonify({
+            "mensaje": "Neighbor creado exitosamente",
+            "user": {
+                "id": new_user.id,
+                "name": new_user.name,
+                "role": new_user.role
+            },
+            "token": auth_token
+        }), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500  
@@ -110,7 +118,14 @@ def add_seller():
         db.session.add(new_user)
         db.session.commit()
         auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
-        return jsonify({"mensaje": "Seller creado exitosamente", "user":{"id":new_user.id}, "token": auth_token
+        return jsonify({
+            "mensaje": "Seller creado exitosamente",
+            "user":{
+                "id":new_user.id,
+                "name": new_user.name,
+                "role": new_user.role
+            },
+            "token": auth_token
 }), 201
     except Exception as error:
         db.session.rollback() 
@@ -138,8 +153,15 @@ def add_administrator():
         db.session.add(new_user)
         db.session.commit()
         auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
-        return jsonify({"mensaje": "Administrador creado exitosamente","user":{"id":new_user.id}, "token": auth_token
-}), 201
+        return jsonify({
+            "mensaje": "Administrador creado exitosamente",
+            "user":{
+            "id":new_user.id, 
+            "name":new_user.name,
+            "role":new_user.role
+            },
+            "token": auth_token
+        }), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500                   
@@ -167,12 +189,12 @@ def get_neighbor(id):
         if neighbor is None:
             return jsonify({"error": "neighbor not found"}), 404
         
-        if current_user['id'] != neighbor.id:
-            print("acaaa", current_user['id'])
-            return jsonify({"error": "Unauthorized access"}), 403
+        # if current_user['id'] != neighbor.id:
+        #     print("acaaa", current_user['id'])
+        #     return jsonify({"error": "Unauthorized access"}), 403
         
-        if current_user['userType'] != "NEIGHBOR":
-            return jsonify({"error": "It's a different role"}), 403
+        # if current_user['userType'] != "NEIGHBOR":
+        #     return jsonify({"error": "It's a different role"}), 403
 
         return jsonify(neighbor.serialize()), 200
     except Exception as e:
@@ -200,11 +222,11 @@ def get_seller(id):
         if seller is None:
             return jsonify({"error": "seller not found"}), 404
         
-        if current_user['id'] != seller.id:
-            return jsonify({"error": "Unauthorized access"}), 403
+        # if current_user['id'] != seller.id:
+        #     return jsonify({"error": "Unauthorized access"}), 403
         
-        if current_user['userType'] != "SELLER":
-            return jsonify({"error": "It's a different role"}), 403
+        # if current_user['userType'] != "SELLER":
+        #     return jsonify({"error": "It's a different role"}), 403
 
         return jsonify(seller.serialize()), 200
     except Exception as e:
@@ -230,16 +252,16 @@ def get_administrator(id):
     try:
         current_user = get_jwt_identity()
         
-        if current_user['userType'] != "ADMINISTRATOR":
-            return jsonify({"error": "It's a different role"}), 403
+        # if current_user['userType'] != "ADMINISTRATOR":
+        #     return jsonify({"error": "It's a different role"}), 403
 
         administrator = Administrator.query.get(id)
         if administrator is None:
             return jsonify({"error": "Administrator not found"}), 404
         
 
-        if current_user['id'] != administrator.id:
-            return jsonify({"error": "Unauthorized access"}), 403
+        # if current_user['id'] != administrator.id:
+        #     return jsonify({"error": "Unauthorized access"}), 403
         
         return jsonify(administrator.serialize()), 200
     

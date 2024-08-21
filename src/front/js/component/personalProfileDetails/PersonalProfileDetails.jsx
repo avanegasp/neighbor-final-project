@@ -32,7 +32,7 @@ const PersonalProfileDetails = ({
         phone ? (
           <p className="fs-4">
             <strong>Whatsapp:</strong> {" "}
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+            <a className="fs-4 text" href={whatsappLink} target="_blank" rel="noopener noreferrer">
               {phone}
             </a>
           </p>
