@@ -7,13 +7,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       admin: {},
       users: null,
       favorites: [],
-
       people: {
         neighbor: [],
         seller: [],
-
-      }
-
+      },
       business: [],
       shop: {},
       currentUser: {},
@@ -474,15 +471,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         alert("No se puede eliminar neighbor");
       }else {
         actions.getAllUser();
-
-      getSingleBusiness: async (seller_id, business_id) => {
-        if (!seller_id || !business_id) return;
-        // const jwt = localStorage.getItem("token");
+}},
 
       getSingleBusiness: async (seller_id, product_name) => {
         if (!seller_id || !product_name) return;
         //const jwt = localStorage.getItem("token");
-
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${product_name}`,
@@ -504,6 +497,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
+
       createReview: async (business_id) => {
         if (!business_id) return;
         const token = localStorage.getItem("token");
@@ -541,6 +535,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } catch (error) {
             console.log(error);
           }
+        },
 
       getAllRecommendations: async () => {
         const token = localStorage.getItem("token")
@@ -602,7 +597,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
 
-      }
+      },
 
       createAdminRecommendation: async (id, { name, shopName, lastname, phone }) => {
         if (!id) return;
@@ -736,8 +731,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error)
         }
 
-      }
-    },
+      },
 
     // deleteSeller: async (id) => {
     //   let actions = getActions();
@@ -753,8 +747,9 @@ const getState = ({ getStore, getActions, setStore }) => {
     //     actions.getAllUser();
     //   }
     // },
-    },
-  };
+    //},
+  },
+};
 };
 
 export default getState;
