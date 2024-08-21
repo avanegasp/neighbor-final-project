@@ -6,23 +6,70 @@ import 'react-phone-input-2/lib/style.css';
 // import "../../styles/inputPhone.css";
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
+import { Cloudinary } from "@cloudinary/url-gen/index";
+import { AdvancedImage } from "@cloudinary/react";
 
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: "dysmvst60"
+  }
+})
+
+const imgCloudinary = [
+  'samples/food/spices',
+  'samples/people/bicycle',
+  'samples/animals/three-dogs',
+  'samples/animals/reindeer',
+  'cld-sample-2',
+  'samples/balloons',
+  'samples/landscapes/nature-mountains',
+  'samples/animals/cat'
+]
 
 const ProfileAdmin = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const cldImg = cld.image('sample');
+
+
+  const [recommendation, setRecommendation] = useState({
+    name: "",
+    lastname: "",
+    shopName: "",
+    phone: ""
+  })
+
+  function handleChange(e) {
+    setRecommendation({ ...recommendation, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (id) {
+      await actions.createAdminRecommendation(id, recommendation)
+      navigate("/recommendations")
+    }
+  }
 
   useEffect(() => {
     actions.getProfileAdmin(id)
       .then((data) => {
-        if (!data || data.error) {
+        if (data?.error) {
           setError(data.error || "Error fetching profile");
-          navigate("/register");
+          if (data.error === "Unknown error") {
+            navigate("/register");
+          }
         }
       });
-  }, [id]);
+  }, []);
+
+  const imageIndex = parseInt(id, 10) % imgCloudinary.length;
+  const selectedImageId = imgCloudinary[imageIndex]
+
+
+
 
   if (!store.admin) return <div>Loading...</div>;
 
@@ -36,20 +83,18 @@ const ProfileAdmin = () => {
         <div className="row w-100 border border-1 border-dark bg-white">
           <div className="col-md-4 ms-4">
             <div className="card mt-5 mb-5 w-50">
-              <img
-                src="https://picsum.photos/200"
+              <AdvancedImage
+                cldImg={cld.image(selectedImageId)}
                 className="card-img-top"
-                alt="..."
+                alt=""
               />
               <div className="card-body text-center">
                 <h5 className="card-title mb-4">Libros Favoritos</h5>
                 <ol className="list-unlysted">
-                  <p className="card-text">
-                    <li>Lord Rings</li>
-                    <li>Harry Potter</li>
-                  </p>
+                  <li>Lord Rings</li>
+                  <li>Harry Potter</li>
                 </ol>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Haz una recomendación
                 </button>
 
@@ -61,19 +106,33 @@ const ProfileAdmin = () => {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div className="modal-body">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                           <div className="mb-3">
                             <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
-                            <input type="text" className="form-control" id="exampleInputName" />
+                            <input
+                              name="name"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              value={recommendation.name}
+                              id="exampleInputName" />
                           </div>
                           <div className="mb-3">
                             <label htmlFor="exampleInputLastname" className="form-label">Apellido:</label>
-                            <input type="text" className="form-control" id="exampleInputLastName" />
+                            <input
+                              name="lastname"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              value={recommendation.lastname}
+                              id="exampleInputLastName" />
                           </div>
                           <div className="mb-3">
                             <label htmlFor="exampleInputPhone" className="form-label">Whatsapp:</label>
                             <PhoneInput
                               country={'us'}
+                              onChange={(phone) => setRecommendation({ ...recommendation, phone })}
+                              value={recommendation.phone}
                               inputProps={{
                                 name: 'phone',
                                 id: 'exampleInputPhone',
@@ -85,10 +144,16 @@ const ProfileAdmin = () => {
                           </div>
                           <div className="mb-3">
                             <label htmlFor="exampleInputShopName" className="form-label">Nombre del comercio:</label>
-                            <input type="text" className="form-control" id="exampleInputShopName" placeholder="Ferretería Mis llaves" />
+                            <input
+                              name="shopName"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              id="exampleInputShopName"
+                              placeholder="Ferretería Mis llaves" />
                             <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
                           </div>
-                          <button type="submit" className="btn btn-primary">Submit</button>
+                          <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
                         </form>
 
                       </div>
@@ -113,6 +178,9 @@ const ProfileAdmin = () => {
           <div className="mt-auto text-end mb-5">
             <Link to={"/profileEditAdmin"} className="btn btn-success me-5">
               Editar información
+            </Link>
+            <Link to={"/buildingUsers"} className="btn btn-success me-5">
+              Ver miembros del edificio
             </Link>
           </div>
         </div>

@@ -86,7 +86,7 @@ const Search = () => {
           <ul className="list-group">
             {results.map((user, index) => (
               <li
-                key={index.id}
+                key={index}
                 className="list-group-item"
                 onClick={() => handleResultClick(user)}
               >

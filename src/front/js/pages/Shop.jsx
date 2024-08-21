@@ -9,6 +9,7 @@ const Shop = ({}) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const getSingleBusiness = async () =>{
       const data = await actions.getSingleBusiness(params.seller_id, params.business_id);
@@ -18,7 +19,7 @@ const Shop = ({}) => {
     }
     getSingleBusiness();
   }, []);
-  console.log(store.shop);
+  // console.log(store.shop);
 
   return (
     <>

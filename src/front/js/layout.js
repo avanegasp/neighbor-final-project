@@ -25,6 +25,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer";
 
+import BuildingUsers from "./pages/directory/BuildingUsers.jsx";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -55,7 +56,7 @@ const Layout = () => {
             <Route element={<Register />} path="/register" />
             <Route element={<Shop />} path="/seller/:seller_id/shop/:business_id" />
             <Route element={<Business />} path="/business" />
-
+            <Route element={<BuildingUsers />} path="/buildingUsers" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
