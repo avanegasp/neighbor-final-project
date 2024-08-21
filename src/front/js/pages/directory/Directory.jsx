@@ -19,7 +19,7 @@ const Directory = () => {
           }
         }
       });
-
+    console.log('data', store)
   }, []);
 
   if (!store.users) return <div>Loading...</div>;

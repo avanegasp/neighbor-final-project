@@ -12,10 +12,10 @@ export const Navbar = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const name = localStorage.getItem("name")
+  const name = localStorage.getItem("name");
   function roleLink() {
-    const role = localStorage.getItem("role")
-    const id = localStorage.getItem("id")
+    const role = localStorage.getItem("role");
+    const id = localStorage.getItem("id");
 
     if (role && id) {
       switch (role) {
@@ -25,6 +25,8 @@ export const Navbar = () => {
           return `/profileSeller/${id}`;
         case "ADMINISTRATOR":
           return `/profileAdmin/${id}`;
+        default:
+          return "/";
       }
     }
   }
@@ -89,7 +91,8 @@ export const Navbar = () => {
                 className="text-success fs-5 mx-1 my-1"
                 href="#"
                 onClick={handleLogout}
-
+              >Cerrar Sesión</a>
+            </div>
 
             <div className="dropdown">
               <button
@@ -98,7 +101,6 @@ export const Navbar = () => {
                 id="dropdownMenuButton"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-
               >
                 <i className="fa-solid fa-bars"></i>
               </button>
