@@ -1,0 +1,10 @@
+/* Agrega este CSS a tu archivo de estilos */
+.phone-input .flag-dropdown .country-list .country:hover {
+    background-color: #f8f9fa;
+    color: #000;
+}
+
+.phone-input .flag-dropdown .country-list .country {
+    background-color: #fff;
+    color: #000;
+}

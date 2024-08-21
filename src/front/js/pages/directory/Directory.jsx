@@ -1,13 +1,25 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext.js";
-import Search from "../../component/search/Search.jsx";
+import { useNavigate } from "react-router-dom";
+// import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
-
+import ModalBodyRecommendation from "../../component/modalRecommendationsProfile/ModalBody.jsx";
 const Directory = () => {
   const { store, actions } = useContext(Context);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    actions.getAllDirectory();
+    actions.getAllDirectory()
+      .then((data) => {
+        if (data?.error) {
+          setError(data.error || "Error fetching profile");
+          if (data.error === "Unauthorized access") {
+            navigate("/register");
+          }
+        }
+      });
+
   }, []);
 
   if (!store.users) return <div>Loading...</div>;
@@ -16,7 +28,7 @@ const Directory = () => {
 
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100" style={{ height: '200px', overflow: 'scroll' }}>
       <div className="container d-flex flex-column flex-grow-1">
         <div
           className="d-flex justify-content-between align-items-center mb-3"
@@ -25,7 +37,7 @@ const Directory = () => {
           <h1 className="d-flex justify-context-center">Directorio</h1>
 
           <div className="input-group mb-3 inputSearch w-25">
-            <Search />
+            {/* <Search /> */}
           </div>
         </div>
 
@@ -48,7 +60,13 @@ const Directory = () => {
                   buildingName={user.buildingName}
                   email={user.email}
                   id={user.id}
+                  recommendation={user.recommendations}
                 />
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <ModalBodyRecommendation
+                    user={user}
+                    recommendations={user.recommendations} />
+                </div>
               </div>
             );
           })}
@@ -66,12 +84,19 @@ const Directory = () => {
                   floor={user.floor}
                   email={user.email}
                   id={user.id}
+                  recommendation={user.recommendations}
                 />
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <ModalBodyRecommendation
+                    user={user}
+                    recommendations={user.recommendations} />
+                </div>
               </div>
             );
           })}
           {store.users.seller.map((user) => {
             // console.log("USERRRRR", user);
+            // console.log("modal", user.recommendations)
             return (
               <div
                 className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
@@ -84,17 +109,20 @@ const Directory = () => {
                   floor={user.floor}
                   shopName={user.shopName}
                   email={user.email}
+                  phone={user.phone}
                   id={user.id}
+                  recommendation={user.recommendations}
                 />
+                <div className="modal fade" id={`modal-${user.role}-${user.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <ModalBodyRecommendation
+                    user={user}
+                    recommendations={user.recommendations} />
+                </div>
               </div>
             );
           })}
         </div>
       </div>
-
-      <footer className="bg-dark text-white text-center py-3">
-        <p>Footer Content Here</p>
-      </footer>
     </div>
   );
 };

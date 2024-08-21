@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, Neighbor, Seller, Administrator, Product, Review
+from api.models import db, Neighbor, Seller, Administrator, Product, Review, Recommendation
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -16,9 +16,51 @@ CORS(api)
 
 logging.basicConfig(level=logging.ERROR)
 
-    #registro de vecino
-    
+#login
 
+@api.route('/login', methods=['POST'])
+def login():
+    try:
+        body = request.json
+        email = body.get("email", None)
+        password = body.get("password", None)
+        userType = body.get("userType", None)
+        if email is None or password is None or userType is None:
+            return jsonify({"error": "Email, password, or user type are missing!"}), 400
+
+        if userType == "NEIGHBOR":
+            neighbor = Neighbor.query.filter_by(email=email).first()
+
+            if not neighbor or not check_password_hash(neighbor.password, password):
+                return jsonify({"error": "Wrong data!"}), 400
+
+            auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email, "userType": neighbor.role, "status": neighbor.status})
+            return jsonify({"token": auth_token, "user": neighbor.serialize()}), 200
+
+        if userType == "SELLER":
+            seller = Seller.query.filter_by(email=email).first()
+            if not seller or not check_password_hash(seller.password, password):
+                return jsonify({"error": "Wrong data!"}), 400
+
+            auth_token = create_access_token({"id": seller.id, "email": seller.email, "userType": seller.role, "status": seller.status})
+            return jsonify({"token": auth_token, "user": seller.serialize()}), 200
+
+        if userType == "ADMINISTRATOR":
+            admin = Administrator.query.filter_by(email=email).first()
+            print("ADMIN", admin)
+            if not admin or not check_password_hash(admin.password, password):
+                return jsonify({"error": "Wrong data!"}), 400
+
+            auth_token = create_access_token({"id": admin.id, "email": admin.email, "userType": admin.role})
+            print("auth_token", auth_token)
+            return jsonify({"token": auth_token, "user": admin.serialize()}), 200
+
+    except Exception as error:
+         print("error", error)
+         return jsonify({"error": f"{error}"}), 500
+
+
+#registro de vecino
 @api.route('/neighbor/registers', methods=['POST'])
 def add_neighbor():
     body = request.json
@@ -38,7 +80,9 @@ def add_neighbor():
         new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Neighbor creado exitosamente"}), 201
+        print("authhhhh", new_user)
+        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role, "status": new_user.status})
+        return jsonify({"mensaje": "Neighbor creado exitosamente", "user":{"id":new_user.id}, "token": auth_token}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500  
@@ -55,16 +99,19 @@ def add_seller():
     lastname = body.get("lastname", None)
     floor = body.get("floor",None)
     shopName = body.get("shopName",None)
-    if email is None or password is None or name is None or lastname is None or floor is None or shopName is None:
+    phone = body.get("phone", None)
+    if email is None or password is None or name is None or lastname is None or floor is None or shopName is None or phone is None:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
     if Seller.query.filter_by(email = email).first() is not None:
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
-        new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, shopName = shopName)
+        new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, phone = phone, shopName = shopName)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Seller creado exitosamente"}), 201
+        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role, "status": new_user.status})
+        return jsonify({"mensaje": "Seller creado exitosamente", "user":{"id":new_user.id}, "token": auth_token
+}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500 
@@ -90,51 +137,12 @@ def add_administrator():
         new_user = Administrator(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, buildingName = buildingName)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({"mensaje": "Administrador creado exitosamente"}), 201
+        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
+        return jsonify({"mensaje": "Administrador creado exitosamente","user":{"id":new_user.id}, "token": auth_token
+}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500                   
-
-
-@api.route('/login', methods=['POST'])
-def login():
-    try:
-        body = request.json
-        email = body.get("email", None)
-        password = body.get("password", None)
-        userType = body.get("userType", None)
-        if email is None or password is None or userType is None:
-            return jsonify({"error": "Email, password, or user type are missing!"}), 400
-
-        if userType == "NEIGHBOR":
-            neighbor = Neighbor.query.filter_by(email=email).first()
-            if not neighbor:
-                return jsonify({"error": "Wrong data!"}), 400
-
-            if not check_password_hash(neighbor.password, password):
-                return jsonify ({"error": "Wrong data!"}), 400
-
-            auth_token = create_access_token({"id": neighbor.id, "email": neighbor.email})
-            return jsonify({"token": auth_token}), 200
-
-        if userType == "SELLER":
-            seller = Seller.query.filter_by(email=email).first()
-            if not seller or not check_password_hash(seller.password, password):
-                return jsonify({"error": "Wrong data!"}), 400
-
-            auth_token = create_access_token({"id": seller.id, "email": seller.email})
-            return jsonify({"token": auth_token}), 200
-
-        if userType == "ADMINISTRATOR":
-            admin = Administrator.query.filter_by(email=email).first()
-            if not admin or not check_password_hash(admin.password, password):
-                return jsonify({"error": "Wrong data!"}), 400
-
-            auth_token = create_access_token({"id": admin.id, "email": admin.email})
-            return jsonify({"token": auth_token}), 200
-
-    except Exception as error:
-        return jsonify({"error": f"{error}"}), 500
 
 #Vecinos
 
@@ -150,11 +158,22 @@ def get_all_neighbors():
 
 
 @api.route('/neighbor/<int:id>', methods=['GET'])
+@jwt_required()
 def get_neighbor(id):
     try:
+        current_user = get_jwt_identity()
         neighbor = Neighbor.query.get(id)
+
         if neighbor is None:
             return jsonify({"error": "neighbor not found"}), 404
+        
+        if current_user['id'] != neighbor.id:
+            print("acaaa", current_user['id'])
+            return jsonify({"error": "Unauthorized access"}), 403
+        
+        if current_user['userType'] != "NEIGHBOR":
+            return jsonify({"error": "It's a different role"}), 403
+
         return jsonify(neighbor.serialize()), 200
     except Exception as e:
         logging.error(f"Error retrieving neighbor {id}: {e}")
@@ -172,11 +191,21 @@ def get_all_sellers():
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
 @api.route('/seller/<int:id>', methods=['GET'])
+@jwt_required()
 def get_seller(id):
     try:
+        current_user = get_jwt_identity()
         seller = Seller.query.get(id)
+
         if seller is None:
             return jsonify({"error": "seller not found"}), 404
+        
+        if current_user['id'] != seller.id:
+            return jsonify({"error": "Unauthorized access"}), 403
+        
+        if current_user['userType'] != "SELLER":
+            return jsonify({"error": "It's a different role"}), 403
+
         return jsonify(seller.serialize()), 200
     except Exception as e:
         logging.error(f"Error retrieving seller {id}: {e}")
@@ -194,12 +223,24 @@ def get_all_administrators():
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
 
     #administrador
+
 @api.route('/administrator/<int:id>', methods=['GET'])
+@jwt_required()
 def get_administrator(id):
     try:
+        current_user = get_jwt_identity()
+        
+        if current_user['userType'] != "ADMINISTRATOR":
+            return jsonify({"error": "It's a different role"}), 403
+
         administrator = Administrator.query.get(id)
         if administrator is None:
-            return jsonify({"error": "administrator not found"}), 404
+            return jsonify({"error": "Administrator not found"}), 404
+        
+
+        if current_user['id'] != administrator.id:
+            return jsonify({"error": "Unauthorized access"}), 403
+        
         return jsonify(administrator.serialize()), 200
     
     except Exception as e:
@@ -256,14 +297,22 @@ def delete_seller(seller_id):
 
 # Directorio
 @api.route('/directory', methods=['GET'])
+@jwt_required()
 def get_all_users_directory():
     try:
+        current_user = get_jwt_identity()
+        print(current_user, id)
+
         administrators = Administrator.query.all()
         serialize_administrators = [administrator.serialize() for administrator in administrators]
         sellers = Seller.query.all()
         serialize_sellers = [seller.serialize() for seller in sellers]
         neighbors = Neighbor.query.all()
         serialize_neighbors = [neighbor.serialize() for neighbor in neighbors]
+        
+        if not current_user:
+            return jsonify({"error": "Unauthorized access"}), 403
+        
         return jsonify({
             "administrator": serialize_administrators, 
             "seller": serialize_sellers, 
@@ -272,7 +321,8 @@ def get_all_users_directory():
     except Exception as e:
         logging.error(f"Error retrieving directory: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
-    
+
+#edit    
 @api.route('/editNeighbor/<int:id>', methods=['PUT'])
 def edit_neighbor(id):
     body = request.json
@@ -322,12 +372,14 @@ def edit_seller(id):
     lastname = body.get("lastname", None)
     floor = body.get("floor", None)
     email = body.get("email", None)
+    phone = body.get("phone", None)
     shopName = body.get("shopName", None)
 
     seller.name = name
     seller.lastname = lastname
     seller.floor = floor
     seller.email = email
+    seller.phone = phone
     seller.shopName = shopName
 
     try:
@@ -371,7 +423,9 @@ def edit_admin(id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"error": str(error)}),500
+    
 
+    
 
 @api.route('/seller/<int:seller_id>/create-business', methods=['POST'])
 #@jwt.required
@@ -399,7 +453,7 @@ def create_business(seller_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"error": f"{error}"}), 500
-
+    
 @api.route('/businesses', methods=['GET'])
 def get_all_businesses():
     try:
@@ -413,7 +467,7 @@ def get_all_businesses():
 @api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['GET'])
 def get_single_business(seller_id, business_id):
     try:
-        business = Product.query.get(seller_id=seller_id, id=business_id)
+        business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
         if not business:
             return jsonify({"Business not found"}), 404
         return jsonify({"Business": business.serialize()}), 200
@@ -554,6 +608,221 @@ def delete_review(neighbor_id, business_id, review_id):
     
     except Exception as error:
         return jsonify({"error": f"{error}"}), 500
-           
+
+@api.route("/me", methods=['GET'])
+@jwt_required
+def get_user_data():
+    
+    user_data = get_jwt_identity()
+    if user_data["userType"] == "NEIGHBOR":
+        user = Neighbor.query.get(user_data["id"])
+        return jsonify(user.serialize()), 200
+    
+    elif user_data["userType"] == "SELLER":
+        user = Seller.query.get(user_data["id"])
+        user_business = Product.query.filter_by(seller_id=user.id).all()
+        return jsonify(user.serialize(), user_business.serialize()), 200
+    
+    elif user_data["userType"] == "ADMINISTRATOR":
+        user = Administrator.query.get(user_data["id"])
+        return jsonify(user.serialize()), 200
+    
+    else:
+        return jsonify({"error": "User not found!"}), 404
+    
+    
 
 
+
+    
+#recommendations    
+    
+@api.route('/recommendations', methods=['GET'])
+@jwt_required()
+def get_all_recommendations():
+    try:
+        current_user = get_jwt_identity()
+        print("Recommendations current", current_user)
+        
+        if not current_user:
+            return jsonify({"error": "Unauthorized access"}), 403
+
+        recommendations = Recommendation.query.all()
+        serialized_recommendations = [recommendation.serialize() for recommendation in recommendations]
+
+        return jsonify({"recommendations": serialized_recommendations}), 200
+
+    except Exception as error:
+        logging.error(f"Error retrieving recommendations: {error}")
+        return jsonify({"error": str(error)}), 500
+
+
+@api.route('/neighbor/<int:neighbor_id>/createReco', methods=['POST'])
+def neighbor_create_recommendation(neighbor_id):
+    try:
+        neighbor = Neighbor.query.get(neighbor_id)
+        if not neighbor:
+            return jsonify({"error": "Neighbor not found!"}), 404
+
+        body = request.json
+        name = body.get("name")
+        lastname = body.get("lastname")
+        phone = body.get("phone")
+        shopName = body.get("shopName")
+
+        required_fields = ["name", "lastname", "phone", "shopName"]
+        missing_fields = [field for field in required_fields if not body.get(field)]
+        if missing_fields:
+            return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+        
+        recommendation_exists = Recommendation.query.filter_by(name=name, lastname=lastname, neighbor_id=neighbor_id).first()
+        if recommendation_exists:
+            return jsonify({"error": f"Recommendation for {name} {lastname} already exists!"}), 400
+        
+
+        recommendation = Recommendation(
+            name=name, 
+            lastname=lastname, 
+            phone=phone, 
+            shopName=shopName, 
+            neighbor_id=neighbor_id
+        )
+
+        db.session.add(recommendation)
+        db.session.commit()
+
+        return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500  
+
+@api.route('/seller/<int:seller_id>/createReco', methods=['POST'])
+def seller_create_recommendation(seller_id):
+    try:
+        seller = Seller.query.get(seller_id)
+        if not seller:
+            return jsonify({"error": "Seller not found!"}), 404
+
+        body = request.json
+        name = body.get("name")
+        lastname = body.get("lastname")
+        phone = body.get("phone")
+        shopName = body.get("shopName")
+
+        required_fields = ["name", "lastname", "phone", "shopName"]
+        missing_fields = [field for field in required_fields if not body.get(field)]
+        if missing_fields:
+            return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+        
+        recommendation_exists = Recommendation.query.filter_by(name=name, lastname=lastname, seller_id=seller_id).first()
+        if recommendation_exists:
+            return jsonify({"error": f"Recommendation for {name} {lastname} already exists!"}), 400
+        
+
+        recommendation = Recommendation(
+            name=name, 
+            lastname=lastname, 
+            phone=phone, 
+            shopName=shopName, 
+            seller_id=seller_id
+        )
+
+        db.session.add(recommendation)
+        db.session.commit()
+
+        return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500
+
+@api.route('/administrator/<int:administrator_id>/createReco', methods=['POST'])
+def admin_create_recommendation(administrator_id):
+    try:
+        administrator = Administrator.query.get(administrator_id)
+        if not administrator:
+            return jsonify({"error": "Admin not found!"}), 404
+
+        body = request.json
+        name = body.get("name")
+        lastname = body.get("lastname")
+        phone = body.get("phone")
+        shopName = body.get("shopName")
+
+        required_fields = ["name", "lastname", "phone", "shopName"]
+        missing_fields = [field for field in required_fields if not body.get(field)]
+        if missing_fields:
+            return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+        
+        recommendation_exists = Recommendation.query.filter_by(name=name, lastname=lastname, administrator_id=administrator_id).first()
+        if recommendation_exists:
+            return jsonify({"error": f"Recommendation for {name} {lastname} already exists!"}), 400
+        
+
+        recommendation = Recommendation(
+            name=name, 
+            lastname=lastname, 
+            phone=phone, 
+            shopName=shopName, 
+            administrator_id=administrator_id
+        )
+
+        db.session.add(recommendation)
+        db.session.commit()
+
+        return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
+
+    
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"error": f"{error}"}), 500
+
+#esta lo va ser llamado en la pagina de cada usuario
+@api.route('/checking', methods=['GET'])
+@jwt_required()
+def checkingStatus():
+    try:
+       current_user = get_jwt_identity() 
+       userType = current_user['userType']
+       if userType == "NEIGHBOR":
+        neighbor =Neighbor.query.filter_by(id=current_user['id']).first()
+        return jsonify({"status": neighbor.status})
+       if userType == "SELLER":
+        seller =Seller.query.filter_by(id=current_user['id']).first()
+        return jsonify({"status": seller.status})
+    except Exception as e:
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
+@api.route('/changeStatus', methods=['PUT'])
+@jwt_required()
+def changeStatus():
+    body = request.json
+    id = body.get("id", None)
+    role = body.get("role", None)
+    status = body.get("status", None)
+
+    if id is None or role is None or status is None:
+        return jsonify({"error": "Fill out all the fields"}), 400
+    try:
+        if role == "NEIGHBOR":
+            neighbor=Neighbor.query.filter_by(id=id).first()
+            neighbor.status = status
+            try:
+                db.session.commit()
+                db.session.refresh(neighbor)
+                return jsonify({"status": f"update status to {neighbor.status}"}),202
+            except Exception as e:
+                return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+        
+        if role == "SELLER":
+            seller=Seller.query.filter_by(id=id).first()
+            seller.status = status
+            try:
+                db.session.commit()
+                db.session.refresh(seller)
+                return jsonify({"status": f"update status to {seller.status}"})
+            except Exception as e:
+                return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+    except Exception as error:
+        return jsonify({"error": f"An error occurred: {str(error)}"}), 500

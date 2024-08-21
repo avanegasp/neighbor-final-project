@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName = "", shopName = "", email = "", id, role = "" }) => {
+import PhoneInput from 'react-phone-input-2';
+import "../../../styles/inputPhone.css";
+const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName = "", shopName = "", email = "", id, role = "", phone = "" }) => {
 
   const { actions } = useContext(Context)
 
@@ -11,12 +13,13 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
     floor,
     email,
     buildingName,
-    shopName
+    shopName,
+    phone
   })
 
   const navigate = useNavigate()
 
-  console.log('HEREEE', id)
+  // console.log('HEREEE', id)
 
   function handleChange(e) {
     setProfile({ ...profile, [e.target.name]: e.target.value })
@@ -38,7 +41,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
     }
   }
 
-  console.log("ROLEEEEE", role)
+  // console.log("ROLEEEEE", role)
 
   return (
     <form onSubmit={handleSubmit}>
@@ -103,6 +106,35 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
             value={profile.shopName} />
         </div>
       ) : null}
+      {
+        phone ? (
+          <div className="mb-3">
+            <label htmlFor="phone" className="form-label fs-3">
+              Whatsapp
+            </label>
+            <PhoneInput
+              country={'us'}
+              value={profile.phone}
+              onChange={(phone) => {
+                setProfile((prevProfile) => ({
+                  ...prevProfile,
+                  phone: phone
+                }));
+              }}
+              inputProps={{
+                name: 'phone',
+                required: true,
+                autoFocus: true
+              }}
+              containerClass="form-control p-0 phone-input"
+              inputClass="form-control w-100"
+            />
+          </div>
+        ) : null
+      }
+
+
+
       {buildingName ? (
         <div className="mb-3">
           <label htmlFor="buildingName" className="form-label fs-3">

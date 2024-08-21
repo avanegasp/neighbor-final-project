@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, Neighbor,Seller,Administrator
+from .models import db, Neighbor,Seller,Administrator,Recommendation
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -15,5 +15,7 @@ def setup_admin(app):
     admin.add_view(ModelView(Neighbor, db.session))
     admin.add_view(ModelView(Seller, db.session))
     admin.add_view(ModelView(Administrator, db.session))
+    admin.add_view(ModelView(Recommendation, db.session))
+
     # You can duplicate that line to add mew models
     # admin.add_view(ModelView(YourModelName, db.session))
