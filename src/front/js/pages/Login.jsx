@@ -28,7 +28,6 @@ const Login = () => {
           return;
 
 
-
       }
     }
     else {
@@ -38,20 +37,20 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container" >
-      <h1 className="text-white">Iniciar sesión</h1>
+    <div className="login-container">
+      <h1>Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
         <div className="user-type-group" onChange={(e) => setUserType(e.target.value)}>
-          <label className="user-type-option btn btn-outline-white text-white">
+          <label className="user-type-option">
             <input type="radio" name="options" value="NEIGHBOR" />
             Neighbor
           </label>
-          <label className="user-type-option btn btn-outline-white text-white">
+          <label className="user-type-option">
             <input type="radio" name="options" value="SELLER" />
             Seller
           </label>
-          <label className="user-type-option btn btn-outline-white text-white">
+          <label className="user-type-option">
             <input type="radio" name="options" value="ADMINISTRATOR" />
             Admin
           </label>
@@ -86,11 +85,10 @@ const Login = () => {
       </form>
 
       <div>
-        <Link className="text-white" to={"/register"}>¿No tienes una cuenta? Regístrate aquí!</Link>
+        <Link to={"/register"}>¿No tienes una cuenta? Regístrate aquí!</Link>
       </div>
     </div>
   );
- 
 };
 
 export default Login;
