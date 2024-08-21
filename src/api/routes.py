@@ -130,7 +130,7 @@ def add_administrator():
     name = body.get("name",None)
     lastname = body.get("lastname", None)
     floor = body.get("floor",None)
-    buildingName = body.get("buildingName",None)
+    buildingName = body.get("buildingName",None)    
     if email is None or password is None  or name is None or lastname is None or floor is None or buildingName is None:
         return jsonify({"error": "Todos los campos deben ser llenados"}), 400
     password_hash = generate_password_hash(password)
@@ -249,6 +249,53 @@ def get_administrator(id):
     except Exception as e:
         logging.error(f"Error retrieving administrator {id}: {e}")
         return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+    
+
+    
+    #view del admin donde ve los neighbor y seller para editar-eliminar   
+
+@api.route('/neighbors/sellers', methods=['GET'])   
+def get_all_neighbors_sellers():
+    try:
+        neighbors = Neighbor.query.all()
+        sellers = Seller.query.all()
+        serialize_neighbors = [neighbor.serialize() for neighbor in neighbors]
+        serialize_sellers = [seller.serialize() for seller in sellers]
+        return jsonify({"neighbor": serialize_neighbors,"seller": serialize_sellers}), 200
+    except Exception as e:
+        logging.error(f"Error retrieving neighbors and sellers: {e}")
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+    
+ 
+    
+ #Admin puede eliminar los neighbor y seller
+
+@api.route('/administrator/neighbor/<int:neighbor_id>', methods=['DELETE'])
+def delete_neighbor(neighbor_id):
+    
+    neighbor = Neighbor.query.get(neighbor_id) 
+    try:
+        if neighbor is None:
+            return jsonify({"error": "Neighbor does not exist"}), 404
+        db.session.delete(neighbor)
+        db.session.commit()
+        return jsonify({"message": "Neighbor deleted"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+
+@api.route('/administrator/seller/<int:seller_id>', methods=['DELETE'])
+def delete_seller(seller_id):
+    
+    seller = Seller.query.get(seller_id) 
+    try:
+        if seller is None:
+            return jsonify({"error": "seller does not exist"}), 404
+        db.session.delete(seller)
+        db.session.commit()
+        return jsonify({"message": "seller deleted"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500    
+ 
 
 
 # Directorio
