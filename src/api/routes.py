@@ -78,10 +78,13 @@ def add_neighbor():
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
         new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
+        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
         db.session.add(new_user)
         db.session.commit()
+        db.session.refresh()
         print("authhhhh", new_user)
         auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role, "status": new_user.status})
+
         return jsonify({"mensaje": "Neighbor creado exitosamente", "user":{"id":new_user.id}, "token": auth_token}), 201
     except Exception as error:
         db.session.rollback() 
@@ -428,11 +431,11 @@ def edit_admin(id):
     
 
 @api.route('/seller/<int:seller_id>/create-business', methods=['POST'])
-#@jwt.required
+@jwt_required()
 def create_business(seller_id):
     try:
         body = request.json
-        name = body.get("name", None)
+        name = body.get("shopName", None)
         price = body.get("price", None)
         schedule = body.get("schedule", None)
         
@@ -464,10 +467,10 @@ def get_all_businesses():
     except Exception as error:
         return jsonify ({"error": f"{error}"}), 500
     
-@api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['GET'])
-def get_single_business(seller_id, business_id):
+@api.route('seller/<int:seller_id>/business/<string:product_name>', methods=['GET'])
+def get_single_business(seller_id, product_name):
     try:
-        business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
+        business = Product.query.filter_by(seller_id=seller_id, name=product_name).first()
         if not business:
             return jsonify({"Business not found"}), 404
         return jsonify({"Business": business.serialize()}), 200
@@ -476,7 +479,7 @@ def get_single_business(seller_id, business_id):
         return jsonify({"error": f"{error}"}), 500 
     
 @api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['PUT'])
-# @jwt_required
+@jwt_required()
 def update_business(seller_id, business_id):
     
     business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
@@ -505,7 +508,7 @@ def update_business(seller_id, business_id):
         return jsonify({"error": f"{error}"}), 500
     
 @api.route('seller/<int:seller_id>/business/<int:business_id>', methods=['DELETE'])
-# @jwt_required
+@jwt_required()
 def delete_business(seller_id, business_id):
     
     business = Product.query.filter_by(seller_id=seller_id, id=business_id).first()
@@ -520,7 +523,7 @@ def delete_business(seller_id, business_id):
         return jsonify({"error": f"{error}"}), 500
 
 @api.route('/neighbor/<int:neighbor_id>/business/<business_id>/create-review', methods=['POST'])
-#@jwt.required
+#@jwt.required()
 def create_review(neighbor_id, business_id):
     try:
         body = request.json
@@ -595,7 +598,7 @@ def update_review(neighbor_id, business_id, review_id):
         return jsonify({"error": f"{error}"}), 500
     
 @api.route('/neighbor/<int:neighbor_id>/business/<int:business_id>/review/<int:review_id>', methods=['DELETE'])
-#@jwt_required
+@jwt_required()
 def delete_review(neighbor_id, business_id, review_id):
     
     review = Review.query.filter_by(neighbor_id, business_id, id=review_id).first()
@@ -610,7 +613,7 @@ def delete_review(neighbor_id, business_id, review_id):
         return jsonify({"error": f"{error}"}), 500
 
 @api.route("/me", methods=['GET'])
-@jwt_required
+@jwt_required()
 def get_user_data():
     
     user_data = get_jwt_identity()
