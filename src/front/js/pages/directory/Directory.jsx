@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-// import Search from "../../component/search/Search.jsx";
+import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
 import ModalBodyRecommendation from "../../component/modalRecommendationsProfile/ModalBody.jsx";
 const Directory = () => {
@@ -37,7 +37,7 @@ const Directory = () => {
           <h1 className="d-flex justify-context-center">Directorio</h1>
 
           <div className="input-group mb-3 inputSearch w-25">
-            {/* <Search /> */}
+            <Search />
           </div>
         </div>
 

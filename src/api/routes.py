@@ -170,12 +170,12 @@ def get_neighbor(id):
         if neighbor is None:
             return jsonify({"error": "neighbor not found"}), 404
         
-        if current_user['id'] != neighbor.id:
-            print("acaaa", current_user['id'])
-            return jsonify({"error": "Unauthorized access"}), 403
+        # if current_user['id'] != neighbor.id:
+        #     print("acaaa", current_user['id'])
+        #     return jsonify({"error": "Unauthorized access"}), 403
         
-        if current_user['userType'] != "NEIGHBOR":
-            return jsonify({"error": "It's a different role"}), 403
+        # if current_user['userType'] != "NEIGHBOR":
+        #     return jsonify({"error": "It's a different role"}), 403
 
         return jsonify(neighbor.serialize()), 200
     except Exception as e:
@@ -203,11 +203,11 @@ def get_seller(id):
         if seller is None:
             return jsonify({"error": "seller not found"}), 404
         
-        if current_user['id'] != seller.id:
-            return jsonify({"error": "Unauthorized access"}), 403
+        # if current_user['id'] != seller.id:
+        #     return jsonify({"error": "Unauthorized access"}), 403
         
-        if current_user['userType'] != "SELLER":
-            return jsonify({"error": "It's a different role"}), 403
+        # if current_user['userType'] != "SELLER":
+        #     return jsonify({"error": "It's a different role"}), 403
 
         return jsonify(seller.serialize()), 200
     except Exception as e:
@@ -233,16 +233,16 @@ def get_administrator(id):
     try:
         current_user = get_jwt_identity()
         
-        if current_user['userType'] != "ADMINISTRATOR":
-            return jsonify({"error": "It's a different role"}), 403
+        # if current_user['userType'] != "ADMINISTRATOR":
+        #     return jsonify({"error": "It's a different role"}), 403
 
         administrator = Administrator.query.get(id)
         if administrator is None:
             return jsonify({"error": "Administrator not found"}), 404
         
 
-        if current_user['id'] != administrator.id:
-            return jsonify({"error": "Unauthorized access"}), 403
+        # if current_user['id'] != administrator.id:
+        #     return jsonify({"error": "Unauthorized access"}), 403
         
         return jsonify(administrator.serialize()), 200
     
