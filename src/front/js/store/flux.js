@@ -15,7 +15,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       shop: {},
       currentUser: {},
       recommendations: []
-
     },
     actions: {
       addToFavorite: (id, name, role) => {
@@ -209,9 +208,9 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
             }
           );
-
           if (response.ok) {
             const data = await response.json();
+            console.log('response', data)
             setStore({ users: data });
             return data;
           } else {
@@ -435,43 +434,51 @@ const getState = ({ getStore, getActions, setStore }) => {
       getAllUser: async () => {
         try {
           console.log("hola")
-            const response = await fetch(process.env.BACKEND_URL+ `/api/neighbors/sellers`,
-              {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+          const response = await fetch(process.env.BACKEND_URL + `/api/neighbors/sellers`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
             });
-    
-            if (response.ok) {
-                const data = await response.json();
-                setStore({ people:{
-                  neighbor:data.neighbor,
-                  seller:data.seller
-                }});
-            } else {
-                console.error("Error encontrando los neighbors:", response.statusText);
-            }
-        } catch (error) {
-            console.error("Error encontrando los seller:", error.message);
-        }
-    },
 
-    deleteUser: async (id,userType) => {
-      let actions = getActions();
-      const role = userType.toLowerCase()
-      const response = await fetch(process.env.BACKEND_URL+`/api/administrator/${role}/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
+          if (response.ok) {
+            const data = await response.json();
+            setStore({
+              people: {
+                neighbor: data.neighbor,
+                seller: data.seller
+              }
+            });
+          } else {
+            console.error("Error encontrando los neighbors:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error encontrando los seller:", error.message);
+        }
       },
-      })  
-      if (!response.ok) {
-        alert("No se puede eliminar neighbor");
-      }else {
-        actions.getAllUser();
-}},
+
+      deleteUser: async (id, userType) => {
+        let actions = getActions();
+        const role = userType.toLowerCase()
+        const response = await fetch(process.env.BACKEND_URL + `/api/administrator/${role}/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*',
+          },
+        })
+        if (!response.ok) {
+          alert("No se puede eliminar neighbor");
+        } else {
+          actions.getAllUser();
+        }
+      },
+
+      getSingleBusiness: async (seller_id, business_id) => {
+        if (!seller_id || !business_id) return;
+        // const jwt = localStorage.getItem("token");
+      },
 
       getSingleBusiness: async (seller_id, product_name) => {
         if (!seller_id || !product_name) return;
@@ -522,20 +529,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-        getCurrentUser: async () => {
-          const token = localStorage("token");
-          try {
-            const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            });
-            const data = await response.json();
-            setStore({ currentUser: data });
-          } catch (error) {
-            console.log(error);
-          }
-        },
+      getCurrentUser: async () => {
+        const token = localStorage("token");
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          setStore({ currentUser: data });
+        } catch (error) {
+          console.log(error);
+        }
+      },
 
       getAllRecommendations: async () => {
         const token = localStorage.getItem("token")
@@ -569,7 +576,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-        createBusiness: async(id, shopName, price, schedule) =>{
+      createBusiness: async (id, shopName, price, schedule) => {
         const token = localStorage.getItem("token")
         if (!token) {
           console.error("No token found")
@@ -584,7 +591,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({shopName, price, schedule}),
+              body: JSON.stringify({ shopName, price, schedule }),
             }
           );
           if (!response.ok) {
@@ -596,7 +603,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error);
         }
-
       },
 
       createAdminRecommendation: async (id, { name, shopName, lastname, phone }) => {
@@ -731,25 +737,24 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error)
         }
 
-      },
+      }
 
-    // deleteSeller: async (id) => {
-    //   let actions = getActions();
-    //   const response = await fetch(process.env.BACKEND_URL+'/administrator/seller'+ `/${id}`, {
-    //     method: "DELETE",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //   },
-    //   })
-    //   if (!response.ok) {
-    //     alert("No se puede eliminar Seller");
-    //   }else {
-    //     actions.getAllUser();
-    //   }
-    // },
-    //},
-  },
-};
-};
+      // deleteSeller: async (id) => {
+      //   let actions = getActions();
+      //   const response = await fetch(process.env.BACKEND_URL+'/administrator/seller'+ `/${id}`, {
+      //     method: "DELETE",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //   },
+      //   })
+      //   if (!response.ok) {
+      //     alert("No se puede eliminar Seller");
+      //   }else {
+      //     actions.getAllUser();
+      //   }
+       },
+    },
+  };
+
 
 export default getState;

@@ -5,6 +5,7 @@ import { faBriefcase, faPerson, faMobileRetro } from "@fortawesome/free-solid-sv
 
 const ModalBodyRecommendation = ({ recommendations, user }) => {
     // console.log("recomendations", recommendations)
+    if (!recommendations) return null
     return (
         <>
             <div className="modal-dialog">

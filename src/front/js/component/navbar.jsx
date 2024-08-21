@@ -13,7 +13,10 @@ export const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const name = localStorage.getItem("name");
+  const name = localStorage.getItem("name");
   function roleLink() {
+    const role = localStorage.getItem("role");
+    const id = localStorage.getItem("id");
     const role = localStorage.getItem("role");
     const id = localStorage.getItem("id");
 
@@ -25,6 +28,8 @@ export const Navbar = () => {
           return `/profileSeller/${id}`;
         case "ADMINISTRATOR":
           return `/profileAdmin/${id}`;
+        default:
+          return "/";
       }
     }
   }
@@ -100,55 +105,43 @@ export const Navbar = () => {
                 className="text-success fs-5 mx-1 my-1"
                 href="#"
                 onClick={handleLogout}
-              />
+              >Cerrar Sesión</a>
+            </div>
 
-              <div className="dropdown">
-                <button
-                  className="btn text-white fs-1"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i className="fa-solid fa-bars"></i>
-                </button>
-                <ul
-                  className="dropdown-menu dropdown-menu-end"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <li>
-                    <Link
-                      className="dropdown-item text-success fs-5 mx-1 my-1"
-                      to="/directory"
-                    >
-                      <i className="text-success fs-5 mx-1 my-1 fa-solid fa-address-book"></i>{" "}
-                      Directorio
-                    </Link>
-                    <Link
-                      className="dropdown-item text-success fs-5 mx-1 my-1"
-                      to="/business"
-                    >
-                      <i className="text-success fs-5 mx-1 my-1 fa-solid fa-store"></i>{" "}
-                      Tienda
-                    </Link>
-                    <Link
-                      className="dropdown-item text-success fs-5 mx-1 my-1"
-                      to="/recommendations"
-                    >
-                      <i className="text-success fs-5 mx-1 my-1 fa-solid fa-comments"></i>{" "}
-                      Recomendaciones
-                    </Link>
-                    <div className="dropdown-divider"></div>
-                    <button
-                      className="dropdown-item text-success fs-5 mx-1 my-1"
-                      onClick={handleLogout}
-                    >
-                      <i className="text-success fs-5 mx-1 my-1 fa-solid fa-right-from-bracket"></i>{" "}
-                      Cerrar Sesión
-                    </button>
-                  </li>
-                </ul>
-              </div>
+            <div className="dropdown">
+              <button
+                className="btn text-white fs-1"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i className="fa-solid fa-bars"></i>
+              </button>
+              <ul
+                className="dropdown-menu dropdown-menu-end"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <li>
+                  <Link className="dropdown-item text-success fs-5 mx-1 my-1" to="/directory">
+                    <i className="text-success fs-5 mx-1 my-1 fa-solid fa-address-book"></i>{" "}
+                    Directorio
+                  </Link>
+                  <Link className="dropdown-item text-success fs-5 mx-1 my-1" to="/business">
+                    <i className="text-success fs-5 mx-1 my-1 fa-solid fa-store"></i>{" "}
+                    Tienda
+                  </Link>
+                  <Link className="dropdown-item text-success fs-5 mx-1 my-1" to="/recommendations">
+                    <i className="text-success fs-5 mx-1 my-1 fa-solid fa-comments"></i>{" "}
+                    Recomendaciones
+                  </Link>
+                  <div className="dropdown-divider"></div>
+                  <button className="dropdown-item text-success fs-5 mx-1 my-1" onClick={handleLogout}>
+                    <i className="text-success fs-5 mx-1 my-1 fa-solid fa-right-from-bracket"></i>{" "}
+                    Cerrar Sesión
+                  </button>
+                </li>
+              </ul>
             </div>
           </>
         )}
