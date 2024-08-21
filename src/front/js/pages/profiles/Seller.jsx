@@ -5,6 +5,8 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
+import ModalBusiness from "../../component/modalCreateBusiness/ModalBusiness.jsx";
+
 import MPending from "../../component/messages/mPending.jsx";
 import MRejected from "../../component/messages/mRejected.jsx"; import { Cloudinary } from "@cloudinary/url-gen/index";
 import { AdvancedImage } from "@cloudinary/react";
@@ -25,6 +27,7 @@ const imgCloudinary = [
   'samples/landscapes/nature-mountains',
   'samples/animals/cat'
 ]
+ dev
 
 const ProfileSeller = () => {
   const { store, actions } = useContext(Context);
@@ -57,6 +60,7 @@ const ProfileSeller = () => {
     const resp = await actions.chekingStatus()
     setStatus(resp.status)
   }
+
 
   useEffect(() => {
     actions.getProfileSeller(id)
@@ -174,9 +178,12 @@ const ProfileSeller = () => {
                         </div>
                       </div>
                     </div>
-                    <a href="#" className="btn btn-secondary mt-4">
-                      Crea un negocio
-                    </a>
+                   <a aria-labelledby="ModalBusiness">
+                  <ModalBusiness
+                  shopName={store.seller.shopName}
+                  id = {id}
+                    />
+                </a>
                   </div>
                 </div>
               </div>
@@ -207,8 +214,6 @@ const ProfileSeller = () => {
           </div>
         </div>
       )}
-
-
     </>
   );
 };

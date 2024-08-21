@@ -21,42 +21,42 @@ const StarsRating = () => {
   }
   return (
     <div className="d-flex m-5">
-      <form onSubmit={handleSubmit}>
-        <div className="d-flex m-5">
-          {[...Array(5)].map((star, index) => {
-            const ratingValue = index + 1;
-            return (
-              <label key={index}>
-                <input
-                  type="radio"
-                  name="rating"
-                  value={ratingValue}
-                  onClick={() => setRating(ratingValue)}
-                  style={{ display: "none" }}
-                />
-                <FaStar
-                  className="star"
-                  color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
-                  size={50}
-                  onMouseEnter={() => setHover(ratingValue)}
-                  onMouseLeave={() => setHover(null)}
-                />
-              </label>
-            );
-          })}
-        </div>
-        <div className="form-group">
-          <label htmlFor="reviewText">Añade un comentario</label>
-          <textarea
-            className="form-control"
-            id="reviewText"
-            rows="3"
-            value={comment}
-            placeholder="Añade un comentario"
-            onChange={(e) => setComment(e.target.value)}
-          ></textarea>
-        </div>
-        <button type="submit my-2" className="btn btn-primary">
+    <form onSubmit={handleSubmit}>
+      <div className="d-flex m-5">
+        {[...Array(5)].map((star, index) => {
+          const ratingValue = index + 1;
+          return (
+            <label key={index}>
+              <input
+                type="radio"
+                name="rating"
+                value={ratingValue}
+                onClick={() => setRating(ratingValue)}
+                style={{ display: "none" }}
+              />
+              <FaStar
+                className="star"
+                color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+                size={50}
+                onMouseEnter={() => setHover(ratingValue)}
+                onMouseLeave={() => setHover(null)}
+              />
+            </label>
+          );
+        })}
+      </div>
+      <div className="form-group fs-2">
+        <label htmlFor="reviewText">Añade un comentario</label>
+        <textarea
+          className="form-control"
+          id="reviewText"
+          rows="3"
+          value={comment}
+          placeholder="Añade un comentario"
+          onChange={(e) => setComment(e.target.value)}
+        ></textarea>
+      </div>
+      <button type="submit my-2" className="btn btn-primary">
           Enviar
         </button>
       </form>

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../../store/appContext.js";
 import EditProfileDetails from "../../component/editProfileDetails/EditProfileDetails.jsx";
 
+
 const ProfileEditSeller = () => {
   const { store } = useContext(Context)
   return (
