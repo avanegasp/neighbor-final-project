@@ -13,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         seller: [],
       },
       business: [],
+      // allBusiness: [],
       shop: {},
       currentUser: {},
       recommendations: []
@@ -30,6 +31,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      // getAllBusiness: () => {
+      //   fetch(process.env.BACKEND_URL )
+      //     .then((res) => res.json())
+      //     .then((data) => {
+      //       setStore({ allBusiness: data })
+      //     })
+      // },
+
       removeToFavorite: (id) => {
         const store = getStore();
         const filteredFavorite = store.favorites.filter(
@@ -37,7 +46,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         );
         setStore({ favorites: filteredFavorite });
       },
-
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");

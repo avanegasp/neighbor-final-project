@@ -74,17 +74,23 @@ const ProfileAdmin = () => {
   if (!store.admin) return <div>Loading...</div>;
 
   return (
-    <div className="container d-flex flex-column min-vh-100">
+    <div className="">
       <TitleProfiles title={store.admin.role} />
       <div
-        className="d-flex justify-content-center align-items-start"
-        style={{ minHeight: "80vh" }}
+        className="container-profiles"
+    
       >
-        <div className="row w-100 border border-1 border-dark bg-white">
+        <div className="row w-100">
           <div className="col-md-4 ms-4">
+
+            <div className="card-N">
+              <img
+                src="https://picsum.photos/200"
+
             <div className="card mt-5 mb-5 w-50">
               <AdvancedImage
                 cldImg={cld.image(selectedImageId)}
+
                 className="card-img-top"
                 alt=""
               />
@@ -94,7 +100,7 @@ const ProfileAdmin = () => {
                   <li>Lord Rings</li>
                   <li>Harry Potter</li>
                 </ol>
-                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Haz una recomendación
                 </button>
 
@@ -158,7 +164,7 @@ const ProfileAdmin = () => {
 
                       </div>
                       <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-success" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>

@@ -82,6 +82,49 @@ const ProfileNeighbor = () => {
   if (!store.neighbor) return <div>Loading...</div>;
 
   return (
+
+    <div className="">
+      <TitleProfiles title={store.neighbor.role} />
+      <div
+        className="container-profiles"
+        
+      >
+        <div className="row w-100">
+          <div className="col-md-4 ms-4">
+            <div className="card-N ">
+              <img
+                src="https://picsum.photos/200"
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body text-center">
+                <h5 className="card-title mb-4">Libros Favoritos</h5>
+                <ol className="list-unlysted">
+                  <li>Lord Rings</li>
+                  <li>Harry Potter</li>
+                </ol>
+                <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Haz una recomendación
+                </button>
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="exampleModalLabel">Quiero recomendar a:</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body">
+                        <form onSubmit={handleSubmit}>
+                          <div className="mb-3">
+                            <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
+                            <input
+                              name="name"
+                              onChange={(e) => handleChange(e)}
+                              type="text"
+                              className="form-control"
+                              value={recommendation.name}
+                              id="exampleInputName" />
+
     <>
       {status === "PENDING" && (
         <MPending />
@@ -119,6 +162,7 @@ const ProfileNeighbor = () => {
                           <div className="modal-header">
                             <h1 className="modal-title fs-5" id="exampleModalLabel">Quiero recomendar a:</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                           </div>
                           <div className="modal-body">
                             <form onSubmit={handleSubmit}>
@@ -196,10 +240,29 @@ const ProfileNeighbor = () => {
               </div>
             </div>
           </div>
+
+          <div className="col-md-7 d-flex flex-column justify-content-center">
+            <PersonalProfileDetails
+              nameProfile={store.neighbor.name}
+              lastname={store.neighbor.lastname}
+              floor={store.neighbor.floor}
+              email={store.neighbor.email}
+            />
+          </div>
+          <div className="mb-3 text-end">
+            <Link to={"/profileEditNeighbor"} className="btn btn-success me-5">
+              Editar información
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+
         </div >
       )}
 
     </>
+
 
   );
 };
