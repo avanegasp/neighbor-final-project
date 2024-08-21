@@ -10,12 +10,12 @@ const StarsRating = () => {
   const [comment, setComment] = useState("");
   const { neighbor_id, business_id } = useParams();
 
-  const handleSubmit = async (e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await actions.createReview(neighbor_id, business_id)
-    console.log(neighbor_id, business_id);
-    console.log(response);
-    if (response){
+    // console.log(neighbor_id, business_id);
+    // console.log(response);
+    if (response) {
       alert("Reseña creada");
     }
   }
@@ -45,7 +45,7 @@ const StarsRating = () => {
           );
         })}
       </div>
-      <div className="form-group">
+      <div className="form-group fs-2">
         <label htmlFor="reviewText">Añade un comentario</label>
         <textarea
           className="form-control"
@@ -59,7 +59,7 @@ const StarsRating = () => {
       <button type="submit my-2" className="btn btn-primary">
           Enviar
         </button>
-    </form>
+      </form>
     </div>
   );
 };

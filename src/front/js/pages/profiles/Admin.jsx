@@ -6,13 +6,32 @@ import 'react-phone-input-2/lib/style.css';
 // import "../../styles/inputPhone.css";
 import TitleProfiles from "../../component/titleProfiles/TitleProfiles.jsx";
 import PersonalProfileDetails from "../../component/personalProfileDetails/PersonalProfileDetails.jsx";
+import { Cloudinary } from "@cloudinary/url-gen/index";
+import { AdvancedImage } from "@cloudinary/react";
 
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: "dysmvst60"
+  }
+})
+
+const imgCloudinary = [
+  'samples/food/spices',
+  'samples/people/bicycle',
+  'samples/animals/three-dogs',
+  'samples/animals/reindeer',
+  'cld-sample-2',
+  'samples/balloons',
+  'samples/landscapes/nature-mountains',
+  'samples/animals/cat'
+]
 
 const ProfileAdmin = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const cldImg = cld.image('sample');
 
 
   const [recommendation, setRecommendation] = useState({
@@ -46,6 +65,10 @@ const ProfileAdmin = () => {
       });
   }, []);
 
+  const imageIndex = parseInt(id, 10) % imgCloudinary.length;
+  const selectedImageId = imgCloudinary[imageIndex]
+
+
 
 
   if (!store.admin) return <div>Loading...</div>;
@@ -59,11 +82,17 @@ const ProfileAdmin = () => {
       >
         <div className="row w-100">
           <div className="col-md-4 ms-4">
+
             <div className="card-N">
               <img
                 src="https://picsum.photos/200"
+
+            <div className="card mt-5 mb-5 w-50">
+              <AdvancedImage
+                cldImg={cld.image(selectedImageId)}
+
                 className="card-img-top"
-                alt="..."
+                alt=""
               />
               <div className="card-body text-center">
                 <h5 className="card-title mb-4">Libros Favoritos</h5>
@@ -155,6 +184,9 @@ const ProfileAdmin = () => {
           <div className="mt-auto text-end mb-5">
             <Link to={"/profileEditAdmin"} className="btn btn-success me-5">
               Editar información
+            </Link>
+            <Link to={"/buildingUsers"} className="btn btn-success me-5">
+              Ver miembros del edificio
             </Link>
           </div>
         </div>

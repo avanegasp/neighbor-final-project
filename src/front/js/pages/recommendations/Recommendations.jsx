@@ -8,12 +8,12 @@ const Recommendations = () => {
     const { store, actions } = useContext(Context)
     const [error, setError] = useState(null)
     const navigate = useNavigate()
-    console.log("recommendations", store.recommendations)
+    // console.log("recommendations", store.recommendations)
 
     useEffect(() => {
         actions.getAllRecommendations()
             .then((data) => {
-                console.log('hereee', data)
+                // console.log('hereee', data)
                 setError(data?.error || "Error fetching profile")
                 if (data?.error && data.error === 'No token found') {
                     navigate("/register")

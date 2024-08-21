@@ -18,7 +18,7 @@ export default function Register() {
     const { register, setValue, handleSubmit } = useForm();
 
     const onSubmit = async (data) => {
-        console.log("SELER FAB", data)
+        // console.log("SELER FAB", data)
         let response
         if (role === 'Neighbor') {
             response = await actions.registerNeighbor(data.email, data.password, data.name, data.lastname, data.floor);
@@ -110,7 +110,7 @@ export default function Register() {
                             <label htmlFor="phone" className="form-label">Whatsapp</label>
                             <PhoneInput
                                 onChange={(phone) => {
-                                    console.log('hhhh', phone)
+                                    // console.log('hhhh', phone)
                                     setValue('phone', phone)
                                 }
                                 }
