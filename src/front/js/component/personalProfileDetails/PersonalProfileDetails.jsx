@@ -37,7 +37,7 @@ const PersonalProfileDetails = ({
         phone ? (
           <p className="fs-4">
             <strong>Whatsapp:</strong> {" "}
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+            <a className="fs-4" href={whatsappLink} target="_blank" rel="noopener noreferrer">
               {phone}
             </a>
           </p>
@@ -46,7 +46,7 @@ const PersonalProfileDetails = ({
       {shopName ? (
         <p className="fs-4">
           <strong>Emprendimiento: </strong> 
-          <a href = {shopLink} target>{shopName}
+          <a className="fs-4" href = {shopLink} target>{shopName}
           </a>
         </p>
       ) : null}

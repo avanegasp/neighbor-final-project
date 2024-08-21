@@ -14,7 +14,7 @@ const Shop = ({}) => {
     const getSingleBusiness = async () =>{
       const data = await actions.getSingleBusiness(params.seller_id, params.business_id);
       if (!data){
-        navigate(`/profileSeller/${params.seller_id}`);
+        navigate(`/directory`);
       }
     }
     getSingleBusiness();
