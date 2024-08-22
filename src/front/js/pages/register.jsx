@@ -51,7 +51,10 @@ export default function Register() {
                         checked={role === 'Neighbor'}
                         onChange={handleRoleChange}
                     />
-                    <label className="btn btn-outline-white text-white" htmlFor="btnradio1">Neighbor</label>
+
+                    <label className="btn btn-outline-white text-white" htmlFor="btnradio1">Vecinor</label>
+
+
                     <input
                         value="Seller"
                         type="radio"
@@ -61,7 +64,10 @@ export default function Register() {
                         checked={role === 'Seller'}
                         onChange={handleRoleChange}
                     />
-                    <label className="btn btn-outline-white text-white" htmlFor="btnradio2">Seller</label>
+
+                    <label className="btn btn-outline-white text-white" htmlFor="btnradio2">Vendedor</label>
+
+
                     <input
                         value="Administrator"
                         type="radio"
@@ -71,28 +77,31 @@ export default function Register() {
                         checked={role === 'Administrator'}
                         onChange={handleRoleChange}
                     />
-                    <label className="btn btn-outline-white text-white" htmlFor="btnradio3">Administration</label>
+
+                    <label className="btn btn-outline-white text-white" htmlFor="btnradio3">Administrador</label>
+
                 </div>
             </div>
             <form className='mt-1' onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-2">
-                    <label htmlFor="name" className="form-label">Name</label>
+                    <label htmlFor="name" className="form-label">Nombre</label>
                     <input type="text" {...register("name")} className="form-control" id="name" />
                 </div>
                 <div className="mb-2">
-                    <label htmlFor="lastname" className="form-label">Last Name</label>
+                    <label htmlFor="lastname" className="form-label">Apellido</label>
                     <input type="text" {...register("lastname")} className="form-control" id="lastname" />
                 </div>
                 <div className="mb-2">
-                    <label htmlFor="email" className="form-label">Email address</label>
+                    <label htmlFor="email" className="form-label">Correo</label>
                     <input type="email" {...register("email")} className="form-control" id="email" aria-describedby="emailHelp" />
                 </div>
                 <div className="mb-2">
-                    <label htmlFor="password" className="form-label">Password</label>
+                    <label htmlFor="password" className="form-label">Contraseña</label>
                     <input type="password" {...register("password")} className="form-control" id="password" />
                 </div>
                 <div className="mb-2">
-                    <label htmlFor="floor" className="form-label">Floor</label>
+                    <label htmlFor="floor" className="form-label">Piso</label>
+
                     <input type="text" {...register("floor")} className="form-control" id="floor" />
                 </div>
                 {role === 'Seller' && (
@@ -115,64 +124,72 @@ export default function Register() {
                             />
                         </div>
                         <div className="mb-2">
-                            <label htmlFor="shopName" className="form-label">Shop name</label>
+
+                            <label htmlFor="shopName" className="form-label">Emprendimiento</label>
+
                             <input type="text" {...register("shopName")} className="form-control" id="shopName" />
                         </div>
                     </>
                 )}
                 {role === 'Administrator' && (
-                    <div className="mb-2">
-                        <label htmlFor="buildingName" className="form-label">Building name</label>
+                    <>
+                        <div className="mb-2">
+                            <label htmlFor="buildingName" className="form-label">Edificio</label>
+                            <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
+
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="lastname" className="form-label">Apellido</label>
+                            <input type="text" {...register("lastname")} className="form-control" id="lastname" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Correo</label>
+                            <input type="email" {...register("email")} className="form-control" id="email" aria-describedby="emailHelp" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Contraseña</label>
+                            <input type="password" {...register("password")} className="form-control" id="password" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="floor" className="form-label">Piso</label>
+                            <input type="text" {...register("floor")} className="form-control" id="floor" />
+                        </div>
+
+                    </>
+                )}
+
+                {role === 'Seller' && (
+                    <>
+                        <div className="mb-3">
+                            <label htmlFor="phone" className="form-label">Whatsapp</label>
+                            <PhoneInput
+                                onChange={(phone) => {
+                                    // console.log('hhhh', phone)
+                                    setValue('phone', phone)
+                                }
+                                }
+                                inputProps={{
+                                    name: 'phone',
+                                    required: true,
+                                    autoFocus: true
+                                }}
+                                containerClass="form-control p-0 phone-input"
+                                inputClass="form-control w-100"
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="shopName" className="form-label">Emprendimiento</label>
+                            <input type="text" {...register("shopName")} className="form-control" id="shopName" />
+                        </div>
+                    </>
+                )}
+                {role === 'Administrator' && (
+                    <div className="mb-3">
+                        <label htmlFor="buildingName" className="form-label">Edificio</label>
                         <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="lastname" className="form-label">Last Name</label>
-                        <input type="text" {...register("lastname")} className="form-control" id="lastname" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email address</label>
-                        <input type="email" {...register("email")} className="form-control" id="email" aria-describedby="emailHelp" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Password</label>
-                        <input type="password" {...register("password")} className="form-control" id="password" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="floor" className="form-label">Floor</label>
-                        <input type="text" {...register("floor")} className="form-control" id="floor" />
-                    </div>
-                    {role === 'Seller' && (
-                        <>
-                            <div className="mb-3">
-                                <label htmlFor="phone" className="form-label">Whatsapp</label>
-                                <PhoneInput
-                                    onChange={(phone) => {
-                                        // console.log('hhhh', phone)
-                                        setValue('phone', phone)
-                                    }
-                                    }
-                                    inputProps={{
-                                        name: 'phone',
-                                        required: true,
-                                        autoFocus: true
-                                    }}
-                                    containerClass="form-control p-0 phone-input"
-                                    inputClass="form-control w-100"
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="shopName" className="form-label">Shop name</label>
-                                <input type="text" {...register("shopName")} className="form-control" id="shopName" />
-                            </div>
-                        </>
-                    )}
-                    {role === 'Administrator' && (
-                        <div className="mb-3">
-                            <label htmlFor="buildingName" className="form-label">Building name</label>
-                            <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
-                        </div>
-                    )}
-                <button type="submit" className="register-button">Create an account</button>
+                )}
+                <button type="submit" className="register-button">Crea una cuenta</button>
             </form>
             <div >
                 {" "}

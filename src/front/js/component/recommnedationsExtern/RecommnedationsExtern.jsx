@@ -9,7 +9,7 @@ const RecommendationsExtern = ({ shopName, phone, name, lastname, numIndex }) =>
             <div className="accordion-item">
                 <h2 className="accordion-header">
                     <button
-                        className="accordion-button collapsed"
+                        className="accordion-button collapsed bg-black p-2 text-white bg-opacity-75 fs-3"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target={`#panelsStayOpen-collapseOne-${numIndex}`}
@@ -23,11 +23,11 @@ const RecommendationsExtern = ({ shopName, phone, name, lastname, numIndex }) =>
                     id={`panelsStayOpen-collapseOne-${numIndex}`}
                     className="accordion-collapse collapse"
                     data-bs-parent={`#accordionPanelsStayOpenExample${numIndex}`}>
-                    <div className="accordion-body">
+                    <div className="accordion-body bg-secondary-subtle">
                         <ul>
 
                             <li>
-                                <FontAwesomeIcon icon={faPerson} className="me-2" />
+                                <FontAwesomeIcon icon={faPerson} className="me-2 fs-4" />
                                 {name} <span> {lastname}</span></li>
                             <li>
                                 <a
@@ -35,7 +35,7 @@ const RecommendationsExtern = ({ shopName, phone, name, lastname, numIndex }) =>
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <FontAwesomeIcon icon={faMobileRetro} />
+                                    <FontAwesomeIcon icon={faMobileRetro} className="me-2 fs-4" />
                                     <span>
                                         {phone}
                                     </span>

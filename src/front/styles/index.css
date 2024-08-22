@@ -6,7 +6,7 @@ body {
   overflow: hidden;
   min-height: 100vh;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
 }
 
@@ -26,14 +26,14 @@ body::before {
 }
 
 .navbar {
-  width: 100%; 
+  width: 100%;
   color: white;
   background-color: rgba(0, 0, 0, 0.6);
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.5);
-  height: 70px; 
-  padding: 0 20px; 
+  height: 70px;
+  padding: 0 20px;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   position: fixed;
   top: 0;
@@ -43,7 +43,7 @@ body::before {
 
 .navbar .dropdown {
   position: absolute;
-  right: 30px; 
+  right: 30px;
 }
 
 .navbar-brand {
@@ -59,7 +59,7 @@ body::before {
 }
 
 .dropdown button {
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
 }
 
 .register-container {
@@ -142,7 +142,7 @@ a {
 
 }
 
-.cardPeople{
+.cardPeople {
   color: white;
   margin-top: 10px;
   background-color: rgba(0, 0, 0, 0.6);
@@ -150,10 +150,10 @@ a {
   border-radius: 10 px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   width: 100%;
-  
+
 }
 
-.my-13{
+.my-13 {
   height: 100%;
   position: relative;
   overflow-x: auto;
@@ -183,8 +183,6 @@ a:hover {
   z-index: 1000;
 }
 
- 
-
 .login-container {
   display: flex;
   flex-direction: column;
@@ -212,14 +210,15 @@ a:hover {
   cursor: pointer;
   margin-top: 20px;
 }
+
 .login-button:hover {
   background-color: #30e390;
 }
 
+
 .form-label{
   color:white;
 }
-
 .container-profiles{
   display: flex;
   flex-direction: column;

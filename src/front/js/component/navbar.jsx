@@ -52,8 +52,8 @@ export const Navbar = () => {
 
       <div className="d-flex justify-content-end align-items-center flex-grow-1">
         {location.pathname === "/login" ||
-        location.pathname === "/register" ||
-        location.pathname === "/" ? null : (
+          location.pathname === "/register" ||
+          location.pathname === "/" ? null : (
           <>
             <div className="d-flex justify-content-center flex-grow-1">
               <span>
