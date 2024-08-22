@@ -7,7 +7,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       admin: {},
       users: null,
       favorites: [],
-
       people: {
         neighbor: [],
         seller: [],
@@ -52,6 +51,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           (favorite) => favorite.name !== id
         );
         setStore({ favorites: filteredFavorite });
+      },
+
+      clearFavorites: () => {
+        setStore({ favorites: [] })
       },
 
       // Use getActions to call a function within a fuction
@@ -334,7 +337,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             {
               method: "POST",
               headers: { "Content-type": "application/json" },
-
               body: JSON.stringify({ email, password, name, lastname, floor }),
             }
           );
@@ -342,17 +344,24 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          // console.log("data completa del registerNeighbor", data);
+          console.log("data completa del registerNeighbor", data);
 
           if (data.user) {
+            // console.log("dsadasa", data)
             setStore({ currentUser: data.user });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.user.role)
+            localStorage.setItem('name', data.user.name)
+            localStorage.setItem('id', data.user.id)
+
+            return data
           } else {
             console.log("El objeto 'user' no está presente en la respuesta");
+            return false
           }
-          localStorage.setItem('token', data.token);
-          return data;
         } catch (error) {
-          console.log(error);
+          console.log(error)
+          return false
         }
       },
       registerSeller: async (
@@ -391,10 +400,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (data.user) {
             setStore({ currentUser: data.user });
+            localStorage.setItem('token', data.token)
           } else {
             console.log("El objeto 'user' no está presente en la respuesta");
           }
           localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role)
+          localStorage.setItem('name', data.user.name)
+          localStorage.setItem('id', data.user.id)
           return data;
         } catch (error) {
           console.log(error);
@@ -440,6 +453,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("El objeto 'user' no está presente en la respuesta");
           }
           localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role)
+          localStorage.setItem('name', data.user.name)
+          localStorage.setItem('id', data.user.id)
           return data;
         } catch (error) {
           console.log(error);
@@ -500,7 +516,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       getSingleBusiness: async (seller_id, product_name) => {
         if (!seller_id || !product_name) return;
         //const jwt = localStorage.getItem("token");
-
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${product_name}`,
@@ -516,12 +531,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log(data);
           setStore({ shop: data.Business });
           return true;
         } catch (error) {
           console.log(error);
         }
       },
+
       createReview: async (business_id) => {
         if (!business_id) return;
         const token = localStorage.getItem("token");
@@ -593,7 +610,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      createBusiness: async (id, shopName, price, schedule) => {
+      createBusiness: async (id, shopName, price, schedule, description) => {
         const token = localStorage.getItem("token")
         if (!token) {
           console.error("No token found")
@@ -608,7 +625,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ shopName, price, schedule }),
+              body: JSON.stringify({ shopName, price, schedule, description }),
             }
           );
           if (!response.ok) {
@@ -735,6 +752,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       changeStatus: async (id, role, status) => {
+        const store = getStore()
         const token = localStorage.getItem("token")
         try {
           const response = await fetch(process.env.BACKEND_URL + "/api/changeStatus",
@@ -746,10 +764,16 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
               body: JSON.stringify({ id, role, status })
             }
-
           )
           const data = await response.json()
+          const roleToUpdate = role === "NEIGHBOR" ? "neighbor" : "seller";
+
+          if (response.ok) {
+            const updateUsers = store.users[roleToUpdate].map((user) => user.id === id ? { ...user, status: status } : user)
+            setStore({ users: { ...store.users, [roleToUpdate]: updateUsers } })
+          }
           return data
+
         } catch (error) {
           console.log(error)
         }
@@ -769,9 +793,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       //   }else {
       //     actions.getAllUser();
       //   }
-      // },
     },
   };
 };
+
 
 export default getState;

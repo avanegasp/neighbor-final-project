@@ -38,6 +38,7 @@ const Login = () => {
   };
 
   return (
+
     <div className="login-container" >
       <h1 className="text-white">Iniciar sesión</h1>
 
@@ -52,13 +53,14 @@ const Login = () => {
             Seller
           </label>
           <label className="user-type-option btn btn-outline-white text-white">
+
             <input type="radio" name="options" value="ADMINISTRATOR" />
             Admin
           </label>
         </div>
 
         <div className="form-group">
-          <label htmlFor="LoginEmail">Correo electrónico</label>
+          <label className="text-dark" htmlFor="LoginEmail">Correo electrónico</label>
           <input
             type="email"
             id="LoginEmail"
@@ -66,11 +68,11 @@ const Login = () => {
             placeholder="Enter email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <small id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
+          <small className="text-dark" id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
         </div>
 
         <div className="form-group">
-          <label htmlFor="LoginPassword">Contraseña</label>
+          <label className="text-dark" htmlFor="LoginPassword">Contraseña</label>
           <input
             type="password"
             id="LoginPassword"
@@ -81,12 +83,13 @@ const Login = () => {
         </div>
 
         <button type="submit" className="login-button">
-          Iniciar sesión
+          Inicia sesión
         </button>
       </form>
 
       <div>
         <Link className="text-white" to={"/register"}>¿No tienes una cuenta? Regístrate aquí!</Link>
+
       </div>
     </div>
   );

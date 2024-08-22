@@ -5,11 +5,18 @@ const ModalBusiness = ({ shopName, id }) => {
   const { store, actions } = useContext(Context);
   const [price, setPrice] = useState("");
   const [schedule, setSchedule] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await actions.createBusiness(id, shopName, price, schedule);
-    console.log(id, shopName, price, schedule);
+    const response = await actions.createBusiness(
+      id,
+      shopName,
+      price,
+      schedule,
+      description
+    );
+    console.log(id, shopName, price, schedule, description);
     console.log(response);
   };
 
@@ -19,7 +26,9 @@ const ModalBusiness = ({ shopName, id }) => {
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
+
         data-bs-target="#createBusiness"
+
       >
         Crear negocio
       </button>
@@ -27,16 +36,18 @@ const ModalBusiness = ({ shopName, id }) => {
       <form
         onSubmit={handleSubmit}
         className="modal fade"
+
         id="createBusiness"
+
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="CreateBusinessLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                {shopName}. Your id: {id}
+              <h1 className="modal-title fs-5" id="CreateBusinessLabel">
+                {shopName}
               </h1>
               <button
                 type="button"
@@ -48,13 +59,13 @@ const ModalBusiness = ({ shopName, id }) => {
             <div className="modal-body">
               <div>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputEmail1" className="form-label">
+                  <label htmlFor="priceInput" className="form-label">
                     Precio
                   </label>
                   <input
                     type="integer"
                     className="form-control"
-                    id="exampleInputEmail1"
+                    id="priceInput"
                     aria-describedby="emailHelp"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
@@ -64,16 +75,26 @@ const ModalBusiness = ({ shopName, id }) => {
                   </div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputPassword1" className="form-label">
+                  <label htmlFor="scheduleInput" className="form-label">
                     Horario
                   </label>
                   <input
                     type="string"
                     className="form-control"
-                    id="exampleInputPassword1"
+                    id="scheduleInput"
                     value={schedule}
                     onChange={(e) => setSchedule(e.target.value)}
                   />
+                  <label htmlFor="descriptionInput" className="form-label">
+                    Añade una descripción
+                  </label>
+                  <textarea
+                    className="form-control mb-3"
+                    id="descriptionInput"
+                    rows="3"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  ></textarea>
                 </div>
               </div>
             </div>

@@ -8,7 +8,7 @@ import "../../styles/index.css";
 
 export default function Register() {
     const [role, setRole] = useState("Neighbor");
-    const { store, actions } = useContext(Context);
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
 
     const handleRoleChange = (event) => {
@@ -134,16 +134,64 @@ export default function Register() {
                     <div className="mb-2">
                         <label htmlFor="buildingName" className="form-label">Building name</label>
                         <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
+
                     </div>
-                )}
+                    <div className="mb-3">
+                        <label htmlFor="lastname" className="form-label">Last Name</label>
+                        <input type="text" {...register("lastname")} className="form-control" id="lastname" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Email address</label>
+                        <input type="email" {...register("email")} className="form-control" id="email" aria-describedby="emailHelp" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input type="password" {...register("password")} className="form-control" id="password" />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="floor" className="form-label">Floor</label>
+                        <input type="text" {...register("floor")} className="form-control" id="floor" />
+                    </div>
 
+                    {role === 'Seller' && (
+                        <>
+                            <div className="mb-3">
+                                <label htmlFor="phone" className="form-label">Whatsapp</label>
+                                <PhoneInput
+                                    onChange={(phone) => {
+                                        // console.log('hhhh', phone)
+                                        setValue('phone', phone)
+                                    }
+                                    }
+                                    inputProps={{
+                                        name: 'phone',
+                                        required: true,
+                                        autoFocus: true
+                                    }}
+                                    containerClass="form-control p-0 phone-input"
+                                    inputClass="form-control w-100"
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="shopName" className="form-label">Shop name</label>
+                                <input type="text" {...register("shopName")} className="form-control" id="shopName" />
+                            </div>
+                        </>
+                    )}
 
+                    {role === 'Administrator' && (
+                        <div className="mb-3">
+                            <label htmlFor="buildingName" className="form-label">Building name</label>
+                            <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
+                        </div>
+                    )}
                 <button type="submit" className="register-button">Create an account</button>
             </form>
             <div >
                 {" "}
                 <Link className='text-white' to={"/login"}>Ya te registraste? Ingresa por acá.</Link>
+
             </div>
-        </div>
+        </div >
     );
 }
