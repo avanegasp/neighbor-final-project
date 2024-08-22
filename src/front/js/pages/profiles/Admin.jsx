@@ -68,9 +68,6 @@ const ProfileAdmin = () => {
   const imageIndex = parseInt(id, 10) % imgCloudinary.length;
   const selectedImageId = imgCloudinary[imageIndex]
 
-
-
-
   if (!store.admin) return <div>Loading...</div>;
 
   return (

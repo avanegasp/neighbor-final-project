@@ -41,7 +41,8 @@ export const Navbar = () => {
   const handleLogout = () => {
     localStorage.clear();
     setIsAuthenticated(false);
-    navigate("/login");
+    actions.clearFavorites()
+    navigate('/login');
   };
 
   return (

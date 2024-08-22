@@ -42,6 +42,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ favorites: filteredFavorite });
       },
 
+      clearFavorites: () => {
+        setStore({ favorites: [] })
+      },
+
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
@@ -258,19 +262,36 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       registerNeighbor: async (email, password, name, lastname, floor) => {
         try {
-          const response = await fetch(process.env.BACKEND_URL + `/api/neighbor/registers`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-
-            body: JSON.stringify({ email, password, name, lastname, floor }),
-          });
+          const response = await fetch(
+            process.env.BACKEND_URL + `/api/neighbor/registers`,
+            {
+              method: "POST",
+              headers: { "Content-type": "application/json" },
+              body: JSON.stringify({ email, password, name, lastname, floor }),
+            }
+          );
           if (!response.ok) {
             return false;
           }
           const data = await response.json();
-          return data;
+          console.log("data completa del registerNeighbor", data);
+
+          if (data.user) {
+            // console.log("dsadasa", data)
+            setStore({ currentUser: data.user });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.user.role)
+            localStorage.setItem('name', data.user.name)
+            localStorage.setItem('id', data.user.id)
+
+            return data
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+            return false
+          }
         } catch (error) {
-          console.log(error);
+          console.log(error)
+          return false
         }
       },
       registerSeller: async (email, password, name, lastname, floor, shopName) => {
@@ -285,6 +306,18 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+            localStorage.setItem('token', data.token)
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role)
+          localStorage.setItem('name', data.user.name)
+          localStorage.setItem('id', data.user.id)
           return data;
         } catch (error) {
           console.log(error);
@@ -302,6 +335,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log("data completa del login", data);
+
+          if (data.user) {
+            setStore({ currentUser: data.user });
+          } else {
+            console.log("El objeto 'user' no está presente en la respuesta");
+          }
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role)
+          localStorage.setItem('name', data.user.name)
+          localStorage.setItem('id', data.user.id)
           return data;
         } catch (error) {
           console.log(error);
@@ -375,6 +419,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log(data);
           setStore({ shop: data.Business });
           return true;
         } catch (error) {
@@ -453,7 +498,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      createBusiness: async (id, shopName, price, schedule) => {
+      createBusiness: async (id, shopName, price, schedule, description) => {
         const token = localStorage.getItem("token")
         if (!token) {
           console.error("No token found")
@@ -468,7 +513,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ shopName, price, schedule }),
+              body: JSON.stringify({ shopName, price, schedule, description }),
             }
           );
           if (!response.ok) {
@@ -595,6 +640,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       changeStatus: async (id, role, status) => {
+        const store = getStore()
         const token = localStorage.getItem("token")
         try {
           const response = await fetch(process.env.BACKEND_URL + "/api/changeStatus",
@@ -606,32 +652,24 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
               body: JSON.stringify({ id, role, status })
             }
-
           )
           const data = await response.json()
+          const roleToUpdate = role === "NEIGHBOR" ? "neighbor" : "seller";
+
+          if (response.ok) {
+            const updateUsers = store.users[roleToUpdate].map((user) => user.id === id ? { ...user, status: status } : user)
+            setStore({ users: { ...store.users, [roleToUpdate]: updateUsers } })
+          }
           return data
+
         } catch (error) {
           console.log(error)
         }
 
       }
-
-      // deleteSeller: async (id) => {
-      //   let actions = getActions();
-      //   const response = await fetch(process.env.BACKEND_URL+'/administrator/seller'+ `/${id}`, {
-      //     method: "DELETE",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //   },
-      //   })
-      //   if (!response.ok) {
-      //     alert("No se puede eliminar Seller");
-      //   }else {
-      //     actions.getAllUser();
-      //   }
-       },
-    };
+    },
   };
+};
 
 
 export default getState;
