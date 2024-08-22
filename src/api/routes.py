@@ -81,11 +81,17 @@ def add_neighbor():
         auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
         db.session.add(new_user)
         db.session.commit()
-        db.session.refresh()
-        print("authhhhh", new_user)
-        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role, "status": new_user.status})
-
-        return jsonify({"mensaje": "Neighbor creado exitosamente", "user":{"id":new_user.id}, "token": auth_token}), 201
+        # print("authhhhh", new_user)
+        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
+        return jsonify({
+            "mensaje": "Neighbor creado exitosamente",
+            "user": {
+                "id": new_user.id,
+                "name": new_user.name,
+                "role": new_user.role
+            },
+            "token": auth_token
+        }), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500  
@@ -112,8 +118,15 @@ def add_seller():
         new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, phone = phone, shopName = shopName)
         db.session.add(new_user)
         db.session.commit()
-        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role, "status": new_user.status})
-        return jsonify({"mensaje": "Seller creado exitosamente", "user":{"id":new_user.id}, "token": auth_token
+        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
+        return jsonify({
+            "mensaje": "Seller creado exitosamente",
+            "user":{
+                "id":new_user.id,
+                "name": new_user.name,
+                "role": new_user.role
+            },
+            "token": auth_token
 }), 201
     except Exception as error:
         db.session.rollback() 
@@ -141,8 +154,15 @@ def add_administrator():
         db.session.add(new_user)
         db.session.commit()
         auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
-        return jsonify({"mensaje": "Administrador creado exitosamente","user":{"id":new_user.id}, "token": auth_token
-}), 201
+        return jsonify({
+            "mensaje": "Administrador creado exitosamente",
+            "user":{
+            "id":new_user.id, 
+            "name":new_user.name,
+            "role":new_user.role
+            },
+            "token": auth_token
+        }), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500                   
@@ -777,7 +797,6 @@ def admin_create_recommendation(administrator_id):
 
         return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
 
-    
     except Exception as error:
         db.session.rollback()
         return jsonify({"error": f"{error}"}), 500
