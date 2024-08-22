@@ -176,7 +176,8 @@ class Building(db.Model):
             "buildingName": self.buildingName,
             
             # do not serialize the password, its a security breach
-        }                           
+        }                          
+                                  
 
 #uno a muchos entre seller y productos
 class Product(db.Model):

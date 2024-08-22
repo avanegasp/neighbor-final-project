@@ -7,7 +7,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       admin: {},
       users: null,
       favorites: [],
-
       people: {
         neighbor: [],
         seller: [],
@@ -484,7 +483,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       getSingleBusiness: async (seller_id, product_name) => {
         if (!seller_id || !product_name) return;
         //const jwt = localStorage.getItem("token");
-
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${product_name}`,
@@ -506,6 +504,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
+
       createReview: async (business_id) => {
         if (!business_id) return;
         const token = localStorage.getItem("token");
@@ -753,9 +752,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       //   }else {
       //     actions.getAllUser();
       //   }
-      // },
-    },
+       },
+    };
   };
-};
+
 
 export default getState;
