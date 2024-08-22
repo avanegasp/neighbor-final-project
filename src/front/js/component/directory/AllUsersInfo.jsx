@@ -78,6 +78,7 @@ const AllUsersInfo = ({
           email={email}
           phone={phone}
           id={id}
+          role={role}
         />
       </div>
     </div>
