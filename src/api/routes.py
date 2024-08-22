@@ -78,20 +78,11 @@ def add_neighbor():
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
         new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
-        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
         db.session.add(new_user)
         db.session.commit()
-        # print("authhhhh", new_user)
-        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
-        return jsonify({
-            "mensaje": "Neighbor creado exitosamente",
-            "user": {
-                "id": new_user.id,
-                "name": new_user.name,
-                "role": new_user.role
-            },
-            "token": auth_token
-        }), 201
+        db.session.refresh(new_user)
+        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role, "status": new_user.status})
+        return jsonify({"mensaje": "Neighbor creado exitosamente", "user":{"id":new_user.id}, "token": auth_token}), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500  
@@ -804,14 +795,16 @@ def admin_create_recommendation(administrator_id):
 #esta lo va ser llamado en la pagina de cada usuario
 @api.route('/checking', methods=['GET'])
 @jwt_required()
-def checkingStatus():
+def checking_status():
     try:
        current_user = get_jwt_identity() 
-       userType = current_user['userType']
-       if userType == "NEIGHBOR":
+       print(current_user)
+       user_type = current_user['userType']
+       print(user_type)
+       if user_type == "NEIGHBOR":
         neighbor =Neighbor.query.filter_by(id=current_user['id']).first()
         return jsonify({"status": neighbor.status})
-       if userType == "SELLER":
+       if user_type == "SELLER":
         seller =Seller.query.filter_by(id=current_user['id']).first()
         return jsonify({"status": seller.status})
     except Exception as e:
@@ -819,7 +812,7 @@ def checkingStatus():
 
 @api.route('/changeStatus', methods=['PUT'])
 @jwt_required()
-def changeStatus():
+def change_status():
     body = request.json
     id = body.get("id", None)
     role = body.get("role", None)

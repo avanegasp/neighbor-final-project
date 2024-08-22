@@ -321,7 +321,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             {
               method: "POST",
               headers: { "Content-type": "application/json" },
-
               body: JSON.stringify({ email, password, name, lastname, floor }),
             }
           );
@@ -329,7 +328,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          // console.log("data completa del registerNeighbor", data);
+          console.log("data completa del registerNeighbor", data);
 
           if (data.user) {
             // console.log("dsadasa", data)
@@ -737,6 +736,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       changeStatus: async (id, role, status) => {
+        const store = getStore()
         const token = localStorage.getItem("token")
         try {
           const response = await fetch(process.env.BACKEND_URL + "/api/changeStatus",
@@ -748,10 +748,16 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
               body: JSON.stringify({ id, role, status })
             }
-
           )
           const data = await response.json()
+          const roleToUpdate = role === "NEIGHBOR" ? "neighbor" : "seller";
+
+          if (response.ok) {
+            const updateUsers = store.users[roleToUpdate].map((user) => user.id === id ? { ...user, status: status } : user)
+            setStore({ users: { ...store.users, [roleToUpdate]: updateUsers } })
+          }
           return data
+
         } catch (error) {
           console.log(error)
         }
@@ -771,9 +777,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       //   }else {
       //     actions.getAllUser();
       //   }
-       },
-    };
+    },
   };
+};
 
 
 export default getState;

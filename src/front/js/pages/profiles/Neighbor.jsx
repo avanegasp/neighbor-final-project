@@ -32,7 +32,7 @@ const ProfileNeighbor = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-
+  const cldImg = cld.image('samples/landscapes/nature-mountains');
 
   const [recommendation, setRecommendation] = useState({
     name: "",
@@ -90,7 +90,7 @@ const ProfileNeighbor = () => {
         <MRejected />
       )}
       {status === "APPROVED" && (
-        <div div className="container d-flex flex-column min-vh-100 mb-5" >
+        <div className="container d-flex flex-column min-vh-100 mb-5" >
           <TitleProfiles title={store.neighbor.role} />
           <div
             className="d-flex justify-content-center align-items-start"
