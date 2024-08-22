@@ -8,7 +8,7 @@ import "../../styles/inputPhone.css";
 
 export default function Register() {
     const [role, setRole] = useState("Neighbor");
-    const { store, actions } = useContext(Context);
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
 
     const handleRoleChange = (event) => {
