@@ -48,7 +48,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
       style={{ minHeight: "100vh" }}>
       <form
         className="container card"
-        style={{ width: "100%", maxWidth: "500px" }}
+        style={{ width: "100%", maxWidth: "100%" }}
         onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label fs-5 text-light text-start d-block">

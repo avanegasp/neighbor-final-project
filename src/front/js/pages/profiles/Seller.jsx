@@ -121,7 +121,7 @@ const ProfileSeller = () => {
                           <div className="modal-body">
                             <form onSubmit={handleSubmit}>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
+                                <label htmlFor="exampleInputName" className="form-label text-dark">Nombre:</label>
                                 <input
                                   name="name"
                                   onChange={(e) => handleChange(e)}
@@ -131,7 +131,7 @@ const ProfileSeller = () => {
                                   id="exampleInputName" />
                               </div>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputLastname" className="form-label">Apellido:</label>
+                                <label htmlFor="exampleInputLastname" className="form-label text-dark">Apellido:</label>
                                 <input
                                   name="lastname"
                                   onChange={(e) => handleChange(e)}
@@ -141,7 +141,7 @@ const ProfileSeller = () => {
                                   id="exampleInputLastName" />
                               </div>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputPhone" className="form-label">Whatsapp:</label>
+                                <label htmlFor="exampleInputPhone" className="form-label text-dark">Whatsapp:</label>
                                 <PhoneInput
                                   country={'us'}
                                   onChange={(phone) => setRecommendation({ ...recommendation, phone })}
@@ -156,7 +156,7 @@ const ProfileSeller = () => {
                                 />
                               </div>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputShopName" className="form-label">Nombre del comercio:</label>
+                                <label htmlFor="exampleInputShopName" className="form-label text-dark">Nombre del comercio:</label>
                                 <input
                                   name="shopName"
                                   onChange={(e) => handleChange(e)}
@@ -164,7 +164,7 @@ const ProfileSeller = () => {
                                   className="form-control"
                                   id="exampleInputShopName"
                                   placeholder="Ferretería Mis llaves" />
-                                <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
+                                <div id="exampleInputShopName" className="form-text text-secondary">Colocar primero el TIPO de comercio</div>
                               </div>
                               <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
                             </form>

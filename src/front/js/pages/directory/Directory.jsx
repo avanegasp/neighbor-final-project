@@ -26,7 +26,7 @@ const Directory = () => {
 
 
   return (
-    <div className="d-flex flex-column min-vh-100" style={{ height: '200px', overflow: 'scroll' }}>
+    <div className="">
       <div className="container d-flex flex-column flex-grow-1">
         <div
           className="d-flex justify-content-between align-items-center mb-3"
