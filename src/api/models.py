@@ -185,6 +185,7 @@ class Product(db.Model):
     name = db.Column(db.String(100), unique=False, nullable=False)
     price =  db.Column(db.Float(30), unique=False, nullable=False)
     schedule = db.Column(db.String(50), unique=False, nullable=False)
+    description = db.Column(db.String(255), unique=False, nullable=False)
 
     seller_id = db.Column(db.Integer, db.ForeignKey('seller.id', ondelete='CASCADE'))
     orders = db.relationship('order_product', backref='product')
@@ -198,7 +199,8 @@ class Product(db.Model):
             "id": self.id,
             "name": self.name,
             "price": self.price,
-            "schedule": self.schedule
+            "schedule": self.schedule,
+            "description": self.description
         }     
         
 class Review(db.Model):

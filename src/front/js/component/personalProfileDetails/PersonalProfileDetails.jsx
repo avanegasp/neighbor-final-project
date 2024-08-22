@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
+import { Context } from "../../store/appContext";
+
 
 const PersonalProfileDetails = ({
   nameProfile,
@@ -8,14 +10,15 @@ const PersonalProfileDetails = ({
   shopName,
   buildingName,
   email,
-  phone
+  phone,
+  description
 }) => {
 
   // const isValidPhone = phone && /^\+[1-9]\d{1,14}$/.test(phone);
   const params = useParams();
-
+  const {store, actions} = useContext(Context);
   const whatsappLink = phone ? `https://wa.me/${phone}` : null;
-  const shopLink = shopName ? `/seller/${params.id}/shop/${shopName}` : null
+  const shopLink = shopName && params.id ? `/seller/${params.id}/shop/${shopName}` : null
 
   return (
     <div className="mt-5">
@@ -53,6 +56,13 @@ const PersonalProfileDetails = ({
       {buildingName ? (
         <p className="fs-4">
           <strong>Edificio:</strong> {buildingName}
+        </p>
+      ) : null}
+      {description ? (
+        <p className="fs-4">
+          <strong>Acerca de: </strong> 
+          <a className="fs-4" href = {shopLink} target>{description}
+          </a>
         </p>
       ) : null}
       

@@ -498,6 +498,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log(data);
           setStore({ shop: data.Business });
           return true;
         } catch (error) {
@@ -576,7 +577,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      createBusiness: async (id, shopName, price, schedule) => {
+      createBusiness: async (id, shopName, price, schedule, description) => {
         const token = localStorage.getItem("token")
         if (!token) {
           console.error("No token found")
@@ -591,7 +592,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ shopName, price, schedule }),
+              body: JSON.stringify({ shopName, price, schedule, description }),
             }
           );
           if (!response.ok) {
