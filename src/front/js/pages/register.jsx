@@ -5,18 +5,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import "../../styles/index.css";
-
 export default function Register() {
     const [role, setRole] = useState("Neighbor");
     const { actions } = useContext(Context);
     const navigate = useNavigate();
-
     const handleRoleChange = (event) => {
         setRole(event.target.value);
     };
-
     const { register, setValue, handleSubmit } = useForm();
-
     const onSubmit = async (data) => {
         // console.log("SELER FAB", data)
         let response
@@ -41,7 +37,6 @@ export default function Register() {
             }
         }
     };
-
     return (
         <div className='register-container'>
             <h1 className='text-center text-white'>Registro {role} </h1>
@@ -57,7 +52,6 @@ export default function Register() {
                         onChange={handleRoleChange}
                     />
                     <label className="btn btn-outline-white text-white" htmlFor="btnradio1">Neighbor</label>
-
                     <input
                         value="Seller"
                         type="radio"
@@ -68,7 +62,6 @@ export default function Register() {
                         onChange={handleRoleChange}
                     />
                     <label className="btn btn-outline-white text-white" htmlFor="btnradio2">Seller</label>
-
                     <input
                         value="Administrator"
                         type="radio"
@@ -81,7 +74,6 @@ export default function Register() {
                     <label className="btn btn-outline-white text-white" htmlFor="btnradio3">Administration</label>
                 </div>
             </div>
-
             <form className='mt-1' onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-2">
                     <label htmlFor="name" className="form-label">Name</label>
@@ -103,7 +95,6 @@ export default function Register() {
                     <label htmlFor="floor" className="form-label">Floor</label>
                     <input type="text" {...register("floor")} className="form-control" id="floor" />
                 </div>
-
                 {role === 'Seller' && (
                     <>
                         <div className="mb-2">
@@ -129,12 +120,10 @@ export default function Register() {
                         </div>
                     </>
                 )}
-
                 {role === 'Administrator' && (
                     <div className="mb-2">
                         <label htmlFor="buildingName" className="form-label">Building name</label>
                         <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
-
                     </div>
                     <div className="mb-3">
                         <label htmlFor="lastname" className="form-label">Last Name</label>
@@ -152,7 +141,6 @@ export default function Register() {
                         <label htmlFor="floor" className="form-label">Floor</label>
                         <input type="text" {...register("floor")} className="form-control" id="floor" />
                     </div>
-
                     {role === 'Seller' && (
                         <>
                             <div className="mb-3">
@@ -178,7 +166,6 @@ export default function Register() {
                             </div>
                         </>
                     )}
-
                     {role === 'Administrator' && (
                         <div className="mb-3">
                             <label htmlFor="buildingName" className="form-label">Building name</label>
@@ -190,7 +177,6 @@ export default function Register() {
             <div >
                 {" "}
                 <Link className='text-white' to={"/login"}>Ya te registraste? Ingresa por acá.</Link>
-
             </div>
         </div >
     );
