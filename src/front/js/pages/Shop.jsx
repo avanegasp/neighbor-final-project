@@ -57,7 +57,7 @@ const Shop = ({}) => {
                   </p>
                 </div>
                  <div className="container-fluid text-center">
-                  {/* {role === 'Neighbor'} ? <StarsRating /> : null */}
+                  {role == 'Neighbor' ? <StarsRating /> : null }
                 </div> 
               </div>
             </div>

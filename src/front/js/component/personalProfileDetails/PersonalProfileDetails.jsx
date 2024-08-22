@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Context } from "../../store/appContext";
 
 
@@ -11,14 +11,15 @@ const PersonalProfileDetails = ({
   buildingName,
   email,
   phone,
-  description
+  description,
+  id
 }) => {
 
   // const isValidPhone = phone && /^\+[1-9]\d{1,14}$/.test(phone);
   const params = useParams();
   const {store, actions} = useContext(Context);
   const whatsappLink = phone ? `https://wa.me/${phone}` : null;
-  const shopLink = shopName && params.id ? `/seller/${params.id}/shop/${shopName}` : null
+  const shopLink = shopName && params.id ? `/seller/${params.id}/shop/${shopName}` : `/seller/${id}/shop/${shopName}` 
 
   return (
     <div className="mt-5">
@@ -40,17 +41,17 @@ const PersonalProfileDetails = ({
         phone ? (
           <p className="fs-4">
             <strong>Whatsapp:</strong> {" "}
-            <a className="fs-4" href={whatsappLink} target="_blank" rel="noopener noreferrer">
+            <Link to={whatsappLink} className="fs-4" target="_blank" rel="noopener noreferrer">
               {phone}
-            </a>
+            </Link>
           </p>
         ) : null
       }
       {shopName ? (
         <p className="fs-4">
           <strong>Emprendimiento: </strong> 
-          <a className="fs-4" href = {shopLink} target>{shopName}
-          </a>
+          <Link to ={shopLink} className="fs-4" target>{shopName}
+          </Link>
         </p>
       ) : null}
       {buildingName ? (
@@ -61,8 +62,8 @@ const PersonalProfileDetails = ({
       {description ? (
         <p className="fs-4">
           <strong>Acerca de: </strong> 
-          <a className="fs-4" href = {shopLink} target>{description}
-          </a>
+          <Link to={shopLink} className="fs-4" target>{description}
+          </Link>
         </p>
       ) : null}
       

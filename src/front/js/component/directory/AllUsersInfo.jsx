@@ -77,6 +77,7 @@ const AllUsersInfo = ({
           buildingName={buildingName}
           email={email}
           phone={phone}
+          id={id}
         />
       </div>
     </div>
