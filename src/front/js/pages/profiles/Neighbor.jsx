@@ -56,6 +56,7 @@ const ProfileNeighbor = () => {
 
   const checkStatus = async () => {
     const resp = await actions.chekingStatus()
+    console.log(resp)
     setStatus(resp.status)
   }
 
@@ -90,7 +91,7 @@ const ProfileNeighbor = () => {
         <MRejected />
       )}
       {status === "APPROVED" && (
-        <div div className="container d-flex flex-column min-vh-100 mb-5" >
+        <div className="container d-flex flex-column min-vh-100 mb-5" >
           <TitleProfiles title={store.neighbor.role} />
           <div
             className="d-flex justify-content-center align-items-start"

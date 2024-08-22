@@ -24,8 +24,6 @@ const Directory = () => {
 
   if (!store.users) return <div>Loading...</div>;
 
-  // console.log("Daaataaaaaa", store.users);
-
 
   return (
     <div className="d-flex flex-column min-vh-100" style={{ height: '200px', overflow: 'scroll' }}>
@@ -46,7 +44,6 @@ const Directory = () => {
           style={{ maxHeight: 'calc(80vh - 100px)' }}
         >
           {store.users.administrator.map((user) => {
-            // console.log("USERRRRR", user);
             return (
               <div
                 className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
@@ -71,7 +68,6 @@ const Directory = () => {
             );
           })}
           {store.users.neighbor.map((user) => {
-            // console.log("USERRRRR", user);
             return (
               <div
                 className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
@@ -95,8 +91,6 @@ const Directory = () => {
             );
           })}
           {store.users.seller.map((user) => {
-            // console.log("USERRRRR", user);
-            // console.log("modal", user.recommendations)
             return (
               <div
                 className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
