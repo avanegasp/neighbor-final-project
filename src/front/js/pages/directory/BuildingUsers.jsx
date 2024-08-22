@@ -19,7 +19,8 @@ function BuildingUsers() {
     }
 
     return (
-        <div className="d-flex flex-column min-vh-100" style={{ height: '200px', overflow: 'scroll' }}>
+
+        <div className="d-fle container justify-content-center text-align-center flex-column min-vh-100">
             <h3 className='text-white pt-3'>Lista de vecinos</h3>
             {store.users.neighbor && store.users.neighbor.length > 0 ? (
                 <table className="table table-dark">

@@ -22,12 +22,12 @@ export const Home = () => {
         <div className="col-md-6 d-flex justify-content-center align-items-center">
           <div className="card p-4 shadow-sm">
             <Link to="/login" className="btn btn-login">
-              Iniciar sesión
+              Inicia sesión
             </Link>
             <Link to="/register" className="btn btn-signup">
-              Crear cuenta nueva
+              Crea una cuenta nueva
             </Link>
-         </div>
+          </div>
         </div>
       </div>
     </div>
