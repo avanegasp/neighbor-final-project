@@ -32,7 +32,7 @@ const Directory = () => {
           className="d-flex justify-content-between align-items-center mb-3"
           style={{ minHeight: "20vh" }}
         >
-          <h1 className="d-flex justify-context-center">Directorio</h1>
+          <h1 className="d-flex fs-1 justify-context-center">Directorio</h1>
 
           <div className="input-group mb-3 inputSearch w-25">
             <Search />
@@ -46,7 +46,7 @@ const Directory = () => {
           {store.users.administrator.map((user) => {
             return (
               <div
-                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
                 key={user.id}
               >
                 <AllUsersInfo
