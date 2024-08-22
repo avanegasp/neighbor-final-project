@@ -7,7 +7,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       admin: {},
       users: null,
       favorites: [],
-
       people: {
         neighbor: [],
         seller: [],
@@ -502,7 +501,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       getSingleBusiness: async (seller_id, product_name) => {
         if (!seller_id || !product_name) return;
         //const jwt = localStorage.getItem("token");
-
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${product_name}`,
@@ -518,12 +516,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
+          console.log(data);
           setStore({ shop: data.Business });
           return true;
         } catch (error) {
           console.log(error);
         }
       },
+
       createReview: async (business_id) => {
         if (!business_id) return;
         const token = localStorage.getItem("token");
@@ -595,7 +595,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      createBusiness: async (id, shopName, price, schedule) => {
+      createBusiness: async (id, shopName, price, schedule, description) => {
         const token = localStorage.getItem("token")
         if (!token) {
           console.error("No token found")
@@ -610,7 +610,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ shopName, price, schedule }),
+              body: JSON.stringify({ shopName, price, schedule, description }),
             }
           );
           if (!response.ok) {
@@ -771,9 +771,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       //   }else {
       //     actions.getAllUser();
       //   }
-      // },
-    },
+       },
+    };
   };
-};
+
 
 export default getState;

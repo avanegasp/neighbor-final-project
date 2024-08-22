@@ -8,13 +8,14 @@ const Shop = ({}) => {
   const params = useParams();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
 
 
   useEffect(() => {
     const getSingleBusiness = async () =>{
       const data = await actions.getSingleBusiness(params.seller_id, params.business_id);
       if (!data){
-        navigate(`/profileSeller/${params.seller_id}`);
+        navigate(`/directory`);
       }
     }
     getSingleBusiness();
@@ -51,10 +52,13 @@ const Shop = ({}) => {
                   <p className="fs-4">
                     <strong>Horario: </strong>{store.shop?.schedule}
                   </p>
+                  <p className="fs-4">
+                    <strong>Acerca de: </strong>{store.shop?.description}
+                  </p>
                 </div>
-                {/* <div className="container-fluid text-center">
-                  <StarsRating />
-                </div> */}
+                 <div className="container-fluid text-center">
+                  {/* {role === 'Neighbor'} ? <StarsRating /> : null */}
+                </div> 
               </div>
             </div>
           </div>

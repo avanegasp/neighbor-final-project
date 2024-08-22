@@ -27,7 +27,6 @@ const imgCloudinary = [
   'samples/landscapes/nature-mountains',
   'samples/animals/cat'
 ]
-
 const ProfileSeller = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();

@@ -458,15 +458,16 @@ def create_business(seller_id):
         name = body.get("shopName", None)
         price = body.get("price", None)
         schedule = body.get("schedule", None)
+        description = body.get("description", None)
         
-        if name is None or price is None or schedule is None:
+        if name is None or price is None or schedule is None or description is None:
             return jsonify("Missing data!"), 400
         
         business_exists = Product.query.filter_by(name=name).first()
         if business_exists is not None:
             return jsonify({"error": f"{name} already exists!"}), 400
         
-        business = Product(name=name, price=price, schedule=schedule, seller_id=seller_id)
+        business = Product(name=name, price=price, schedule=schedule, seller_id=seller_id, description=description)
         
         db.session.add(business)
         db.session.commit()
