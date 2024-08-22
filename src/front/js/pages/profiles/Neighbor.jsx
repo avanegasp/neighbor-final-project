@@ -56,7 +56,6 @@ const ProfileNeighbor = () => {
 
   const checkStatus = async () => {
     const resp = await actions.chekingStatus()
-    console.log(resp)
     setStatus(resp.status)
   }
 

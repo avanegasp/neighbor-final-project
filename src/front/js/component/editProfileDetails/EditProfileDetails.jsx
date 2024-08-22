@@ -48,10 +48,10 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
       style={{ minHeight: "100vh" }}>
       <form
         className="container card"
-        style={{ width: "100%", maxWidth: "500px" }}
+        style={{ width: "100%", maxWidth: "100%" }}
         onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="name" className="form-label fs-5 text-light">
+          <label htmlFor="name" className="form-label fs-5 text-light text-start d-block">
             Nombre
           </label>
           <input
@@ -63,7 +63,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
             value={profile.name} />
         </div>
         <div className="mb-3">
-          <label htmlFor="lastname" className="form-label fs-5 text-light">
+          <label htmlFor="lastname" className="form-label fs-5 text-light text-start d-block">
             Apellido
           </label>
           <input name="lastname"
@@ -74,7 +74,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
             value={profile.lastname} />
         </div>
         <div className="mb-3">
-          <label htmlFor="floor" className="form-label fs-5 text-light">
+          <label htmlFor="floor" className="form-label fs-5 text-light text-start d-block">
             Piso
           </label>
           <input
@@ -86,7 +86,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
             value={profile.floor} />
         </div>
         <div className="mb-3">
-          <label htmlFor="floor" className="form-label fs-5 text-light">
+          <label htmlFor="floor" className="form-label fs-5 text-light text-start d-block">
             Correo
           </label>
           <input
@@ -99,7 +99,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
         </div>
         {shopName ? (
           <div className="mb-3">
-            <label htmlFor="shopName" className="form-label fs-5 text-light">
+            <label htmlFor="shopName" className="form-label fs-5 text-light text-start d-block">
               shopName
             </label>
             <input
@@ -114,7 +114,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
         {
           phone ? (
             <div className="mb-3">
-              <label htmlFor="phone" className="form-label fs-5 text-light">
+              <label htmlFor="phone" className="form-label fs-5 text-light text-start d-block">
                 Whatsapp
               </label>
               <PhoneInput
@@ -142,8 +142,8 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
 
         {buildingName ? (
           <div className="mb-3">
-            <label htmlFor="buildingName" className="form-label fs-5 text-light">
-              buildingName
+            <label htmlFor="buildingName" className="form-label fs-5 text-light text-start d-block">
+              Edificio
             </label>
             <input
               name="buildingName"

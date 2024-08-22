@@ -53,8 +53,8 @@ export const Navbar = () => {
 
       <div className="d-flex justify-content-end align-items-center flex-grow-1">
         {location.pathname === "/login" ||
-        location.pathname === "/register" ||
-        location.pathname === "/" ? null : (
+          location.pathname === "/register" ||
+          location.pathname === "/" ? null : (
           <>
             <div className="d-flex justify-content-center flex-grow-1">
               <span>
@@ -98,13 +98,6 @@ export const Navbar = () => {
               </Link>
             </div>
             <div className="dropdown-divider"></div>
-            <div className="dropdown-item">
-              <a
-                className="text-success fs-5 mx-1 my-1"
-                href="#"
-                onClick={handleLogout}
-              >Cerrar Sesión</a>
-            </div>
 
             <div className="dropdown">
               <button

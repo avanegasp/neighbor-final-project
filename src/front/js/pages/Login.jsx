@@ -46,16 +46,16 @@ const Login = () => {
         <div className="user-type-group" onChange={(e) => setUserType(e.target.value)}>
           <label className="user-type-option btn btn-outline-white text-white">
             <input type="radio" name="options" value="NEIGHBOR" />
-            Neighbor
+            Vecino
           </label>
           <label className="user-type-option btn btn-outline-white text-white">
             <input type="radio" name="options" value="SELLER" />
-            Seller
+            Vendedor
           </label>
           <label className="user-type-option btn btn-outline-white text-white">
 
             <input type="radio" name="options" value="ADMINISTRATOR" />
-            Admin
+            Administrador
           </label>
         </div>
 
