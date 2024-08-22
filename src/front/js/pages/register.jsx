@@ -132,58 +132,6 @@ export default function Register() {
                     </>
                 )}
                 {role === 'Administrator' && (
-                    <>
-                        <div className="mb-2">
-                            <label htmlFor="buildingName" className="form-label">Edificio</label>
-                            <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
-
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="lastname" className="form-label">Apellido</label>
-                            <input type="text" {...register("lastname")} className="form-control" id="lastname" />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Correo</label>
-                            <input type="email" {...register("email")} className="form-control" id="email" aria-describedby="emailHelp" />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Contraseña</label>
-                            <input type="password" {...register("password")} className="form-control" id="password" />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="floor" className="form-label">Piso</label>
-                            <input type="text" {...register("floor")} className="form-control" id="floor" />
-                        </div>
-
-                    </>
-                )}
-
-                {role === 'Seller' && (
-                    <>
-                        <div className="mb-3">
-                            <label htmlFor="phone" className="form-label">Whatsapp</label>
-                            <PhoneInput
-                                onChange={(phone) => {
-                                    // console.log('hhhh', phone)
-                                    setValue('phone', phone)
-                                }
-                                }
-                                inputProps={{
-                                    name: 'phone',
-                                    required: true,
-                                    autoFocus: true
-                                }}
-                                containerClass="form-control p-0 phone-input"
-                                inputClass="form-control w-100"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="shopName" className="form-label">Emprendimiento</label>
-                            <input type="text" {...register("shopName")} className="form-control" id="shopName" />
-                        </div>
-                    </>
-                )}
-                {role === 'Administrator' && (
                     <div className="mb-3">
                         <label htmlFor="buildingName" className="form-label">Edificio</label>
                         <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
