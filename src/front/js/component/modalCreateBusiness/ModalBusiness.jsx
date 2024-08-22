@@ -19,7 +19,7 @@ const ModalBusiness = ({ shopName, id }) => {
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#createBusiness"
       >
         Crear negocio
       </button>
@@ -27,7 +27,7 @@ const ModalBusiness = ({ shopName, id }) => {
       <form
         onSubmit={handleSubmit}
         className="modal fade"
-        id="exampleModal"
+        id="createBusiness"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
