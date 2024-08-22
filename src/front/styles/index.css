@@ -287,3 +287,20 @@ a:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
 }
+.wordNavbar {
+  font-size: 2rem;
+}
+
+.favNavbar {
+  border: 1px solid white;
+  padding: 10px 4rem;
+}
+
+.favNavbar {
+  font-size: 20px;
+}
+
+.buttonSearch,
+::placeholder {
+  font-size: 13px;
+}

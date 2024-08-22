@@ -59,7 +59,7 @@ const ModalBusiness = ({ shopName, id }) => {
             <div className="modal-body">
               <div>
                 <div className="mb-3">
-                  <label htmlFor="priceInput" className="form-label">
+                  <label htmlFor="priceInput" className="form-label text-black">
                     Precio
                   </label>
                   <input
@@ -75,7 +75,7 @@ const ModalBusiness = ({ shopName, id }) => {
                   </div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="scheduleInput" className="form-label">
+                  <label htmlFor="scheduleInput" className="form-label text-black">
                     Horario
                   </label>
                   <input
@@ -85,7 +85,7 @@ const ModalBusiness = ({ shopName, id }) => {
                     value={schedule}
                     onChange={(e) => setSchedule(e.target.value)}
                   />
-                  <label htmlFor="descriptionInput" className="form-label">
+                  <label htmlFor="descriptionInput" className="form-label text-black">
                     Añade una descripción
                   </label>
                   <textarea

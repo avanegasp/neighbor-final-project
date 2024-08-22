@@ -70,7 +70,7 @@ const Directory = () => {
           {store.users.neighbor.map((user) => {
             return (
               <div
-                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
                 key={user.id}
               >
                 <AllUsersInfo
@@ -93,7 +93,7 @@ const Directory = () => {
           {store.users.seller.map((user) => {
             return (
               <div
-                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
                 key={user.id}
               >
                 <AllUsersInfo

@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "../../styles/navbar.css";
 import "../../styles/index.css";
 import Favorite from "./favorite/Favorite.jsx";
 
@@ -58,7 +57,7 @@ export const Navbar = () => {
           <>
             <div className="d-flex justify-content-center flex-grow-1">
               <span>
-                <strong className="fs-2 text">Sesión de :</strong>
+                <strong className="fs-2 text"><i className="fa-solid fa-user-large"></i></strong>
               </span>
               <span className="ms-3">
                 <Link className="fs-2 text" to={roleLink()}>
@@ -88,7 +87,7 @@ export const Navbar = () => {
               </ul>
             </div>
 
-            <div className="dropdown-item">
+            {/* <div className="dropdown-item">
               <Link
                 className="text-success fs-5 mx-1 my-1"
                 to="/adminDeleteUser"
@@ -96,9 +95,8 @@ export const Navbar = () => {
                 <i className="text-success fs-5 mx-1 my-1 fa-solid fa-trash"></i>{" "}
                 Administración de usuarios
               </Link>
-            </div>
+            </div> */}
             <div className="dropdown-divider"></div>
-
             <div className="dropdown">
               <button
                 className="btn text-white fs-1"
