@@ -12,16 +12,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       people: {
         neighbor: [],
         seller: [],
-<<<<<<< HEAD
 
-      }
-=======
       },
+      
       business: [],
       shop: {},
       currentUser: {},
       recommendations: []
->>>>>>> 5372196be962c2203b3120490b6aa02a0c67e1ff
     },
     actions: {
       addToFavorite: (id, name, role) => {
@@ -158,12 +155,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
             }
           );
-<<<<<<< HEAD
-
-          if (!response.ok) {
-            console.error(`Error: ${response.status} ${response.statusText}`);
-            return false;
-=======
           if (response.ok) {
             const data = await response.json();
             console.log('response', data)
@@ -173,11 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const errorData = await response.json()
             console.error("Authorization error:", errorData.error || "Unknown error");
             return { error: errorData.error || "Authorization error" };
->>>>>>> 5372196be962c2203b3120490b6aa02a0c67e1ff
           }
-
-          const data = await response.json();
-          setStore({ users: data });
         } catch (error) {
           console.error("Error fetching directory:", error.message);
         }
@@ -364,13 +351,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           actions.getAllUser();
         }
       },
-<<<<<<< HEAD
-      })  
-      if (!response.ok) {
-        alert("No se puede eliminar neighbor");
-      }else {
-        actions.getAllUser();
-=======
 
       getSingleBusiness: async (seller_id, business_id) => {
         if (!seller_id || !business_id) return;
@@ -634,7 +614,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error)
         }
 
->>>>>>> 5372196be962c2203b3120490b6aa02a0c67e1ff
       }
 
       // deleteSeller: async (id) => {
