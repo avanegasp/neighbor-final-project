@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         neighbor: [],
         seller: [],
       },
+      allBusiness: [],
       business: [],
       shop: {},
       currentUser: {},
@@ -29,6 +30,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
         }
       },
+
+      getAllBusiness: async () => {
+        try {
+          const response = await fetch`${process.env.BACKEND_URL}/api/business`;
+          const data = await response.json();
+          setStore({allBusiness: data.results});
+        } catch (error) {
+          console.log(error)
+        }
+      },        
+
+    
 
       removeToFavorite: (id) => {
         const store = getStore();
