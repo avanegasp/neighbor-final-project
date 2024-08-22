@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         neighbor: [],
         seller: [],
       },
+      allBusiness: [],
       business: [],
       shop: {},
       currentUser: {},
@@ -28,6 +29,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
         }
       },
+
+      getAllBusiness: async () => {
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}/api/businesses`);
+            if (!response.ok) {
+                throw new Error(`Error fetching businesses: ${response.statusText}`);
+            }
+            const data = await response.json();
+            setStore({ allBusiness: data.businesses});
+        } catch (error) {
+            console.error("Error fetching businesses:", error);
+        }
+    },
+    
+    
 
       removeToFavorite: (id) => {
         const store = getStore();

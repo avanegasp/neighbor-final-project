@@ -56,7 +56,9 @@ export default function Register() {
                         checked={role === 'Neighbor'}
                         onChange={handleRoleChange}
                     />
+
                     <label className="btn btn-outline-white text-white" htmlFor="btnradio1">Vecinor</label>
+
 
                     <input
                         value="Seller"
@@ -67,7 +69,9 @@ export default function Register() {
                         checked={role === 'Seller'}
                         onChange={handleRoleChange}
                     />
+
                     <label className="btn btn-outline-white text-white" htmlFor="btnradio2">Vendedor</label>
+
 
                     <input
                         value="Administrator"
@@ -78,7 +82,9 @@ export default function Register() {
                         checked={role === 'Administrator'}
                         onChange={handleRoleChange}
                     />
+
                     <label className="btn btn-outline-white text-white" htmlFor="btnradio3">Administrador</label>
+
                 </div>
             </div>
 
@@ -101,6 +107,7 @@ export default function Register() {
                 </div>
                 <div className="mb-2">
                     <label htmlFor="floor" className="form-label">Piso</label>
+
                     <input type="text" {...register("floor")} className="form-control" id="floor" />
                 </div>
 
@@ -124,12 +131,13 @@ export default function Register() {
                             />
                         </div>
                         <div className="mb-2">
+
                             <label htmlFor="shopName" className="form-label">Emprendimiento</label>
+
                             <input type="text" {...register("shopName")} className="form-control" id="shopName" />
                         </div>
                     </>
                 )}
-
                 {role === 'Administrator' && (
                     <>
                         <div className="mb-2">
@@ -153,6 +161,7 @@ export default function Register() {
                             <label htmlFor="floor" className="form-label">Piso</label>
                             <input type="text" {...register("floor")} className="form-control" id="floor" />
                         </div>
+
                     </>
                 )}
 
@@ -193,7 +202,6 @@ export default function Register() {
             <div >
                 {" "}
                 <Link className='text-white' to={"/login"}>Ya te registraste? Ingresa por acá.</Link>
-
             </div>
         </div >
     );
