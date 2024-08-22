@@ -196,6 +196,28 @@ a {
   
 }
 
+.infoPerson{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  margin-right: 200px;
+  margin-top: 70px;
+  
+
+}
+
+.personImg{
+margin-left: 50px;
+margin-top: 20px;
+
+}
+
+.trash{
+  margin-right: 100px;
+  background-color: ;
+}
+
 .my-13{
   height: 100%;
   position: relative;

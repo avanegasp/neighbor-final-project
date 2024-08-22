@@ -88,22 +88,16 @@ export const Navbar = () => {
             </div>
 
             <div className="dropdown-item">
-              <Link
-                className="text-success fs-5 mx-1 my-1"
-                to="/adminDeleteUser"
-              >
-                <i className="text-success fs-5 mx-1 my-1 fa-solid fa-trash"></i>{" "}
-                Administración de usuarios
-              </Link>
+              
             </div>
-            <div className="dropdown-divider"></div>
-            <div className="dropdown-item">
+            {/* <div className="dropdown-divider"></div> */}
+            {/* <div className="dropdown-item">
               <a
                 className="text-success fs-5 mx-1 my-1"
                 href="#"
                 onClick={handleLogout}
               >Cerrar Sesión</a>
-            </div>
+            </div> */}
 
             <div className="dropdown">
               <button
