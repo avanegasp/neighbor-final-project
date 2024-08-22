@@ -32,7 +32,7 @@ const ProfileNeighbor = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-  const cldImg = cld.image('samples/landscapes/nature-mountains');
+
 
   const [recommendation, setRecommendation] = useState({
     name: "",
