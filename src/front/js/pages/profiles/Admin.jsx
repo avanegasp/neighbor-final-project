@@ -19,7 +19,6 @@ const imgCloudinary = [
   'samples/balloons',
   'samples/landscapes/nature-mountains',
   'samples/animals/cat',
-  'samples/food/spices',
   'samples/people/bicycle',
   'samples/animals/three-dogs',
   'samples/animals/reindeer',

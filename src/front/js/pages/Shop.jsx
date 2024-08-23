@@ -2,8 +2,28 @@ import React, { useContext, useEffect, useState } from "react";
 import StarsRating from "../component/StarsRating.jsx";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { AdvancedImage } from "@cloudinary/react";
+import { Cloudinary } from "@cloudinary/url-gen";
 
-const Shop = ({}) => {
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: "dysmvst60"
+  }
+});
+
+const imgCloudinary = [
+  'samples/people/kitchen-bar',
+  'samples/breakfast',
+  'samples/food/fish-vegetables',
+  'samples/dessert-on-a-plate',
+  'samples/food/spices',
+  'samples/coffee',
+  'samples/food/pot-mussels',
+  'samples/food/dessert',
+  'samples/balloons'
+];
+
+const Shop = ({ }) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const [error, setError] = useState(null);
@@ -13,50 +33,55 @@ const Shop = ({}) => {
 
 
   useEffect(() => {
-    const getSingleBusiness = async () =>{
+    const getSingleBusiness = async () => {
       const data = await actions.getSingleBusiness(params.seller_id, params.business_id);
-      if (!data){
+      if (!data) {
         navigate(`/directory`);
       }
     }
     getSingleBusiness();
   }, []);
-console.log(id)
+  console.log(id)
+
+  const imageIndex = parseInt(id, 10) % imgCloudinary.length;
+  const selectedImageId = imgCloudinary[imageIndex];
+  const cldImg = cld.image(selectedImageId);
+
   return (
     <>
       {store.shop && (
         <div className="App">
-          <div className="container d-flex flex-column min-vh-100 mb-5">
-            <h1>Emprendimiento</h1>
+          <div className="container">
+            <h1 className="d-flex fs-1 justify-content-center align-items-center" style={{ minHeight: "28vh" }}>Emprendimiento</h1>
             <div
-              className="d-flex justify-content-center align-items-start"
-              style={{ minHeight: "80vh" }}
+              className="d-flex justify-content-center align-items-center"
+              style={{ minHeight: "40vh" }}
             >
-              <div className="row w-100 border border-1 border-dark bg-white">
+              <div className="row w-100 rounded-1 border-dark bg-dark">
                 <div className="col-md-4 ms-4">
-                  <div className="card mt-5 w-50">
-                    <img
-                      src="https://picsum.photos/200"
+                  <div className="card mt-5 mb-5 w-100">
+                    <AdvancedImage
+                      cldImg={cldImg}
                       className="card-img-top"
                       alt="..."
                     />
                   </div>
                 </div>
-                <div className="col-md-7 d-flex flex-column justify-content-center">
-                  <p className="fs-4">
+                <div className="col-md-7 mt-3 d-flex flex-column justify-content-center">
+                  <p className="fs-4 text-white">
                     <strong>Nombre: </strong>{store.shop?.name}
                   </p>
-                  <p className="fs-4">
+                  <p className="fs-4 text-white">
                     <strong>Precio: </strong>{store.shop?.price}
                   </p>
-                  <p className="fs-4">
+                  <p className="fs-4 text-white">
                     <strong>Horario: </strong>{store.shop?.schedule}
                   </p>
-                  <p className="fs-4">
-                    <strong>Acerca de: </strong>{store.shop?.description}
+                  <p className="fs-4 text-white">
+                    <strong>Descripción: </strong>{store.shop?.description}
                   </p>
                 </div>
-                 {/* <div className="container-fluid text-center">
+                {/* <div className="container-fluid text-center">
                   {role == 'NEIGHBOR' ? <StarsRating/> : null }
                 </div>  */}
               </div>

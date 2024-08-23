@@ -17,7 +17,6 @@ const cld = new Cloudinary({
 })
 
 const imgCloudinary = [
-  'samples/food/spices',
   'samples/people/bicycle',
   'samples/animals/three-dogs',
   'samples/animals/reindeer',
