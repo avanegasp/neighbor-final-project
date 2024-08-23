@@ -20,7 +20,6 @@ import Recommendations from "./pages/recommendations/Recommendations.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/register.jsx";
 
-
 import AdminDeleteUser from "./component/adminDeleteUser/AdminDeleteUser.jsx";
 import DeleteUser from "./pages/deleteUser/DeleteUser.jsx";
 
@@ -63,6 +62,7 @@ const Layout = () => {
             <Route element={<Register />} path="/register" />
             <Route element={<Shop />} path="/seller/:seller_id/shop/:business_id" />
             <Route element={<Business />} path="/business" />
+            
 
             <Route element={<DeleteUser  />} path="/adminDeleteUser" />
             
