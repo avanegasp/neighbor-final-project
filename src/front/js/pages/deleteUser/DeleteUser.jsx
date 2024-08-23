@@ -22,7 +22,7 @@ const DeleteUser = () =>{
       </div>
 			<div className="container-fluid d-flex justify-content-end">
 							</div>
-			<div className="container-fluid">
+			<div className="container-fluid border border-dark" style={{ height: '1000px', overflow: 'scroll' }}  >
                 {store.people?.neighbor.length > 0 && store.people?.neighbor.map((neighbor) =>(
                     <AdminDeleteUser person={neighbor}/>
                 ) )}

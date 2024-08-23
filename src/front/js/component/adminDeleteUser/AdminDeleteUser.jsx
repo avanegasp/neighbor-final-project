@@ -16,31 +16,28 @@ const AdminDeleteUser = ({ person }) => {
         <div>
 
             <div key={person.id} className=" people">
-                <div className="cardPeople" >
-                    <div className="col-3 col-lg-2 p-2 mx-4 my-auto">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp8-7zKqxeqUgJ0SfeQ9jxZzFzU_6nTObmYQ&s" className="card-img rounded-circle" alt="..." />
+                <div className=" d-flex gap-2 w-100 justify-content-between " >
+                    <div className=" personImg col-3 col-lg-2 border">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp8-7zKqxeqUgJ0SfeQ9jxZzFzU_6nTObmYQ&s" className="card-img  " alt="..." />
                     </div>
-                    <div className="infoPerson d-flex">
-                        <div className="row d-flex">
+                    <div className="infoPerson  col-sm  align-items-center">
+                        <div className="name">
                             <div className="col-12 py-3">
-                                <h2 className="pt-2">{person.name}</h2>
+                                <h2 className="pt-2">{person.name} {person.lastname} </h2>
                             </div>
-                            <div className="col text-secondary">
-                                <div className="d-flex align-items-center">
-                                    <i className="fa-solid fa-envelope"></i> {person.email}
+                            <div className="floor">
+                                <div className="floor">
+                                    <i class="fa-solid fa-building"></i> {person.floor}
                                 </div>
-                                <div className="d-flex align-items-center">
-                                    <i class="fa-solid fa-person"></i> {person.name}
-                                </div>
-                                <div className="d-flex align-items-center">
-                                    <i className="fa-solid fa-building"></i> {person.floor}
+                                <div className="role">
+                                    <i className="fa-solid fa-person"></i> {person.role}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="container-fluid d-flex justify-content-end mb-2 mt-2">
-                        <div className="d-flex align-items-start mt-3">
-                            <button onClick={() => actions.deleteUser(person.id, person.role)} className="btn" data-bs-target="#exampleModal">
+                    <div className=" d-flex justify-content-end">
+                        <div className="trash">
+                            <button onClick={() => actions.deleteUser(person.id, person.role)} className="btn btn-light col-lg-50 justify-content-lg-center" >
                                 <i className="fa-solid fa-trash"></i>
                             </button>
                         </div>
