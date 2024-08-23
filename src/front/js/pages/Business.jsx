@@ -10,13 +10,14 @@ const cld = new Cloudinary({
 });
 
 const imgCloudinary = [
+    'samples/people/kitchen-bar',
     'samples/breakfast',
     'samples/food/fish-vegetables',
-    'samples/landscapes/nature-mountains',
-    'samples/people/bicycle',
+    'samples/dessert-on-a-plate',
     'samples/food/spices',
-    'samples/animals/three-dogs',
-    'samples/animals/reindeer',
+    'samples/coffee',
+    'samples/food/pot-mussels',
+    'samples/food/dessert',
     'samples/balloons'
 ];
 
