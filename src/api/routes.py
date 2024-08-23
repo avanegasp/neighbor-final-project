@@ -534,9 +534,9 @@ def delete_business(seller_id, business_id):
     except Exception as error:
         return jsonify({"error": f"{error}"}), 500
 
-@api.route('/neighbor/<int:neighbor_id>/business/<business_id>/create-review', methods=['POST'])
-#@jwt.required()
-def create_review(neighbor_id, business_id):
+@api.route('/neighbor/<int:neighbor_id>/business/<int:product_id>/create-review', methods=['POST'])
+@jwt_required()
+def create_review(neighbor_id, product_id):
     try:
         body = request.json
         comment_text = body.get("comment_text", None)
@@ -545,11 +545,11 @@ def create_review(neighbor_id, business_id):
         if comment_text is None or stars is None:
             return jsonify({"Missing data!"}), 400
         
-        review_exists = Review.query.filter_by(neighbor_id=neighbor_id, business_id=business_id).first()
+        review_exists = Review.query.filter_by(neighbor_id=neighbor_id, product_id=product_id).first()
         if review_exists is not None:
             return jsonify({"error": "Neighbors can't review twice the same product!"}), 400
         
-        review = Review(comment_text=comment_text, stars=stars, neighbor_id=neighbor_id, business_id=business_id)
+        review = Review(comment_text=comment_text, stars=stars, neighbor_id=neighbor_id, product_id=product_id)
         
         db.session.add(review)
         db.session.commit()
@@ -558,7 +558,7 @@ def create_review(neighbor_id, business_id):
         
     except Exception as error:
         db.session.rollback()
-        return jsonify({"error": f"{error}"})
+        return jsonify({"error": f"{error}"}), 500
     
 @api.route('business/reviews', methods=['GET'])
 def get_reviews():
@@ -583,7 +583,7 @@ def get_single_review(business_id, id):
         return jsonify({"error": f"{error}"}), 500 
     
 @api.route('/neighbor/<int:neighbor_id>/business/<int:business_id>/review/<int:review_id>', methods=['PUT'])
-#@jwt.required
+#@jwt_required
 def update_review(neighbor_id, business_id, review_id):
     
     review = Review.query.filter_by(neighbor_id=neighbor_id, business_id=business_id, id=review_id).first()

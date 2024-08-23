@@ -539,17 +539,17 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      createReview: async (business_id) => {
-        if (!business_id) return;
+      createReview: async (id, product_id) => {
+        if (!product_id) return;
         const token = localStorage.getItem("token");
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/neighbor/${neighbor_id}/business/${business_id}`,
+            `${process.env.BACKEND_URL}/api/neighbor/${id}/business/${product_id}/create-review`,
             {
-              methods: "POST",
+              method: "POST",
               headers: {
-                "Content-type": "appliaction/json",
-                authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                "Content-type": "appliaction/json"
               },
             }
           );
@@ -611,6 +611,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       createBusiness: async (id, shopName, price, schedule, description) => {
+        console.log(id, shopName, price, schedule, description)
         const token = localStorage.getItem("token")
         if (!token) {
           console.error("No token found")

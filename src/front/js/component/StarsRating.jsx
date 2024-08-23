@@ -3,18 +3,19 @@ import { Link, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { Context } from "../store/appContext";
 
-const StarsRating = () => {
+const StarsRating = ({product_id}) => {
   const { store, actions } = useContext(Context);
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
   const [comment, setComment] = useState("");
-  const { neighbor_id, business_id } = useParams();
+  const id = localStorage.getItem("id");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await actions.createReview(neighbor_id, business_id)
-    // console.log(neighbor_id, business_id);
-    // console.log(response);
+    const response = await actions.createReview(id, product_id)
+    console.log(id, product_id);
+    console.log(response);
     if (response) {
       alert("Reseña creada");
     }

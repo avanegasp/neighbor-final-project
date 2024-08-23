@@ -8,6 +8,7 @@ const ModalBusiness = ({ shopName, id }) => {
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (e) => {
+    console.log("funciona");
     e.preventDefault();
     const response = await actions.createBusiness(
       id,
@@ -24,7 +25,7 @@ const ModalBusiness = ({ shopName, id }) => {
     <>
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-success"
         data-bs-toggle="modal"
 
         data-bs-target="#createBusiness"
@@ -47,7 +48,7 @@ const ModalBusiness = ({ shopName, id }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="CreateBusinessLabel">
-                {shopName}
+                {shopName} Your id: {id}
               </h1>
               <button
                 type="button"
@@ -101,8 +102,9 @@ const ModalBusiness = ({ shopName, id }) => {
             <div className="modal-footer">
               <button
                 type="button submit"
-                className="btn btn-primary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                onClick={handleSubmit}
               >
                 Crear
               </button>

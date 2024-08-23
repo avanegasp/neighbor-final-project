@@ -9,6 +9,7 @@ const Shop = ({}) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
+  const id = localStorage.getItem("id");
 
 
   useEffect(() => {
@@ -20,8 +21,7 @@ const Shop = ({}) => {
     }
     getSingleBusiness();
   }, []);
-  // console.log(store.shop);
-
+console.log(id)
   return (
     <>
       {store.shop && (
@@ -56,9 +56,9 @@ const Shop = ({}) => {
                     <strong>Acerca de: </strong>{store.shop?.description}
                   </p>
                 </div>
-                 <div className="container-fluid text-center">
-                  {/* {role === 'Neighbor'} ? <StarsRating /> : null */}
-                </div> 
+                 {/* <div className="container-fluid text-center">
+                  {role == 'NEIGHBOR' ? <StarsRating/> : null }
+                </div>  */}
               </div>
             </div>
           </div>

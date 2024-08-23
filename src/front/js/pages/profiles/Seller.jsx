@@ -176,12 +176,12 @@ const ProfileSeller = () => {
                         </div>
                       </div>
                     </div>
-                    <a aria-labelledby="ModalBusiness">
+                    <Link to aria-labelledby="ModalBusiness">
                       <ModalBusiness
                         shopName={store.seller.shopName}
                         id={id}
                       />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
