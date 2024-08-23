@@ -53,7 +53,7 @@ const Business = () => {
                                             <thead>
                                                 <tr>
                                                     <th scope="row">{business.name}</th>
-                                                    <th scope="row">{business.seller_name}</th>
+                                                    <th> {business.seller_name}</th>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Precio</th>

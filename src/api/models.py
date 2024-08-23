@@ -202,7 +202,7 @@ class Product(db.Model):
             "price": self.price,
             "schedule": self.schedule,
             "description": self.description,
-            "seller_name": self.seller.serialize()["name"]
+            "seller_name": self.seller.serialize()['name']
         }     
         
 class Review(db.Model):

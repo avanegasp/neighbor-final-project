@@ -7,6 +7,8 @@ const ModalBusiness = ({ shopName, id }) => {
   const [schedule, setSchedule] = useState("");
   const [description, setDescription] = useState("");
 
+  console.log(shopName);
+
   const handleSubmit = async (e) => {
     // console.log("funciona");
     e.preventDefault();
@@ -48,7 +50,7 @@ const ModalBusiness = ({ shopName, id }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5 text-dark" id="CreateBusinessLabel">
-                {shopName}
+                {shopName} Your id: {id}
               </h1>
               <button
                 type="button"
