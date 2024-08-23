@@ -24,7 +24,7 @@ const Recommendations = () => {
     if (!store.recommendations) return <div>Loading...</div>
 
     return (
-        <div className="d-flex flex-column min-vh-100">
+        <div className="container justify-content-center align-content-start flex-column min-vh-100">
             <div className="container d-flex flex-column flex-grow-1">
                 <div
                     className="d-flex justify-content-between align-items-center mb-3"
@@ -47,12 +47,9 @@ const Recommendations = () => {
                                     shopName={recommendation.shopName}
                                     phone={recommendation.phone}
                                     numIndex={index} />
-
                             </div>
                         );
                     })}
-
-
                 </div>
             </div>
         </div >

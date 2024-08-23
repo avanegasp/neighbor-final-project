@@ -62,17 +62,17 @@ body::before {
   color: white;
   background-color: rgba(0, 0, 0, 0.6);
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.5);
-  height: 70px; 
-  padding: 0 20px; 
+  height: 70px;
+  padding: 0 20px;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   position: relative;
 }
 
 .navbar .dropdown {
   position: absolute;
-  right: 30px; 
+  right: 30px;
 }
 
 .navbar-brand {
@@ -87,8 +87,9 @@ body::before {
 }
 
 .dropdown button {
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
 }
+
 /* el css del login comienza aqui */
 
 .login-container {
@@ -99,7 +100,7 @@ body::before {
   height: 50vh;
   min-height: 50vh;
 
-  
+
 }
 
 h1 {
@@ -185,7 +186,7 @@ a {
 
 }
 
-.cardPeople{
+.cardPeople {
   color: white;
   margin-top: 10px;
   background-color: rgba(0, 0, 0, 0.6);
@@ -193,52 +194,51 @@ a {
   border-radius: 10 px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   width: 100%;
-  
+
 }
 
-.infoPerson{
+.infoPerson {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100px;
   margin-right: 200px;
   margin-top: 70px;
-  
+
 
 }
 
-.personImg{
-margin-left: 50px;
-margin-top: 20px;
+.personImg {
+  margin-left: 50px;
+  margin-top: 20px;
 
 }
 
-.trash{
+.trash {
   margin-right: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.container-fluid::-webkit-scrollbar{
+.container-fluid::-webkit-scrollbar {
 
-  background:#333;
+  background: #333;
   width: 20px;
-  overflow-x: hidden;
 
 }
 
-.container-fluid::-webkit-scrollbar-thumb{
-background: #b2b8b9;
-border-radius: 10px;
-}
-
-.container-fluid{
+.container-fluid::-webkit-scrollbar-thumb {
+  background: #b2b8b9;
   border-radius: 10px;
-  overflow-x: hidden;
 }
 
-.my-13{
+.container-fluid {
+  border-radius: 10px;
+  
+}
+
+.my-13 {
   height: 100%;
   position: relative;
   overflow-x: auto;
@@ -257,4 +257,3 @@ a:hover {
   text-align: center;
   padding: 10px 0;
 }
-

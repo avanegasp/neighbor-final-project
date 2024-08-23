@@ -26,7 +26,9 @@ const ModalBusiness = ({ shopName, id }) => {
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#CreateBusiness"
+
+        data-bs-target="#createBusiness"
+
       >
         Crear negocio
       </button>
@@ -34,7 +36,9 @@ const ModalBusiness = ({ shopName, id }) => {
       <form
         onSubmit={handleSubmit}
         className="modal fade"
-        id="CreateBusiness"
+
+        id="createBusiness"
+
         tabIndex="-1"
         aria-labelledby="CreateBusinessLabel"
         aria-hidden="true"
@@ -55,7 +59,7 @@ const ModalBusiness = ({ shopName, id }) => {
             <div className="modal-body">
               <div>
                 <div className="mb-3">
-                  <label htmlFor="priceInput" className="form-label">
+                  <label htmlFor="priceInput" className="form-label text-black">
                     Precio
                   </label>
                   <input
@@ -71,7 +75,7 @@ const ModalBusiness = ({ shopName, id }) => {
                   </div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="scheduleInput" className="form-label">
+                  <label htmlFor="scheduleInput" className="form-label text-black">
                     Horario
                   </label>
                   <input
@@ -81,7 +85,7 @@ const ModalBusiness = ({ shopName, id }) => {
                     value={schedule}
                     onChange={(e) => setSchedule(e.target.value)}
                   />
-                  <label htmlFor="descriptionInput" className="form-label">
+                  <label htmlFor="descriptionInput" className="form-label text-black">
                     Añade una descripción
                   </label>
                   <textarea

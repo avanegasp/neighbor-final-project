@@ -47,7 +47,7 @@ const AllUsersInfo = ({
   const selectedImageId = imgCloudinary[imageIndex]
 
   return (
-    <div className="row w-100 border border-1 border-dark justify-content-center bg-white">
+    <div className="bg-light row w-100 rounded justify-content-center">
       <div className="col-md-4">
         <div className="card mt-5 mb-5 w-50">
           <AdvancedImage

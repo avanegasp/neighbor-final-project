@@ -88,15 +88,15 @@ const ProfileSeller = () => {
         <MRejected />
       )}
       {status === "APPROVED" && (
-        <div className="container d-flex flex-column min-vh-100">
+        <div className="">
           <TitleProfiles title={store.seller.role} />
           <div
-            className="d-flex justify-content-center align-items-start"
-            style={{ minHeight: "80vh" }}
+            className="container-profiles"
+           
           >
-            <div className="row w-100 border border-1 border-dark bg-white">
+            <div className="row">
               <div className="col-md-4 ms-4">
-                <div className="card mt-5 mb-5 w-50">
+                <div className="card-N">
                   <AdvancedImage
                     cldImg={cld.image(selectedImageId)}
                     className="card-img-top"
@@ -108,20 +108,20 @@ const ProfileSeller = () => {
                       <li>Lord Rings</li>
                       <li>Harry Potter</li>
                     </ol>
-                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       Haz una recomendación
                     </button>
                     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div className="modal-dialog">
                         <div className="modal-content">
                           <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Quiero recomendar a:</h1>
+                            <h1 className="modal-title fs-5 text-black" id="exampleModalLabel">Quiero recomendar a:</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div className="modal-body">
                             <form onSubmit={handleSubmit}>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
+                                <label htmlFor="exampleInputName" className="form-label text-dark">Nombre:</label>
                                 <input
                                   name="name"
                                   onChange={(e) => handleChange(e)}
@@ -131,7 +131,7 @@ const ProfileSeller = () => {
                                   id="exampleInputName" />
                               </div>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputLastname" className="form-label">Apellido:</label>
+                                <label htmlFor="exampleInputLastname" className="form-label text-dark">Apellido:</label>
                                 <input
                                   name="lastname"
                                   onChange={(e) => handleChange(e)}
@@ -141,7 +141,7 @@ const ProfileSeller = () => {
                                   id="exampleInputLastName" />
                               </div>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputPhone" className="form-label">Whatsapp:</label>
+                                <label htmlFor="exampleInputPhone" className="form-label text-dark">Whatsapp:</label>
                                 <PhoneInput
                                   country={'us'}
                                   onChange={(phone) => setRecommendation({ ...recommendation, phone })}
@@ -156,7 +156,7 @@ const ProfileSeller = () => {
                                 />
                               </div>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputShopName" className="form-label">Nombre del comercio:</label>
+                                <label htmlFor="exampleInputShopName" className="form-label text-dark">Nombre del comercio:</label>
                                 <input
                                   name="shopName"
                                   onChange={(e) => handleChange(e)}
@@ -164,7 +164,7 @@ const ProfileSeller = () => {
                                   className="form-control"
                                   id="exampleInputShopName"
                                   placeholder="Ferretería Mis llaves" />
-                                <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
+                                <div id="exampleInputShopName" className="form-text text-secondary">Colocar primero el TIPO de comercio</div>
                               </div>
                               <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
                             </form>
