@@ -215,6 +215,27 @@ margin-top: 20px;
 
 .trash{
   margin-right: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-fluid::-webkit-scrollbar{
+
+  background:#333;
+  width: 20px;
+  overflow-x: hidden;
+
+}
+
+.container-fluid::-webkit-scrollbar-thumb{
+background: #b2b8b9;
+border-radius: 10px;
+}
+
+.container-fluid{
+  border-radius: 10px;
+  overflow-x: hidden;
 }
 
 .my-13{

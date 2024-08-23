@@ -17,8 +17,8 @@ const AdminDeleteUser = ({ person }) => {
 
             <div key={person.id} className=" people">
                 <div className=" d-flex gap-2 w-100 justify-content-between " >
-                    <div className=" personImg col-3 col-lg-2 ">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp8-7zKqxeqUgJ0SfeQ9jxZzFzU_6nTObmYQ&s" className="card-img rounded-circle" alt="..." />
+                    <div className=" personImg col-3 col-lg-2 border">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp8-7zKqxeqUgJ0SfeQ9jxZzFzU_6nTObmYQ&s" className="card-img  " alt="..." />
                     </div>
                     <div className="infoPerson  col-sm  align-items-center">
                         <div className="name">
@@ -37,7 +37,7 @@ const AdminDeleteUser = ({ person }) => {
                     </div>
                     <div className=" d-flex justify-content-end">
                         <div className="trash">
-                            <button onClick={() => actions.deleteUser(person.id, person.role)} className="btn" data-bs-target="#exampleModal">
+                            <button onClick={() => actions.deleteUser(person.id, person.role)} className="btn btn-light col-lg-50 justify-content-lg-center" >
                                 <i className="fa-solid fa-trash"></i>
                             </button>
                         </div>
