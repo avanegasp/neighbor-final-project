@@ -595,6 +595,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       createBusiness: async (id, shopName, price, schedule, description) => {
+        console.log(id, shopName, price, schedule, description)
         const token = localStorage.getItem("token")
         if (!token) {
           console.error("No token found")

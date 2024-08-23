@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import { Context } from "../../store/appContext";
 
 const PersonalProfileDetails = ({
   nameProfile,
@@ -11,13 +11,15 @@ const PersonalProfileDetails = ({
   email,
   phone,
   description,
-  id
+  id,
 }) => {
-
   // const isValidPhone = phone && /^\+[1-9]\d{1,14}$/.test(phone);
   const params = useParams();
   const whatsappLink = phone ? `https://wa.me/${phone}` : null;
-  const shopLink = shopName && params.id ? `/seller/${params.id}/shop/${shopName}` : `/seller/${id}/shop/${shopName}` 
+  const shopLink =
+    shopName && params.id
+      ? `/seller/${params.id}/shop/${shopName}`
+      : `/seller/${id}/shop/${shopName}`;
 
   return (
     <div className="mt-5">
@@ -35,20 +37,24 @@ const PersonalProfileDetails = ({
         <strong>Correo:</strong> {email}
       </p>
 
-      {
-        phone ? (
-          <p className="fs-4">
-            <strong>Whatsapp:</strong> {" "}
-            <Link to={whatsappLink} className="fs-4" target="_blank" rel="noopener noreferrer">
-              {phone}
-            </Link>
-          </p>
-        ) : null
-      }
+      {phone ? (
+        <p className="fs-4">
+          <strong>Whatsapp:</strong>{" "}
+          <Link
+            to={whatsappLink}
+            className="fs-4"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {phone}
+          </Link>
+        </p>
+      ) : null}
       {shopName ? (
         <p className="fs-4">
-          <strong>Emprendimiento: </strong> 
-          <Link to ={shopLink} className="fs-4" target>{shopName}
+          <strong>Emprendimiento: </strong>
+          <Link to={shopLink} className="fs-4" target>
+            {shopName}
           </Link>
         </p>
       ) : null}
@@ -59,12 +65,12 @@ const PersonalProfileDetails = ({
       ) : null}
       {description ? (
         <p className="fs-4">
-          <strong>Acerca de: </strong> 
-          <Link to={shopLink} className="fs-4" target>{description}
+          <strong>Acerca de: </strong>
+          <Link to={shopLink} className="fs-4" target>
+            {description}
           </Link>
         </p>
       ) : null}
-      
     </div>
   );
 };

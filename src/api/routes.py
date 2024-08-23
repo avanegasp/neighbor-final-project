@@ -445,8 +445,6 @@ def edit_admin(id):
 @jwt_required()
 def create_business(seller_id):
     try:
-        current_user = get_jwt_identity()
-        print(current_user, id)
         body = request.json
         name = body.get("shopName", None)
         price = body.get("price", None)
