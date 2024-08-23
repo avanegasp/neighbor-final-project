@@ -69,7 +69,7 @@ class Seller(db.Model):
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
     status = db.Column(db.String(50), nullable=False, default=StatusEnum.PENDING.value)
 
-    products = db.relationship('Product', backref='seller')
+    products = db.relationship('Product', back_populates='seller')
     orders = db.relationship('Order', backref='seller')
 
    
@@ -188,6 +188,7 @@ class Product(db.Model):
     description = db.Column(db.String(255), unique=False, nullable=False)
 
     seller_id = db.Column(db.Integer, db.ForeignKey('seller.id', ondelete='CASCADE'))
+    seller = db.relationship(Seller)
     orders = db.relationship('order_product', backref='product')
     review = db.relationship('Review', backref='Product', uselist=False) 
 
@@ -200,7 +201,8 @@ class Product(db.Model):
             "name": self.name,
             "price": self.price,
             "schedule": self.schedule,
-            "description": self.description
+            "description": self.description,
+            "seller_name": self.seller.serialize()['name']
         }     
         
 class Review(db.Model):
