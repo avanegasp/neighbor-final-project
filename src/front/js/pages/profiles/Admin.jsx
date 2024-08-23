@@ -16,14 +16,13 @@ const cld = new Cloudinary({
 })
 
 const imgCloudinary = [
-  'samples/food/spices',
+  'samples/balloons',
+  'samples/landscapes/nature-mountains',
+  'samples/animals/cat',
   'samples/people/bicycle',
   'samples/animals/three-dogs',
   'samples/animals/reindeer',
-  'cld-sample-2',
-  'samples/balloons',
-  'samples/landscapes/nature-mountains',
-  'samples/animals/cat'
+  'cld-sample-2'
 ]
 
 const ProfileAdmin = () => {

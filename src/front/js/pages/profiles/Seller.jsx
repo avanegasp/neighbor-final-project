@@ -8,7 +8,8 @@ import PersonalProfileDetails from "../../component/personalProfileDetails/Perso
 import ModalBusiness from "../../component/modalCreateBusiness/ModalBusiness.jsx";
 
 import MPending from "../../component/messages/mPending.jsx";
-import MRejected from "../../component/messages/mRejected.jsx"; import { Cloudinary } from "@cloudinary/url-gen/index";
+import MRejected from "../../component/messages/mRejected.jsx";
+import { Cloudinary } from "@cloudinary/url-gen/index";
 import { AdvancedImage } from "@cloudinary/react";
 
 const cld = new Cloudinary({
@@ -18,14 +19,13 @@ const cld = new Cloudinary({
 })
 
 const imgCloudinary = [
-  'samples/food/spices',
+  'cld-sample-2',
+  'samples/food/fish-vegetables',
+  'samples/landscapes/nature-mountains',
   'samples/people/bicycle',
   'samples/animals/three-dogs',
   'samples/animals/reindeer',
-  'cld-sample-2',
-  'samples/balloons',
-  'samples/landscapes/nature-mountains',
-  'samples/animals/cat'
+  'samples/balloons'
 ]
 const ProfileSeller = () => {
   const { store, actions } = useContext(Context);
@@ -92,7 +92,7 @@ const ProfileSeller = () => {
           <TitleProfiles title={store.seller.role} />
           <div
             className="container-profiles"
-           
+
           >
             <div className="row">
               <div className="col-md-4 ms-4">
