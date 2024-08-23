@@ -8,7 +8,7 @@ const ModalBusiness = ({ shopName, id }) => {
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (e) => {
-    console.log("funciona");
+    // console.log("funciona");
     e.preventDefault();
     const response = await actions.createBusiness(
       id,
@@ -17,8 +17,8 @@ const ModalBusiness = ({ shopName, id }) => {
       schedule,
       description
     );
-    console.log(id, shopName, price, schedule, description);
-    console.log(response);
+    // console.log(id, shopName, price, schedule, description);
+    // console.log(response);
   };
 
   return (

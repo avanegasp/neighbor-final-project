@@ -16,14 +16,14 @@ const cld = new Cloudinary({
 })
 
 const imgCloudinary = [
+  'samples/balloons',
+  'samples/landscapes/nature-mountains',
+  'samples/animals/cat',
   'samples/food/spices',
   'samples/people/bicycle',
   'samples/animals/three-dogs',
   'samples/animals/reindeer',
-  'cld-sample-2',
-  'samples/balloons',
-  'samples/landscapes/nature-mountains',
-  'samples/animals/cat'
+  'cld-sample-2'
 ]
 
 const ProfileAdmin = () => {
@@ -75,7 +75,7 @@ const ProfileAdmin = () => {
       <TitleProfiles title={store.admin.role} />
       <div
         className="container-profiles"
-        
+
       >
         <div className="row w-100">
           <div className="col-md-4 ms-4">
