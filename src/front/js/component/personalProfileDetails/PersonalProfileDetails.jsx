@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Context } from "../../store/appContext";
 
 
 const PersonalProfileDetails = ({
@@ -12,13 +11,11 @@ const PersonalProfileDetails = ({
   email,
   phone,
   description,
-  id, 
-  role
+  id
 }) => {
 
   // const isValidPhone = phone && /^\+[1-9]\d{1,14}$/.test(phone);
   const params = useParams();
-  const {store, actions} = useContext(Context);
   const whatsappLink = phone ? `https://wa.me/${phone}` : null;
   const shopLink = shopName && params.id ? `/seller/${params.id}/shop/${shopName}` : `/seller/${id}/shop/${shopName}` 
 

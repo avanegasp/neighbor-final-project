@@ -78,13 +78,10 @@ def add_neighbor():
         return jsonify({"error": "Email ya esta siendo utilizado"}), 400
     try: 
         new_user = Neighbor(email = email, password = password_hash, name = name, lastname = lastname, floor = floor)
-        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
         db.session.add(new_user)
         db.session.commit()
-        db.session.refresh()
-        print("authhhhh", new_user)
+        db.session.refresh(new_user)
         auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role, "status": new_user.status})
-
         return jsonify({"mensaje": "Neighbor creado exitosamente", "user":{"id":new_user.id}, "token": auth_token}), 201
     except Exception as error:
         db.session.rollback() 
@@ -112,8 +109,15 @@ def add_seller():
         new_user = Seller(email = email, password = password_hash, name = name, lastname = lastname, floor = floor, phone = phone, shopName = shopName)
         db.session.add(new_user)
         db.session.commit()
-        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role, "status": new_user.status})
-        return jsonify({"mensaje": "Seller creado exitosamente", "user":{"id":new_user.id}, "token": auth_token
+        auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
+        return jsonify({
+            "mensaje": "Seller creado exitosamente",
+            "user":{
+                "id":new_user.id,
+                "name": new_user.name,
+                "role": new_user.role
+            },
+            "token": auth_token
 }), 201
     except Exception as error:
         db.session.rollback() 
@@ -141,8 +145,15 @@ def add_administrator():
         db.session.add(new_user)
         db.session.commit()
         auth_token = create_access_token({"id": new_user.id, "email": new_user.email, "userType": new_user.role})
-        return jsonify({"mensaje": "Administrador creado exitosamente","user":{"id":new_user.id}, "token": auth_token
-}), 201
+        return jsonify({
+            "mensaje": "Administrador creado exitosamente",
+            "user":{
+            "id":new_user.id, 
+            "name":new_user.name,
+            "role":new_user.role
+            },
+            "token": auth_token
+        }), 201
     except Exception as error:
         db.session.rollback() 
         return jsonify({"error": f"{error}"}), 500                   
@@ -434,6 +445,8 @@ def edit_admin(id):
 @jwt_required()
 def create_business(seller_id):
     try:
+        current_user = get_jwt_identity()
+        print(current_user, id)
         body = request.json
         name = body.get("shopName", None)
         price = body.get("price", None)
@@ -523,9 +536,9 @@ def delete_business(seller_id, business_id):
     except Exception as error:
         return jsonify({"error": f"{error}"}), 500
 
-@api.route('/neighbor/<int:neighbor_id>/business/<business_id>/create-review', methods=['POST'])
-#@jwt.required()
-def create_review(neighbor_id, business_id):
+@api.route('/neighbor/<int:neighbor_id>/business/<int:product_id>/create-review', methods=['POST'])
+@jwt_required()
+def create_review(neighbor_id, product_id):
     try:
         body = request.json
         comment_text = body.get("comment_text", None)
@@ -534,11 +547,11 @@ def create_review(neighbor_id, business_id):
         if comment_text is None or stars is None:
             return jsonify({"Missing data!"}), 400
         
-        review_exists = Review.query.filter_by(neighbor_id=neighbor_id, business_id=business_id).first()
+        review_exists = Review.query.filter_by(neighbor_id=neighbor_id, product_id=product_id).first()
         if review_exists is not None:
             return jsonify({"error": "Neighbors can't review twice the same product!"}), 400
         
-        review = Review(comment_text=comment_text, stars=stars, neighbor_id=neighbor_id, business_id=business_id)
+        review = Review(comment_text=comment_text, stars=stars, neighbor_id=neighbor_id, product_id=product_id)
         
         db.session.add(review)
         db.session.commit()
@@ -547,7 +560,7 @@ def create_review(neighbor_id, business_id):
         
     except Exception as error:
         db.session.rollback()
-        return jsonify({"error": f"{error}"})
+        return jsonify({"error": f"{error}"}), 500
     
 @api.route('business/reviews', methods=['GET'])
 def get_reviews():
@@ -572,7 +585,7 @@ def get_single_review(business_id, id):
         return jsonify({"error": f"{error}"}), 500 
     
 @api.route('/neighbor/<int:neighbor_id>/business/<int:business_id>/review/<int:review_id>', methods=['PUT'])
-#@jwt.required
+#@jwt_required
 def update_review(neighbor_id, business_id, review_id):
     
     review = Review.query.filter_by(neighbor_id=neighbor_id, business_id=business_id, id=review_id).first()
@@ -777,7 +790,6 @@ def admin_create_recommendation(administrator_id):
 
         return jsonify({"message": f"Recommendation for {recommendation.shopName} created!"}), 201
 
-    
     except Exception as error:
         db.session.rollback()
         return jsonify({"error": f"{error}"}), 500
@@ -785,14 +797,16 @@ def admin_create_recommendation(administrator_id):
 #esta lo va ser llamado en la pagina de cada usuario
 @api.route('/checking', methods=['GET'])
 @jwt_required()
-def checkingStatus():
+def checking_status():
     try:
        current_user = get_jwt_identity() 
-       userType = current_user['userType']
-       if userType == "NEIGHBOR":
+       print(current_user)
+       user_type = current_user['userType']
+       print(user_type)
+       if user_type == "NEIGHBOR":
         neighbor =Neighbor.query.filter_by(id=current_user['id']).first()
         return jsonify({"status": neighbor.status})
-       if userType == "SELLER":
+       if user_type == "SELLER":
         seller =Seller.query.filter_by(id=current_user['id']).first()
         return jsonify({"status": seller.status})
     except Exception as e:
@@ -800,7 +814,7 @@ def checkingStatus():
 
 @api.route('/changeStatus', methods=['PUT'])
 @jwt_required()
-def changeStatus():
+def change_status():
     body = request.json
     id = body.get("id", None)
     role = body.get("role", None)
