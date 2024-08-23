@@ -75,7 +75,7 @@ const ProfileAdmin = () => {
       <TitleProfiles title={store.admin.role} />
       <div
         className="container-profiles"
-        
+
       >
         <div className="row w-100">
           <div className="col-md-4 ms-4">
@@ -173,6 +173,9 @@ const ProfileAdmin = () => {
             />
           </div>
           <div className="mt-auto text-end mb-5">
+            <Link to={"/AdminDeleteUser"} className="btn btn-success me-5">
+              Administracion de usuarios
+            </Link>
             <Link to={"/profileEditAdmin"} className="btn btn-success me-5">
               Editar información
             </Link>
