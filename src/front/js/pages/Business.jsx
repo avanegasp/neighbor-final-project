@@ -26,7 +26,7 @@ const Business = () => {
 
     useEffect(() => {
         actions.getAllBusiness();
-    }, [actions]);
+    }, []);
 
     return (
         <div className="text-center mt-5">
@@ -53,6 +53,7 @@ const Business = () => {
                                             <thead>
                                                 <tr>
                                                     <th scope="row">{business.name}</th>
+                                                    <th scope="row">{business.seller_name}</th>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Precio</th>
