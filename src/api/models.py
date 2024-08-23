@@ -151,7 +151,6 @@ class Administrator(db.Model):
             # do not serialize the password, its a security breach
         }               
 
-
 class Building(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     buildingName = db.Column(db.String(80), unique=False, nullable=False)
@@ -167,7 +166,20 @@ class Building(db.Model):
 
         }
 
-  #uno a muchos entre seller y productos
+
+    def __repr__(self):
+        return f'<BUILDING {self.email}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "buildingName": self.buildingName,
+            
+            # do not serialize the password, its a security breach
+        }                          
+                                  
+
+#uno a muchos entre seller y productos
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
