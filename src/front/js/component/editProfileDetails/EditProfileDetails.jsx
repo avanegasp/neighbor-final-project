@@ -118,7 +118,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
                 Whatsapp
               </label>
               <PhoneInput
-                country={'us'}
+                country={'co'}
                 value={profile.phone}
                 onChange={(phone) => {
                   setProfile((prevProfile) => ({
@@ -154,7 +154,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
               value={profile.buildingName} />
           </div>
         ) : null}
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-success">
           Enviar
         </button>
       </form>

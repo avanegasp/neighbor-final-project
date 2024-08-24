@@ -21,7 +21,7 @@ function BuildingUsers() {
     return (
 
         <div className="d-fle container justify-content-center align-content-center flex-column min-vh-100">
-            <h1 className='text-black fs-1 pt-3'>Lista de vecinos</h1>
+            <h1 className='text-title fw-bold font-monospace text-white business' style={{ marginTop: "20px" }}>Lista de vecinos</h1>
             {store.users.neighbor && store.users.neighbor.length > 0 ? (
                 <div style={{ maxHeight: '400px', overflowY: 'auto', overflowX: 'hidden' }}>
                     <table className="table">
@@ -66,7 +66,7 @@ function BuildingUsers() {
                 <p className='text-white'>No hay vendedores registrados</p>
             }
 
-            <h1 className='text-black fs-1 mt-5'>Lista de vendedores</h1>
+            <h1 className='text-title fw-bold font-monospace text-white business' style={{ marginTop: "20px" }}>Lista de vendedores</h1>
             {store.users.seller && store.users.seller.length > 0 ? (
                 <div style={{ maxHeight: '400px', overflowY: 'auto', overflowX: 'hidden' }}>
                     <table className='table'>

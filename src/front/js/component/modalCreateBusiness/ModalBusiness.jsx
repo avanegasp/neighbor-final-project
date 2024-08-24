@@ -27,9 +27,8 @@ const ModalBusiness = ({ shopName, id }) => {
     <>
       <button
         type="button"
-        className="btn btn-success"
+        className="btn btn-success mt-3"
         data-bs-toggle="modal"
-
         data-bs-target="#createBusiness"
 
       >
@@ -50,7 +49,7 @@ const ModalBusiness = ({ shopName, id }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5 text-dark" id="CreateBusinessLabel">
-                {shopName} Your id: {id}
+                Emprendimiento {shopName}
               </h1>
               <button
                 type="button"
@@ -88,7 +87,7 @@ const ModalBusiness = ({ shopName, id }) => {
                     value={schedule}
                     onChange={(e) => setSchedule(e.target.value)}
                   />
-                  <label htmlFor="descriptionInput" className="form-label text-black">
+                  <label htmlFor="descriptionInput" className="form-label text-black mt-3">
                     Añade una descripción
                   </label>
                   <textarea
@@ -104,7 +103,7 @@ const ModalBusiness = ({ shopName, id }) => {
             <div className="modal-footer">
               <button
                 type="button submit"
-                className="btn btn-secondary"
+                className="btn btn-success"
                 data-bs-dismiss="modal"
                 onClick={handleSubmit}
               >

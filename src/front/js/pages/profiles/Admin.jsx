@@ -78,7 +78,7 @@ const ProfileAdmin = () => {
       >
         <div className="row w-100">
           <div className="col-md-4 ms-4">
-            <div className="card-N">
+            <div className="card-N" style={{ marginRight: "30px" }}>
               <AdvancedImage
                 cldImg={cld.image(selectedImageId)}
                 className="card-img-top"
@@ -96,7 +96,7 @@ const ProfileAdmin = () => {
 
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div className="modal-dialog">
-                    <div className="modal-content">
+                    <div className="modal-content bg-body">
                       <div className="modal-header">
                         <h1 className="modal-title fs-5 text-black" id="exampleModalLabel">Quiero recomendar a:</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -104,7 +104,7 @@ const ProfileAdmin = () => {
                       <div className="modal-body">
                         <form onSubmit={handleSubmit}>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
+                            <label htmlFor="exampleInputName" className="form-label text-dark d-flex align-content-start">Nombre:</label>
                             <input
                               name="name"
                               onChange={(e) => handleChange(e)}
@@ -114,7 +114,7 @@ const ProfileAdmin = () => {
                               id="exampleInputName" />
                           </div>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputLastname" className="form-label">Apellido:</label>
+                            <label htmlFor="exampleInputLastname" className="form-label text-dark d-flex align-content-start">Apellido:</label>
                             <input
                               name="lastname"
                               onChange={(e) => handleChange(e)}
@@ -124,9 +124,9 @@ const ProfileAdmin = () => {
                               id="exampleInputLastName" />
                           </div>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputPhone" className="form-label">Whatsapp:</label>
+                            <label htmlFor="exampleInputPhone" className="form-label text-dark d-flex align-content-start">Whatsapp:</label>
                             <PhoneInput
-                              country={'us'}
+                              country={'co'}
                               onChange={(phone) => setRecommendation({ ...recommendation, phone })}
                               value={recommendation.phone}
                               inputProps={{
@@ -139,7 +139,7 @@ const ProfileAdmin = () => {
                             />
                           </div>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputShopName" className="form-label">Nombre del comercio:</label>
+                            <label htmlFor="exampleInputShopName" className="form-label text-dark d-flex align-content-start">Nombre del comercio:</label>
                             <input
                               name="shopName"
                               onChange={(e) => handleChange(e)}
@@ -149,12 +149,12 @@ const ProfileAdmin = () => {
                               placeholder="Ferretería Mis llaves" />
                             <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
                           </div>
-                          <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
+                          <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Enviar</button>
                         </form>
 
                       </div>
                       <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                       </div>
                     </div>
                   </div>

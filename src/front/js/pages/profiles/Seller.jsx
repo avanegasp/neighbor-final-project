@@ -96,7 +96,7 @@ const ProfileSeller = () => {
           >
             <div className="row">
               <div className="col-md-4 ms-4">
-                <div className="card-N">
+                <div className="card-N" style={{ marginRight: "30px" }}>
                   <AdvancedImage
                     cldImg={cld.image(selectedImageId)}
                     className="card-img-top"
@@ -143,7 +143,7 @@ const ProfileSeller = () => {
                               <div className="mb-3">
                                 <label htmlFor="exampleInputPhone" className="form-label text-dark">Whatsapp:</label>
                                 <PhoneInput
-                                  country={'us'}
+                                  country={'co'}
                                   onChange={(phone) => setRecommendation({ ...recommendation, phone })}
                                   value={recommendation.phone}
                                   inputProps={{
@@ -166,12 +166,12 @@ const ProfileSeller = () => {
                                   placeholder="Ferretería Mis llaves" />
                                 <div id="exampleInputShopName" className="form-text text-secondary">Colocar primero el TIPO de comercio</div>
                               </div>
-                              <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
+                              <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Enviar</button>
                             </form>
 
                           </div>
                           <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                           </div>
                         </div>
                       </div>
