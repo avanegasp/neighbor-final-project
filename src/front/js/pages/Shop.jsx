@@ -52,7 +52,7 @@ const Shop = ({ }) => {
       {store.shop && (
         <div className="App">
           <div className="container">
-            <h1 className="d-flex fs-1 justify-content-center align-items-center" style={{ minHeight: "28vh" }}>Emprendimiento</h1>
+            <h1 className="text-title fw-bold font-monospace text-white business">Emprendimiento</h1>
             <div
               className="d-flex justify-content-center align-items-center"
               style={{ minHeight: "40vh" }}

@@ -54,16 +54,22 @@ const Business = () => {
                                                 <tr>
                                                     <th scope="row">{business.name}</th>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">Precio</th>
-                                                    <th scope="row">Horarios</th>
-                                                    <th scope="row">Descripcion</th>
-                                                </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                    <th scope="row">Dueño</th>
+                                                    <td>{business.seller_name}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Precio</th>
                                                     <td>{business.price}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Horarios</th>
                                                     <td>{business.schedule}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Descripcion</th>
                                                     <td>{business.description}</td>
                                                 </tr>
                                             </tbody>

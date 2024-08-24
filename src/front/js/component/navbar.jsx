@@ -57,10 +57,10 @@ export const Navbar = () => {
           <>
             <div className="d-flex justify-content-center flex-grow-1">
               <span>
-                <strong className="fs-2 text"><i className="fa-solid fa-user-large"></i></strong>
+                <strong className="fs-2"><i className="fa-solid fa-user-large"></i></strong>
               </span>
-              <span className="ms-3">
-                <Link className="fs-2 text" to={roleLink()}>
+              <span className="ms-3 ">
+                <Link className="fs-2 text-white" to={roleLink()}>
                   {name}
                 </Link>
               </span>

@@ -2,7 +2,7 @@ import React from "react";
 
 const TitleProfiles = ({ title }) => {
   return (
-    <div className="d-flex justify-content-center align-items-center my-4 flex-grow-1">
+    <div className="text-title fw-bold font-monospace text-white business">
       <h1>Información personal {title?.toLowerCase()}</h1>
     </div>
   );

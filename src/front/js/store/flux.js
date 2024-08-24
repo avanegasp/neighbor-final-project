@@ -508,10 +508,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      getSingleBusiness: async (seller_id, business_id) => {
-        if (!seller_id || !business_id) return;
-        // const jwt = localStorage.getItem("token");
-      },
+      // getSingleBusiness: async (seller_id, business_id) => {
+      //   if (!seller_id || !business_id) return;
+      //   // const jwt = localStorage.getItem("token");
+      // },
 
       getSingleBusiness: async (seller_id, product_name) => {
         if (!seller_id || !product_name) return;

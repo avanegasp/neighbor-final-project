@@ -96,15 +96,15 @@ const ProfileAdmin = () => {
 
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div className="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h1 className="modal-title fs-5 text-black" id="exampleModalLabel">Quiero recomendar a:</h1>
+                    <div className="recomendar modal-content text-white">
+                      <div className="modal-header text-white">
+                        <h1 className="modal-title fs-5 text-white" id="exampleModalLabel">Quiero recomendar a:</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div className="modal-body">
+                      <div className="modal-body text-white">
                         <form onSubmit={handleSubmit}>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputName" className="form-label">Nombre:</label>
+                            <label htmlFor="exampleInputName" className="form-label text-white">Nombre:</label>
                             <input
                               name="name"
                               onChange={(e) => handleChange(e)}
@@ -114,7 +114,7 @@ const ProfileAdmin = () => {
                               id="exampleInputName" />
                           </div>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputLastname" className="form-label">Apellido:</label>
+                            <label htmlFor="exampleInputLastname" className="form-label text-white">Apellido:</label>
                             <input
                               name="lastname"
                               onChange={(e) => handleChange(e)}
@@ -124,7 +124,7 @@ const ProfileAdmin = () => {
                               id="exampleInputLastName" />
                           </div>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputPhone" className="form-label">Whatsapp:</label>
+                            <label htmlFor="exampleInputPhone" className="form-label text-white">Whatsapp:</label>
                             <PhoneInput
                               country={'us'}
                               onChange={(phone) => setRecommendation({ ...recommendation, phone })}
@@ -149,7 +149,7 @@ const ProfileAdmin = () => {
                               placeholder="Ferretería Mis llaves" />
                             <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
                           </div>
-                          <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Submit</button>
+                          <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Submit</button>
                         </form>
 
                       </div>

@@ -27,26 +27,26 @@ const Directory = () => {
 
   return (
     <div className="">
-      <div className="container d-flex flex-column flex-grow-1">
+      <div className="container d-flex flex-column mt-0">
         <div
           className="d-flex justify-content-between align-items-center mb-3"
           style={{ minHeight: "20vh" }}
         >
-          <h1 className="d-flex fs-1 justify-context-center">Directorio</h1>
+          <h1 className="text-title fw-bold font-monospace text-white business">Directorio</h1>
 
-          <div className="input-group mb-3 inputSearch w-25">
+          <div className="input-group mb-3 inputSearch w-25 business">
             <Search />
           </div>
         </div>
 
         <div
-          className="flex-grow-1 overflow-auto border border-white p-3"
+          className="flex-grow-1 overflow-auto p-2 text-title fw-bold font-monospace business"
           style={{ maxHeight: 'calc(80vh - 100px)' }}
         >
           {store.users.administrator.map((user) => {
             return (
               <div
-                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5 business"
                 key={user.id}
               >
                 <AllUsersInfo
@@ -70,7 +70,7 @@ const Directory = () => {
           {store.users.neighbor.map((user) => {
             return (
               <div
-                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5 business"
                 key={user.id}
               >
                 <AllUsersInfo
@@ -93,7 +93,7 @@ const Directory = () => {
           {store.users.seller.map((user) => {
             return (
               <div
-                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5 business"
                 key={user.id}
               >
                 <AllUsersInfo
