@@ -514,6 +514,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       // },
 
       getSingleBusiness: async (seller_id, product_name) => {
+        console.log (seller_id,product_name)
         if (!seller_id || !product_name) return;
         //const jwt = localStorage.getItem("token");
         try {

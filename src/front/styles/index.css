@@ -133,18 +133,17 @@ a {
 
 .people {
   color: white;
-  margin-top: 1rem;
+  margin-top: 1ram;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 
 
 }
 
 .cardPeople {
   color: white;
-  margin-top: 10px;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 10px;
   border-radius: 10 px;
@@ -156,8 +155,6 @@ a {
 .my-13 {
   height: 100%;
   position: relative;
-  overflow-x: auto;
-  overflow-y: auto
 }
 
 
@@ -306,9 +303,8 @@ a:hover {
 
 .people {
   color: white;
-  margin-top: 1rem;
+  margin-top: 5rem;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
@@ -325,13 +321,12 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  
   margin-right: 200px;
-  margin-top: 70px;
+  
 }
 .personImg {
   margin-left: 50px;
-  margin-top: 20px;
 }
 .trash {
   margin-right: 100px;
@@ -339,22 +334,10 @@ a:hover {
   align-items: center;
   justify-content: center;
 }
-.container-fluid::-webkit-scrollbar {
-  background: #333;
-  width: 20px;
-}
-.container-fluid::-webkit-scrollbar-thumb {
-  background: #B2B8B9;
-  border-radius: 10px;
-}
-.container-fluid {
-  border-radius: 10px;
-}
+
 .my-13 {
   height: 100%;
   position: relative;
-  overflow-x: auto;
-  overflow-y: auto
 }
 
 .shop{

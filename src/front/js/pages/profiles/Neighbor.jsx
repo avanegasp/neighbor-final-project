@@ -109,7 +109,7 @@ const ProfileNeighbor = () => {
                       <li>Lord Rings</li>
                       <li>Harry Potter</li>
                     </ol>
-                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       Haz una recomendación
                     </button>
                     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

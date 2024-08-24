@@ -20,30 +20,30 @@ function BuildingUsers() {
 
     return (
 
-        <div className="d-fle container justify-content-center align-content-center flex-column min-vh-100">
-            <h1 className='text-black fs-1 pt-3'>Lista de vecinos</h1>
+        <div className="d-fle container justify-content-center align-content-center flex-column business ">
+            <h1 className='text-white fs-1 pt-3'>Lista de vecinos</h1>
             {store.users.neighbor && store.users.neighbor.length > 0 ? (
-                <div style={{ maxHeight: '400px', overflowY: 'auto', overflowX: 'hidden' }}>
+                <div style={{ maxHeight: '200px', overflowY: 'auto', overflowX: 'auto' }}>
                     <table className="table">
-                        <thead className='bg-light'>
-                            <tr className='border border-white' style={{ position: "sticky", top: 0, zIndex: 1, background: "inherit" }}>
-                                <th scope="col" className="text-dark fs-3">Nombre</th>
-                                <th scope="col" className="text-dark fs-3">Apellido</th>
-                                <th scope="col" className="text-dark fs-3">Piso</th>
-                                <th scope="col" className="text-dark fs-3">Email</th>
-                                <th scope="col" className="text-dark fs-3">Acciones</th>
+                        <thead className='bg-black'>
+                            <tr className='' style={{ position: "sticky", top: 0, zIndex: 1,background: "inherit" }}>
+                                <th scope="col" className="text-white fs-5">Nombre</th>
+                                <th scope="col" className="text-white fs-5">Apellido</th>
+                                <th scope="col" className="text-white fs-5">Piso</th>
+                                <th scope="col" className="text-white fs-5">Email</th>
+                                <th scope="col" className="text-white fs-5">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {store.users.neighbor.map((user) => (
                                 <tr className='border border-secondary' key={user.id}>
-                                    <td className="text-white fs-4">{user.name}</td>
-                                    <td className="text-white fs-4">{user.lastname}</td>
-                                    <td className="text-white fs-4">{user.floor}</td>
-                                    <td className="text-white fs-4">{user.email}</td>
+                                    <td className="text-white fs-5">{user.name}</td>
+                                    <td className="text-white fs-5">{user.lastname}</td>
+                                    <td className="text-white fs-5">{user.floor}</td>
+                                    <td className="text-white fs-5">{user.email}</td>
                                     {user.status === "PENDING" && (
                                         <td>
-                                            <button type="button" className="btn btn-primary m-2" onClick={() => ApprovedStatus(user)}>Aceptar</button>
+                                            <button type="button" className="btn btn-success m-2" onClick={() => ApprovedStatus(user)}>Aceptar</button>
                                             <button type="button" className="btn btn-danger m-2" onClick={() => RejectedStatus(user)}>Rechazar</button>
                                         </td>
                                     )}
@@ -63,34 +63,34 @@ function BuildingUsers() {
                     </table>
                 </div>
             ) :
-                <p className='text-white'>No hay vendedores registrados</p>
+                <p className='text-white'>No hay vecinos registrados</p>
             }
 
-            <h1 className='text-black fs-1 mt-5'>Lista de vendedores</h1>
+            <h1 className='text-white fs-1 mt-5'>Lista de vendedores</h1>
             {store.users.seller && store.users.seller.length > 0 ? (
-                <div style={{ maxHeight: '400px', overflowY: 'auto', overflowX: 'hidden' }}>
+                <div style={{ maxHeight: '200px', overflowY: 'auto', overflowX: 'auto' }}>
                     <table className='table'>
-                        <thead className='bg-light'>
-                            <tr className='border border-white' style={{ position: "sticky", top: 0, zIndex: 1, background: "inherit" }}>
-                                <th scope="col" className="text-dark fs-3">Nombre</th>
-                                <th scope="col" className="text-dark fs-3">Apellido</th>
-                                <th scope="col" className="text-dark fs-3">Piso</th>
-                                <th scope="col" className="text-dark fs-3">Email</th>
-                                <th scope="col" className="text-dark fs-3">Shopname</th>
-                                <th scope="col" className="text-dark fs-3">Acciones</th>
+                        <thead className='bg-black'>
+                            <tr className='' style={{ position: "sticky", top: 0, zIndex: 1, background: "inherit" }}>
+                                <th scope="col" className="text-white fs-5">Nombre</th>
+                                <th scope="col" className="text-white fs-5">Apellido</th>
+                                <th scope="col" className="text-white fs-5">Piso</th>
+                                <th scope="col" className="text-white fs-5">Email</th>
+                                <th scope="col" className="text-white fs-5">Shopname</th>
+                                <th scope="col" className="text-white fs-5">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {store.users.seller.map((user) => (
                                 <tr className='border border-secondary' key={user.id}>
-                                    <td className="text-white fs-4">{user.name}</td>
-                                    <td className="text-white fs-4">{user.lastname}</td>
-                                    <td className="text-white fs-4">{user.floor}</td>
-                                    <td className="text-white fs-4">{user.email}</td>
-                                    <td className="text-white fs-4">{user.shopName}</td>
+                                    <td className="text-white fs-5">{user.name}</td>
+                                    <td className="text-white fs-5">{user.lastname}</td>
+                                    <td className="text-white fs-5">{user.floor}</td>
+                                    <td className="text-white fs-5">{user.email}</td>
+                                    <td className="text-white fs-5">{user.shopName}</td>
                                     {user.status === "PENDING" && (
                                         <td>
-                                            <button type="button" className="btn btn-primary m-2" onClick={() => ApprovedStatus(user)}>Aceptar</button>
+                                            <button type="button" className="btn btn-success m-2" onClick={() => ApprovedStatus(user)}>Aceptar</button>
                                             <button type="button" className="btn btn-danger m-2" onClick={() => RejectedStatus(user)}>Rechazar</button>
                                         </td>
                                     )}

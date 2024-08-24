@@ -57,7 +57,7 @@ const StarsRating = ({product_id}) => {
           onChange={(e) => setComment(e.target.value)}
         ></textarea>
       </div>
-      <button type="submit my-2" className="btn btn-primary">
+      <button type="submit my-2" className="btn btn-success">
           Enviar
         </button>
       </form>

@@ -52,7 +52,7 @@ export default function Register() {
                         onChange={handleRoleChange}
                     />
 
-                    <label className="btn btn-outline-white text-white" htmlFor="btnradio1">Vecinor</label>
+                    <label className="btn btn-outline-white text-white" htmlFor="btnradio1">Vecino</label>
 
 
                     <input

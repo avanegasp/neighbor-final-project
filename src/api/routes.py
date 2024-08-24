@@ -483,8 +483,11 @@ def get_all_businesses():
 def get_single_business(seller_id, product_name):
     try:
         business = Product.query.filter_by(seller_id=seller_id, name=product_name).first()
-        if not business:
-            return jsonify({"Business not found"}), 404
+        print("***")
+        print(business)
+        print("***")
+        if business is None:
+            return jsonify({"error":"Business not found"}), 404
         return jsonify({"Business": business.serialize()}), 200
         
     except Exception as error:

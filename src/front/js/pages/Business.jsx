@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { Context } from '../store/appContext';
 import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -26,7 +27,7 @@ const Business = () => {
 
     useEffect(() => {
         actions.getAllBusiness();
-    }, [actions]);
+    }, []);
 
     return (
         <div className="text-center mt-5">
@@ -34,7 +35,7 @@ const Business = () => {
                 <h1 className="text-title fw-bold font-monospace text-white business">TIENDA</h1>
             </div>
             <div className="card-group">
-                <div className="d-flex flex-row overflow-scroll">
+                <div className="d-flex flex-row" style={{ width:"600px", overflow: 'scroll' }}  >
                     {store.allBusiness.length > 0 ? (
                         store.allBusiness.map((business, index) => {
                             const imageIndex = parseInt(index, 10) % imgCloudinary.length;
@@ -56,10 +57,10 @@ const Business = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                {/* <tr>
                                                     <th scope="row">Dueño</th>
                                                     <td>{business.seller_name}</td>
-                                                </tr>
+                                                </tr> */}
                                                 <tr>
                                                     <th scope="row">Precio</th>
                                                     <td>{business.price}</td>
@@ -74,6 +75,10 @@ const Business = () => {
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <Link className="text-white fs-5 mx-1 my-1" to="/directory">
+                                            <i className="text-white fs-5 mx-1 my-1 fa-solid fa-address-book"></i>{" "}
+                                            Directorio
+                                        </Link>
                                     </div>
                                 </div>
                             );

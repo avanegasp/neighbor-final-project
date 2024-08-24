@@ -30,7 +30,6 @@ const Directory = () => {
       <div className="container d-flex flex-column mt-0">
         <div
           className="d-flex justify-content-between align-items-center mb-3"
-          style={{ minHeight: "20vh" }}
         >
           <h1 className="text-title fw-bold font-monospace text-white business">Directorio</h1>
 
@@ -40,9 +39,9 @@ const Directory = () => {
         </div>
 
         <div
-          className="flex-grow-1 overflow-auto p-2 text-title fw-bold font-monospace business"
-          style={{ maxHeight: 'calc(80vh - 100px)' }}
-        >
+          className="flex-grow-1 text-title fw-bold font-monospace business text-white m-auto"
+          style={{ width:"900px", height: '600px', overflow: 'scroll' }}
+          >
           {store.users.administrator.map((user) => {
             return (
               <div

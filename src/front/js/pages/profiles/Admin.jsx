@@ -73,7 +73,7 @@ const ProfileAdmin = () => {
     <div className="">
       <TitleProfiles title={store.admin.role} />
       <div
-        className="container-profiles"
+        className="container-profiles mt-3"
 
       >
         <div className="row w-100">
@@ -85,11 +85,11 @@ const ProfileAdmin = () => {
                 alt=""
               />
               <div className="card-body text-center">
-                <h5 className="card-title mb-4">Libros Favoritos</h5>
+                {/* <h5 className="card-title mb-4">Libros Favoritos</h5>
                 <ol className="list-unlysted">
                   <li>Lord Rings</li>
                   <li>Harry Potter</li>
-                </ol>
+                </ol> */}
                 <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Haz una recomendación
                 </button>
@@ -154,7 +154,7 @@ const ProfileAdmin = () => {
 
                       </div>
                       <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-success" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
