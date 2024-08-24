@@ -43,7 +43,7 @@ const Login = () => {
       <h1 className="text-white">Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
-        <div className="user-type-group" onChange={(e) => setUserType(e.target.value)}>
+        <div className="user-type-group mt-3" onChange={(e) => setUserType(e.target.value)}>
           <label className="user-type-option btn btn-outline-white text-white">
             <input type="radio" name="options" value="NEIGHBOR" />
             Vecino
@@ -60,29 +60,29 @@ const Login = () => {
         </div>
 
         <div className="form-group">
-          <label className="text-dark" htmlFor="LoginEmail">Correo electrónico</label>
+          <label className="text-white mt-4" htmlFor="LoginEmail">Correo electrónico</label>
           <input
             type="email"
             id="LoginEmail"
             value={email}
-            placeholder="Enter email"
+            // placeholder="correo"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <small className="text-dark" id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
+          <small className="text-white" id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
         </div>
 
         <div className="form-group">
-          <label className="text-dark" htmlFor="LoginPassword">Contraseña</label>
+          <label className="text-white" htmlFor="LoginPassword">Contraseña</label>
           <input
             type="password"
             id="LoginPassword"
             value={password}
-            placeholder="Password"
+            // placeholder="contraseña"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <button type="submit" className="login-button">
+        <button type="submit" className="login-button mb-3">
           Inicia sesión
         </button>
       </form>
@@ -93,7 +93,7 @@ const Login = () => {
       </div>
     </div>
   );
- 
+
 };
 
 export default Login;

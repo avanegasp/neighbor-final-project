@@ -9,9 +9,9 @@ const ModalBodyRecommendation = ({ recommendations, user }) => {
     return (
         <>
             <div className="modal-dialog">
-                <div className="modal-content">
+                <div className="modal-content bg-dark">
                     <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="exampleModalLabel">
+                        <h1 className="modal-title fs-5 text-white" id="exampleModalLabel">
                             Recomendaciones de {user.name} <span> - {user.role.toLowerCase()}</span>
                         </h1>
                         <button
@@ -27,15 +27,15 @@ const ModalBodyRecommendation = ({ recommendations, user }) => {
                             return (
                                 <div key={recommendation.id}>
                                     <ul>
-                                        <li>
-                                            <FontAwesomeIcon icon={faBriefcase} className="me-2" />
+                                        <li className="text-white">
+                                            <FontAwesomeIcon icon={faBriefcase} className="me-2 text-white" />
                                             {recommendation.shopName}
                                         </li>
-                                        <li>
-                                            <FontAwesomeIcon icon={faPerson} className="me-2" />
+                                        <li className="text-white">
+                                            <FontAwesomeIcon icon={faPerson} className="me-2 text-white" />
                                             {recommendation.name} <span></span> {recommendation.lastname}
                                         </li>
-                                        <li>
+                                        <li className="text-white">
                                             <a
                                                 href={whatsappLink}
                                                 target="_blank"

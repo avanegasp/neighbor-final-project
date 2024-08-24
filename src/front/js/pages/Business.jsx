@@ -31,7 +31,7 @@ const Business = () => {
     return (
         <div className="text-center mt-5">
             <div className='mb-4'>
-                <h1 className="text-title fw-bold font-monospace text-white business">TIENDA</h1>
+                <h1 className="text-title fw-bold font-monospace text-white business">Tienda</h1>
             </div>
             <div className="card-group">
                 <div className="d-flex flex-row overflow-scroll">
@@ -42,18 +42,20 @@ const Business = () => {
                             const cldImg = cld.image(selectedImageId);
 
                             return (
-                                <div key={index} className="card" style={{ width: "18rem", flex: "none", margin: "10px" }}>
+                                <div key={index} className="card" style={{ flex: "none", margin: "10px", width: "20rem" }}>
                                     <AdvancedImage
                                         cldImg={cldImg}
                                         className="card-img-top"
                                         alt={business.name}
+                                        style={{ width: '300px', height: '200px', objectFit: 'cover' }}
                                     />
                                     <div className="card-body">
-                                        <table className="table table-borderless">
+                                        <table className="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="row">{business.name}</th> 
-                                                    <th> {business.seller_name}</th>
+                                                    <th scope="row">{business.name}</th>
+                                                    <th></th>
+                                                    <th>{business.seller_name}</th>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Precio</th>

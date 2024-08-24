@@ -46,7 +46,7 @@ export const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <Link className="navbar-brand" to="/">
+      <Link className="navbar-brand mb-3" to="/">
         <span className="icon-n">N</span>
       </Link>
 

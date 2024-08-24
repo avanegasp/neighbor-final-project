@@ -29,10 +29,10 @@ const Directory = () => {
     <div className="">
       <div className="container d-flex flex-column flex-grow-1">
         <div
-          className="d-flex justify-content-between align-items-center mb-3"
-          style={{ minHeight: "20vh" }}
+          className="d-flex justify-content-between align-items-center mb-3" style={{ marginTop: "100px" }}
+
         >
-          <h1 className="d-flex fs-1 justify-context-center">Directorio</h1>
+          <h1 className="text-title fw-bold font-monospace text-white business">Directorio</h1>
 
           <div className="input-group mb-3 inputSearch w-25">
             <Search />

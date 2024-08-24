@@ -30,7 +30,7 @@ const Recommendations = () => {
                     className="d-flex justify-content-between align-items-center mb-3"
                     style={{ minHeight: "20vh" }}
                 >
-                    <h1 className="d-flex justify-context-center">Recomendaciones de mis vecinos</h1>
+                    <h1 className="text-title fw-bold font-monospace text-white business">Recomendaciones de mis vecinos</h1>
                 </div>
                 <div
                     className="flex-grow-1 overflow-auto border border-white p-3"
