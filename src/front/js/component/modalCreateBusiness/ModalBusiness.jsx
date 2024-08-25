@@ -48,7 +48,7 @@ const ModalBusiness = ({ shopName, id }) => {
         <div className="modal-dialog">
           <div className="modal-content recomendar2">
             <div className="modal-header">
-              <h1 className="modal-title fs-5 text-dark" id="CreateBusinessLabel">
+              <h1 className="modal-title fs-5 text-white" id="CreateBusinessLabel">
                 Emprendimiento {shopName}
               </h1>
               <button

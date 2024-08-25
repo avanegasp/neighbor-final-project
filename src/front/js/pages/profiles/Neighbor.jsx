@@ -101,11 +101,11 @@ const ProfileNeighbor = () => {
                     alt=""
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title mb-4">Libros Favoritos</h5>
+                    {/* <h5 className="card-title mb-4">Libros Favoritos</h5>
                     <ol className="list-unlysted">
                       <li>Lord Rings</li>
                       <li>Harry Potter</li>
-                    </ol>
+                    </ol> */}
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       Haz una recomendación
                     </button>
