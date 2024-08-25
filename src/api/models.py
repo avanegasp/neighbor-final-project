@@ -91,9 +91,7 @@ class Seller(db.Model):
             "phone": self.phone,
             "role": self.role,
             "orders": [order.serialize() for order in self.orders],
-
-            
-
+       
             "recommendations": [recommendation.serialize() for recommendation in self.recommendations],
             "status": self.status
 

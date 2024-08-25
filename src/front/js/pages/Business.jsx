@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { Context } from '../store/appContext';
 import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -34,7 +35,7 @@ const Business = () => {
                 <h1 className="text-title fw-bold font-monospace text-white business">Tienda</h1>
             </div>
             <div className="card-group">
-                <div className="d-flex flex-row overflow-scroll">
+                <div className="d-flex flex-row" style={{ width:"600px", overflow: 'scroll' }}  >
                     {store.allBusiness.length > 0 ? (
                         store.allBusiness.map((business, index) => {
                             const imageIndex = parseInt(index, 10) % imgCloudinary.length;
@@ -57,20 +58,30 @@ const Business = () => {
                                                     <th></th>
                                                     <th>{business.seller_name}</th>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">Precio</th>
-                                                    <th scope="row">Horarios</th>
-                                                    <th scope="row">Descripcion</th>
-                                                </tr>
                                             </thead>
                                             <tbody>
+                                                {/* <tr>
+                                                    <th scope="row">Dueño</th>
+                                                    <td>{business.seller_name}</td>
+                                                </tr> */}
                                                 <tr>
+                                                    <th scope="row">Precio</th>
                                                     <td>{business.price}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Horarios</th>
                                                     <td>{business.schedule}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Descripcion</th>
                                                     <td>{business.description}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <Link className="text-white fs-5 mx-1 my-1" to="/directory">
+                                            <i className="text-white fs-5 mx-1 my-1 fa-solid fa-address-book"></i>{" "}
+                                            Directorio
+                                        </Link>
                                     </div>
                                 </div>
                             );

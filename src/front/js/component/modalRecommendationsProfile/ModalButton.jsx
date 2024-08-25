@@ -5,7 +5,7 @@ const ModalButtonRecommendation = ({ recommendation, role, id }) => {
     // console.log("IDDDD", id)
     return (
         <>
-            <button disabled={recommendationNumber === 0} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#modal-${role}-${id}`}>
+            <button disabled={recommendationNumber === 0} type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target={`#modal-${role}-${id}`}>
                 # Recomendaciones: {recommendationNumber}
             </button>
         </>

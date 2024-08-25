@@ -73,7 +73,7 @@ const ProfileAdmin = () => {
     <div className="">
       <TitleProfiles title={store.admin.role} />
       <div
-        className="container-profiles"
+        className="container-profiles mt-3"
 
       >
         <div className="row w-100">
@@ -85,26 +85,30 @@ const ProfileAdmin = () => {
                 alt=""
               />
               <div className="card-body text-center">
-                <h5 className="card-title mb-4">Libros Favoritos</h5>
+                {/* <h5 className="card-title mb-4">Libros Favoritos</h5>
                 <ol className="list-unlysted">
                   <li>Lord Rings</li>
                   <li>Harry Potter</li>
-                </ol>
+                </ol> */}
                 <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   Haz una recomendación
                 </button>
 
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div className="modal-dialog">
-                    <div className="modal-content bg-body">
-                      <div className="modal-header">
-                        <h1 className="modal-title fs-5 text-black" id="exampleModalLabel">Quiero recomendar a:</h1>
+
+                    <div className="recomendar modal-content text-white">
+                      <div className="modal-header text-white">
+                        <h1 className="modal-title fs-5 text-white" id="exampleModalLabel">Quiero recomendar a:</h1>
+
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div className="modal-body">
+                      <div className="modal-body text-white">
                         <form onSubmit={handleSubmit}>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputName" className="form-label text-dark d-flex align-content-start">Nombre:</label>
+
+                            <label htmlFor="exampleInputName" className="form-label text-white">Nombre:</label>
+
                             <input
                               name="name"
                               onChange={(e) => handleChange(e)}
@@ -114,7 +118,9 @@ const ProfileAdmin = () => {
                               id="exampleInputName" />
                           </div>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputLastname" className="form-label text-dark d-flex align-content-start">Apellido:</label>
+
+                            <label htmlFor="exampleInputLastname" className="form-label text-white">Apellido:</label>
+
                             <input
                               name="lastname"
                               onChange={(e) => handleChange(e)}
@@ -124,7 +130,9 @@ const ProfileAdmin = () => {
                               id="exampleInputLastName" />
                           </div>
                           <div className="mb-3">
-                            <label htmlFor="exampleInputPhone" className="form-label text-dark d-flex align-content-start">Whatsapp:</label>
+
+                            <label htmlFor="exampleInputPhone" className="form-label text-white">Whatsapp:</label>
+
                             <PhoneInput
                               country={'co'}
                               onChange={(phone) => setRecommendation({ ...recommendation, phone })}
@@ -149,12 +157,16 @@ const ProfileAdmin = () => {
                               placeholder="Ferretería Mis llaves" />
                             <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
                           </div>
-                          <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Enviar</button>
+
+                          <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Submit</button>
+
                         </form>
 
                       </div>
                       <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                        <button type="button" className="btn btn-success" data-bs-dismiss="modal">Close</button>
+
                       </div>
                     </div>
                   </div>

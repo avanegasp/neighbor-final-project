@@ -11,18 +11,22 @@ const DeleteUser = () => {
   //  console.log(store.people)
   return (
     <div >
-      <div className="container" style={{ marginTop: "100px" }}>
+
+      <div className="container">
+
         <div className="mb-4">
           <h2 className="text-center people">Usuarios Activos</h2>
         </div>
-        <div className="container-fluid d-flex justify-content-end">
+        <div className="container d-flex justify-content-end">
         </div>
-        <div className="container-fluid border border-dark" style={{ height: '630px', overflow: 'scroll' }}  >
-          {store.people?.neighbor.length > 0 && store.people?.neighbor.map((neighbor) => (
-            <AdminDeleteUser person={neighbor} />
+
+        <div className="container" style={{ width:"700px", height: '600px', overflow: 'scroll' }}  >
+        {store.people?.neighbor.length > 0 && store.people?.neighbor.map((neighbor) => (
+            neighbor.status === 'APPROVED' ? <AdminDeleteUser person={neighbor} /> : null
+
           ))}
           {store.people?.seller.length > 0 && store.people?.seller.map((seller) => (
-            <AdminDeleteUser person={seller} />
+            seller.status === 'APPROVED' ? <AdminDeleteUser person={seller} /> : null
           ))}
         </div>
       </div>

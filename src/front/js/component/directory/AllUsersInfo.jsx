@@ -46,9 +46,11 @@ const AllUsersInfo = ({
   const selectedImageId = imgCloudinary[imageIndex]
 
   return (
-    <div className="bg-light row w-100 rounded justify-content-center">
-      <div className="col-md-4" style={{ marginRight: "15px", paddingTop: "25px" }}>
-        <div className="card mt-5 mb-5">
+
+    <div className="row w-100 rounded justify-content-center">
+      <div className="col-md-4">
+        <div className="card mt-5 mb-5 w-50">
+
           <AdvancedImage
             cldImg={cld.image(selectedImageId)}
             className="card-img-top"
@@ -56,7 +58,7 @@ const AllUsersInfo = ({
           />
           <button
             type="button"
-            className="btn btn-outline-warning position-relative bottom-0 end-0 mt-3"
+            className="btn btn-outline-success position-relative bottom-0 end-0 mt-3"
             onClick={() => actions.addToFavorite(id, nameProfile, role)}>
             <FontAwesomeIcon icon={faHeart} />
           </button>
