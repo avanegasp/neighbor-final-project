@@ -118,7 +118,7 @@ const EditProfileDetails = ({ name = "", lastname = "", floor = "", buildingName
                 Whatsapp
               </label>
               <PhoneInput
-                country={'us'}
+                country={'co'}
                 value={profile.phone}
                 onChange={(phone) => {
                   setProfile((prevProfile) => ({

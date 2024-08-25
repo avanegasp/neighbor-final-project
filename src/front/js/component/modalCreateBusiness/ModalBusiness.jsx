@@ -7,6 +7,8 @@ const ModalBusiness = ({ shopName, id }) => {
   const [schedule, setSchedule] = useState("");
   const [description, setDescription] = useState("");
 
+  console.log(shopName);
+
   const handleSubmit = async (e) => {
     // console.log("funciona");
     e.preventDefault();
@@ -25,9 +27,8 @@ const ModalBusiness = ({ shopName, id }) => {
     <>
       <button
         type="button"
-        className="btn btn-success"
+        className="btn btn-success mt-3"
         data-bs-toggle="modal"
-
         data-bs-target="#createBusiness"
 
       >
@@ -47,8 +48,8 @@ const ModalBusiness = ({ shopName, id }) => {
         <div className="modal-dialog">
           <div className="modal-content recomendar2">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="CreateBusinessLabel">
-                {shopName} Your id: {id}
+              <h1 className="modal-title fs-5 text-dark" id="CreateBusinessLabel">
+                Emprendimiento {shopName}
               </h1>
               <button
                 type="button"
@@ -86,7 +87,9 @@ const ModalBusiness = ({ shopName, id }) => {
                     value={schedule}
                     onChange={(e) => setSchedule(e.target.value)}
                   />
+
                   <label htmlFor="descriptionInput" className="form-label text-white">
+
                     Añade una descripción
                   </label>
                   <textarea

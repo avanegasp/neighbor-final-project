@@ -40,7 +40,7 @@ export default function Register() {
     return (
         <div className='register-container'>
             <h1 className='text-center text-white'>Registro {role} </h1>
-            <div className=''>
+            <div className='mb-3'>
                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input
                         type="radio"
@@ -137,7 +137,7 @@ export default function Register() {
                         <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
                     </div>
                 )}
-                <button type="submit" className="register-button">Crea una cuenta</button>
+                <button type="submit" className="register-button mb-3">Crea una cuenta</button>
             </form>
             <div >
                 {" "}

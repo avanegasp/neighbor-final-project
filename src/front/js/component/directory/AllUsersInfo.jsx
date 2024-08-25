@@ -15,14 +15,13 @@ const cld = new Cloudinary({
 })
 
 const imgCloudinary = [
-  'samples/food/spices',
-  'samples/people/bicycle',
-  'samples/animals/three-dogs',
+  'cld-sample-3',
+  'samples/cup-on-a-table',
   'samples/animals/reindeer',
   'cld-sample-2',
   'samples/balloons',
-  'samples/landscapes/nature-mountains',
-  'samples/animals/cat'
+  'samples/cloudinary-group',
+  'samples/imagecon-group'
 ]
 
 const AllUsersInfo = ({
@@ -47,9 +46,11 @@ const AllUsersInfo = ({
   const selectedImageId = imgCloudinary[imageIndex]
 
   return (
+
     <div className="row w-100 rounded justify-content-center">
       <div className="col-md-4">
         <div className="card mt-5 mb-5 w-50">
+
           <AdvancedImage
             cldImg={cld.image(selectedImageId)}
             className="card-img-top"
@@ -62,7 +63,7 @@ const AllUsersInfo = ({
             <FontAwesomeIcon icon={faHeart} />
           </button>
         </div>
-        <div className="mb-5">
+        <div className="mb-5" style={{ marginLeft: "20px" }}>
           <ModalButtonRecommendation recommendation={recommendation} role={role} id={id} />
         </div>
       </div>

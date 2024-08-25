@@ -20,8 +20,10 @@ function BuildingUsers() {
 
     return (
 
+
         <div className="d-fle container justify-content-center align-content-center flex-column business ">
             <h1 className='text-white fs-1 pt-3'>Lista de vecinos</h1>
+
             {store.users.neighbor && store.users.neighbor.length > 0 ? (
                 <div style={{ maxHeight: '200px', overflowY: 'auto', overflowX: 'auto' }}>
                     <table className="table">
@@ -66,7 +68,9 @@ function BuildingUsers() {
                 <p className='text-white'>No hay vecinos registrados</p>
             }
 
+
             <h1 className='text-white fs-1 mt-5'>Lista de vendedores</h1>
+
             {store.users.seller && store.users.seller.length > 0 ? (
                 <div style={{ maxHeight: '200px', overflowY: 'auto', overflowX: 'auto' }}>
                     <table className='table'>

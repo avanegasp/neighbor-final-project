@@ -17,13 +17,13 @@ const cld = new Cloudinary({
 })
 
 const imgCloudinary = [
-  'samples/people/bicycle',
-  'samples/animals/three-dogs',
+  'cld-sample-3',
+  'samples/cup-on-a-table',
   'samples/animals/reindeer',
   'cld-sample-2',
   'samples/balloons',
-  'samples/landscapes/nature-mountains',
-  'samples/animals/cat'
+  'samples/cloudinary-group',
+  'samples/imagecon-group'
 ]
 
 const ProfileNeighbor = () => {
@@ -89,15 +89,12 @@ const ProfileNeighbor = () => {
         <MRejected />
       )}
       {status === "APPROVED" && (
-        <div className="container d-flex flex-column min-vh-100 mb-5" >
+        <div className="">
           <TitleProfiles title={store.neighbor.role} />
-          <div
-            className="d-flex justify-content-center align-items-start"
-            style={{ minHeight: "80vh" }}
-          >
-            <div className="row w-100 border border-1 border-dark bg-white">
+          <div className="container-profiles">
+            <div className="row">
               <div className="col-md-4 ms-4">
-                <div className="card mt-5 w-50">
+                <div className="card-N" style={{ marginRight: "30px" }}>
                   <AdvancedImage
                     cldImg={cld.image(selectedImageId)}
                     className="card-img-top"
@@ -122,7 +119,9 @@ const ProfileNeighbor = () => {
                           <div className="modal-body">
                             <form onSubmit={handleSubmit}>
                               <div className="mb-3">
+
                                 <label htmlFor="exampleInputName" className="form-label text-white">Nombre:</label>
+
                                 <input
                                   name="name"
                                   onChange={(e) => handleChange(e)}
@@ -132,7 +131,9 @@ const ProfileNeighbor = () => {
                                   id="exampleInputName" />
                               </div>
                               <div className="mb-3">
+
                                 <label htmlFor="exampleInputLastname" className="form-label text-white">Apellido:</label>
+
                                 <input
                                   name="lastname"
                                   onChange={(e) => handleChange(e)}
@@ -142,9 +143,11 @@ const ProfileNeighbor = () => {
                                   id="exampleInputLastName" />
                               </div>
                               <div className="mb-3">
+
                                 <label htmlFor="exampleInputPhone" className="form-label text-white">Whatsapp:</label>
+
                                 <PhoneInput
-                                  country={'us'}
+                                  country={'co'}
                                   onChange={(phone) => setRecommendation({ ...recommendation, phone })}
                                   value={recommendation.phone}
                                   inputProps={{
@@ -157,7 +160,7 @@ const ProfileNeighbor = () => {
                                 />
                               </div>
                               <div className="mb-3">
-                                <label htmlFor="exampleInputShopName" className="form-label">Nombre del comercio:</label>
+                                <label htmlFor="exampleInputShopName" className="form-label text-dark">Nombre del comercio:</label>
                                 <input
                                   name="shopName"
                                   onChange={(e) => handleChange(e)}
@@ -165,14 +168,15 @@ const ProfileNeighbor = () => {
                                   className="form-control"
                                   id="exampleInputShopName"
                                   placeholder="Ferretería Mis llaves" />
-                                <div id="exampleInputShopName" className="form-text">Colocar primero el TIPO de comercio</div>
+                                <div id="exampleInputShopName" className="form-text text-secondary">Colocar primero el TIPO de comercio</div>
                               </div>
-                              <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Submit</button>
-                            </form>
 
+                              <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Submit</button>
+
+                            </form>
                           </div>
                           <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                           </div>
                         </div>
                       </div>
@@ -195,7 +199,8 @@ const ProfileNeighbor = () => {
               </div>
             </div>
           </div>
-        </div >
+        </div>
+
       )}
 
     </>

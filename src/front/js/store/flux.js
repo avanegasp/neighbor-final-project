@@ -37,6 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 throw new Error(`Error fetching businesses: ${response.statusText}`);
             }
             const data = await response.json();
+            console.log(data);
             setStore({ allBusiness: data.businesses});
         } catch (error) {
             console.error("Error fetching businesses:", error);

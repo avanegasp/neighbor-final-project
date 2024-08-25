@@ -34,8 +34,10 @@ const AdminDeleteUser = ({ person }) => {
     // console.log(actions.deleteSeller)
     return (
         <div>
+
             <div key={person.id} className="people">
                 <div className=" d-flex w-100 justify-content-between " >
+
                     <div className=" personImg col-3 col-lg-2">
                         <AdvancedImage
                             cldImg={cld.image(selectedImageId)}
@@ -43,7 +45,7 @@ const AdminDeleteUser = ({ person }) => {
                             alt=""
                         />
                     </div>
-                    <div className="infoPerson  col-sm  align-items-center">
+                    <div className="infoPerson col-sm align-items-center mt-4">
                         <div className="name">
                             <div className="col-12">
                                 <h2 className="pt-2 m-3">{person.name} {person.lastname} </h2>
