@@ -30,8 +30,8 @@ const Directory = () => {
       <div className="container d-flex flex-column mt-0">
         <div
 
-          className="d-flex justify-content-between align-items-center mb-3 >
-          <h1 className="text-title fw-bold font-monospace text-white business">Directorio</h1>
+          className="d-flex justify-content-between align-items-center mb-3">
+          <h1 className="text-title fw-bold font-monospace text-white business" > Directorio </h1>
 
           <div className="input-group mb-3 inputSearch w-25 business">
             <Search />
