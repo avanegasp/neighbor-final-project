@@ -38,7 +38,7 @@ const AdminDeleteUser = ({ person }) => {
             <div key={person.id} className="people">
                 <div className=" d-flex w-100 justify-content-between " >
 
-                    <div className=" personImg col-3 col-lg-2">
+                    <div className=" personImg col-3 col-lg-2" style={{ marginLeft: "28px", marginTop: "65px", marginRight: "30px", width: "160px" }}>
                         <AdvancedImage
                             cldImg={cld.image(selectedImageId)}
                             className="card-img-top"
