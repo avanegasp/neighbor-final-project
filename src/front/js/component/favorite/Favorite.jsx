@@ -7,7 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 const Favorite = ({ favorites, removeToFavorite }) => {
     return (
         <>
-            {favorites.map((favorite, index) => {
+            {favorites.length > 0 ? (favorites.map((favorite, index) => {
                 let path = "/";
                 if (favorite.role === "NEIGHBOR") {
                     path = "/profileNeighbor";
@@ -18,18 +18,20 @@ const Favorite = ({ favorites, removeToFavorite }) => {
                 }
                 return (
                     <div className="d-flex" key={index}>
-                        <Link to={`${path}/${favorite.id}`} className="dropdown-item text-black">
+                        <Link to={`${path}/${favorite.id}`} className="dropdown-item text-black fs-4">
                             {favorite.name}
                         </Link>
                         <span
                             className="me-3 mb-3 fs-3"
                             onClick={() => removeToFavorite(favorite.name)}
                         >
-                            <FontAwesomeIcon icon={faTrash} />
+                            <FontAwesomeIcon className="text-success" icon={faTrash} />
                         </span>
                     </div>
                 );
-            })}
+            })) : (
+                <p className="d-flex justify-content-center ">No tienes fav</p>
+            )}
         </>
     );
 };

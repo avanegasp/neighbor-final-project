@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-// import Search from "../../component/search/Search.jsx";
+import Search from "../../component/search/Search.jsx";
 import AllUsersInfo from "../../component/directory/AllUsersInfo.jsx";
 import ModalBodyRecommendation from "../../component/modalRecommendationsProfile/ModalBody.jsx";
 const Directory = () => {
@@ -19,37 +19,33 @@ const Directory = () => {
           }
         }
       });
-
+    console.log('data', store)
   }, []);
 
   if (!store.users) return <div>Loading...</div>;
 
-  // console.log("Daaataaaaaa", store.users);
-
 
   return (
-    <div className="d-flex flex-column min-vh-100" style={{ height: '200px', overflow: 'scroll' }}>
-      <div className="container d-flex flex-column flex-grow-1">
+    <div className="">
+      <div className="container d-flex flex-column mt-0">
         <div
-          className="d-flex justify-content-between align-items-center mb-3"
-          style={{ minHeight: "20vh" }}
-        >
-          <h1 className="d-flex justify-context-center">Directorio</h1>
 
-          <div className="input-group mb-3 inputSearch w-25">
-            {/* <Search /> */}
+          className="d-flex justify-content-between align-items-center mb-3">
+          <h1 className="text-title fw-bold font-monospace text-white business" > Directorio </h1>
+
+          <div className="input-group mb-3 inputSearch w-25 business">
+            <Search />
           </div>
         </div>
 
         <div
-          className="flex-grow-1 overflow-auto border border-white p-3"
-          style={{ maxHeight: 'calc(80vh - 100px)' }}
-        >
+          className="flex-grow-1 text-title fw-bold font-monospace business text-white m-auto"
+          style={{ width:"900px", height: '600px', overflow: 'scroll' }}
+          >
           {store.users.administrator.map((user) => {
-            // console.log("USERRRRR", user);
             return (
               <div
-                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5 business"
                 key={user.id}
               >
                 <AllUsersInfo
@@ -71,10 +67,9 @@ const Directory = () => {
             );
           })}
           {store.users.neighbor.map((user) => {
-            // console.log("USERRRRR", user);
             return (
               <div
-                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5 business"
                 key={user.id}
               >
                 <AllUsersInfo
@@ -95,11 +90,9 @@ const Directory = () => {
             );
           })}
           {store.users.seller.map((user) => {
-            // console.log("USERRRRR", user);
-            // console.log("modal", user.recommendations)
             return (
               <div
-                className="col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5"
+                className="ps-4 col-md-7 d-flex flex-column justify-content-center position-relative w-auto mb-5 business"
                 key={user.id}
               >
                 <AllUsersInfo

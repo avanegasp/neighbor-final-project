@@ -4,21 +4,17 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import "../../styles/inputPhone.css";
-
+import "../../styles/index.css";
 export default function Register() {
     const [role, setRole] = useState("Neighbor");
-    const { store, actions } = useContext(Context);
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
-
     const handleRoleChange = (event) => {
         setRole(event.target.value);
     };
-
     const { register, setValue, handleSubmit } = useForm();
-
     const onSubmit = async (data) => {
-        console.log("SELER FAB", data)
+        // console.log("SELER FAB", data)
         let response
         if (role === 'Neighbor') {
             response = await actions.registerNeighbor(data.email, data.password, data.name, data.lastname, data.floor);
@@ -41,79 +37,80 @@ export default function Register() {
             }
         }
     };
-
     return (
-        <div className='container-fluid w-50'>
-            <h1 className='text-center p-2'>Registro {role} </h1>
-            <div className='w-100 d-flex justify-content-center'>
+        <div className='register-container'>
+            <h1 className='text-center text-white'>Registro {role} </h1>
+            <div className='mb-3'>
                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input
-                        value="Neighbor"
                         type="radio"
-                        className="btn-check"
+                        value="Neighbor"
                         name="btnradio"
                         id="btnradio1"
                         autoComplete="off"
                         checked={role === 'Neighbor'}
                         onChange={handleRoleChange}
                     />
-                    <label className="btn btn-outline-primary" htmlFor="btnradio1">Neighbor</label>
+
+                    <label className="btn btn-outline-white text-white" htmlFor="btnradio1">Vecino</label>
+
 
                     <input
                         value="Seller"
                         type="radio"
-                        className="btn-check"
                         name="btnradio"
                         id="btnradio2"
                         autoComplete="off"
                         checked={role === 'Seller'}
                         onChange={handleRoleChange}
                     />
-                    <label className="btn btn-outline-primary" htmlFor="btnradio2">Seller</label>
+
+                    <label className="btn btn-outline-white text-white" htmlFor="btnradio2">Vendedor</label>
+
 
                     <input
                         value="Administrator"
                         type="radio"
-                        className="btn-check"
                         name="btnradio"
                         id="btnradio3"
                         autoComplete="off"
                         checked={role === 'Administrator'}
                         onChange={handleRoleChange}
                     />
-                    <label className="btn btn-outline-primary" htmlFor="btnradio3">Administration</label>
+
+                    <label className="btn btn-outline-white text-white" htmlFor="btnradio3">Administrador</label>
+
                 </div>
             </div>
-
             <form className='mt-1' onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Name</label>
+                <div className="mb-2">
+                    <label htmlFor="name" className="form-label">Nombre</label>
                     <input type="text" {...register("name")} className="form-control" id="name" />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="lastname" className="form-label">Last Name</label>
+                <div className="mb-2">
+                    <label htmlFor="lastname" className="form-label">Apellido</label>
                     <input type="text" {...register("lastname")} className="form-control" id="lastname" />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
+                <div className="mb-2">
+                    <label htmlFor="email" className="form-label">Correo</label>
                     <input type="email" {...register("email")} className="form-control" id="email" aria-describedby="emailHelp" />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
+                <div className="mb-2">
+                    <label htmlFor="password" className="form-label">Contraseña</label>
                     <input type="password" {...register("password")} className="form-control" id="password" />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="floor" className="form-label">Floor</label>
+                <div className="mb-2">
+                    <label htmlFor="floor" className="form-label">Piso</label>
+
                     <input type="text" {...register("floor")} className="form-control" id="floor" />
                 </div>
-
                 {role === 'Seller' && (
                     <>
-                        <div className="mb-3">
+                        <div className="mb-2">
                             <label htmlFor="phone" className="form-label">Whatsapp</label>
                             <PhoneInput
                                 onChange={(phone) => {
-                                    console.log('hhhh', phone)
+                                    // console.log('hhhh', phone)
                                     setValue('phone', phone)
                                 }
                                 }
@@ -126,27 +123,26 @@ export default function Register() {
                                 inputClass="form-control w-100"
                             />
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="shopName" className="form-label">Shop name</label>
+                        <div className="mb-2">
+
+                            <label htmlFor="shopName" className="form-label">Emprendimiento</label>
+
                             <input type="text" {...register("shopName")} className="form-control" id="shopName" />
                         </div>
                     </>
                 )}
-
                 {role === 'Administrator' && (
                     <div className="mb-3">
-                        <label htmlFor="buildingName" className="form-label">Building name</label>
+                        <label htmlFor="buildingName" className="form-label">Edificio</label>
                         <input type="text" {...register("buildingName")} className="form-control" id="buildingName" />
                     </div>
                 )}
-
-
-                <button type="submit" className="btn btn-primary">Create an account</button>
+                <button type="submit" className="register-button mb-3">Crea una cuenta</button>
             </form>
-            <div>
+            <div >
                 {" "}
-                <Link to={"/login"}>Ya te registraste? Ingresa por acá!</Link>
+                <Link className='text-white' to={"/login"}>Ya te registraste? Ingresa por acá.</Link>
             </div>
-        </div>
+        </div >
     );
 }

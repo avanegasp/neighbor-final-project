@@ -8,12 +8,12 @@ const Recommendations = () => {
     const { store, actions } = useContext(Context)
     const [error, setError] = useState(null)
     const navigate = useNavigate()
-    console.log("recommendations", store.recommendations)
+    // console.log("recommendations", store.recommendations)
 
     useEffect(() => {
         actions.getAllRecommendations()
             .then((data) => {
-                console.log('hereee', data)
+                // console.log('hereee', data)
                 setError(data?.error || "Error fetching profile")
                 if (data?.error && data.error === 'No token found') {
                     navigate("/register")
@@ -24,13 +24,13 @@ const Recommendations = () => {
     if (!store.recommendations) return <div>Loading...</div>
 
     return (
-        <div className="d-flex flex-column min-vh-100">
+        <div className="container justify-content-center align-content-start flex-column min-vh-100">
             <div className="container d-flex flex-column flex-grow-1">
                 <div
                     className="d-flex justify-content-between align-items-center mb-3"
                     style={{ minHeight: "20vh" }}
                 >
-                    <h1 className="d-flex justify-context-center">Recomendaciones de mis vecinos</h1>
+                    <h1 className="text-title fw-bold font-monospace text-white business">Recomendaciones de mis vecinos</h1>
                 </div>
                 <div
                     className="flex-grow-1 overflow-auto border border-white p-3"
@@ -47,12 +47,9 @@ const Recommendations = () => {
                                     shopName={recommendation.shopName}
                                     phone={recommendation.phone}
                                     numIndex={index} />
-
                             </div>
                         );
                     })}
-
-
                 </div>
             </div>
         </div >

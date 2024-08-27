@@ -13,8 +13,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await actions.login(email, password, userType);
-    console.log(email, password, userType);
-    console.log("respuesta", response);
+    // console.log(email, password, userType);
+    // console.log("respuesta", response);
     if (response) {
       switch (userType) {
         case "NEIGHBOR":
@@ -25,66 +25,75 @@ const Login = () => {
           return;
         case "ADMINISTRATOR":
           navigate(`/profileAdmin/${response.user.id}`);
-          return
+          return;
+
+
+
       }
-    } else {
+    }
+    else {
       alert("Login failed");
     }
+
   };
 
   return (
-    <div className="login-container">
-      <h1>Iniciar sesión</h1>
+
+    <div className="login-container" >
+      <h1 className="text-white">Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
-        <div className="user-type-group" onChange={(e) => setUserType(e.target.value)}>
-          <label className="user-type-option">
+        <div className="user-type-group mt-3" onChange={(e) => setUserType(e.target.value)}>
+          <label className="user-type-option btn btn-outline-white text-white">
             <input type="radio" name="options" value="NEIGHBOR" />
-            Neighbor
+            Vecino
           </label>
-          <label className="user-type-option">
+          <label className="user-type-option btn btn-outline-white text-white">
             <input type="radio" name="options" value="SELLER" />
-            Seller
+            Vendedor
           </label>
-          <label className="user-type-option">
+          <label className="user-type-option btn btn-outline-white text-white">
+
             <input type="radio" name="options" value="ADMINISTRATOR" />
-            Admin
+            Administrador
           </label>
         </div>
 
         <div className="form-group">
-          <label htmlFor="LoginEmail">Correo electrónico</label>
+          <label className="text-white mt-4" htmlFor="LoginEmail">Correo electrónico</label>
           <input
             type="email"
             id="LoginEmail"
             value={email}
-            placeholder="Enter email"
+            // placeholder="correo"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <small id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
+          <small className="text-white" id="emailHelp">Nunca compartiremos tu correo con nadie.</small>
         </div>
 
         <div className="form-group">
-          <label htmlFor="LoginPassword">Contraseña</label>
+          <label className="text-white" htmlFor="LoginPassword">Contraseña</label>
           <input
             type="password"
             id="LoginPassword"
             value={password}
-            placeholder="Password"
+            // placeholder="contraseña"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <button type="submit" className="login-button">
-          Iniciar sesión
+        <button type="submit" className="login-button mb-3">
+          Inicia sesión
         </button>
       </form>
 
       <div>
-        <Link to={"/register"}>¿No tienes una cuenta? Regístrate aquí!</Link>
+        <Link className="text-white" to={"/register"}>¿No tienes una cuenta? Regístrate aquí!</Link>
+
       </div>
     </div>
   );
+
 };
 
 export default Login;

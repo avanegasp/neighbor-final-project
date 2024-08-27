@@ -12,6 +12,10 @@ class RoleEnum(enum.Enum):
     NEIGHBOR = "NEIGHBOR"
     SELLER = "SELLER"
 
+class StatusEnum(enum.Enum):
+    APPROVED ="APPROVED"
+    REJECTED = "REJECTED"
+    PENDING = "PENDING"
 
 class Neighbor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,9 +25,16 @@ class Neighbor(db.Model):
     lastname = db.Column(db.String(80), unique=False, nullable=False)
     floor = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.NEIGHBOR.value)
+    status = db.Column(db.String(50), nullable=False, default=StatusEnum.PENDING.value)
     
+
+    review = db.relationship('Review', backref='Neighbor', uselist=False) 
+    
+
+
     review = db.relationship('Review', backref='Neighbor', uselist=False)
     recommendations = db.relationship('Recommendation', backref='neighbor')
+
 
     def __repr__(self):
         return f'<Neighbor {self.email}>'
@@ -37,7 +48,12 @@ class Neighbor(db.Model):
             "lastname": self.lastname,
             "floor": self.floor,
             "role": self.role,
-            "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
+
+        
+
+            "recommendations": [recommendation.serialize() for recommendation in self.recommendations],
+            "status": self.status
+
             # do not serialize the password, its a security breach
         }
 
@@ -51,10 +67,15 @@ class Seller(db.Model):
     shopName= db.Column(db.String(80), unique=False, nullable=False)
     phone= db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.SELLER.value)
+    status = db.Column(db.String(50), nullable=False, default=StatusEnum.PENDING.value)
 
-    products = db.relationship('Product', backref='seller')
+    products = db.relationship('Product', back_populates='seller')
     orders = db.relationship('Order', backref='seller')
+
+   
+
     recommendations = db.relationship('Recommendation', backref="seller")
+
 
     def __repr__(self):
         return f'<Seller {self.email}>'
@@ -70,7 +91,10 @@ class Seller(db.Model):
             "phone": self.phone,
             "role": self.role,
             "orders": [order.serialize() for order in self.orders],
-            "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
+       
+            "recommendations": [recommendation.serialize() for recommendation in self.recommendations],
+            "status": self.status
+
         } 
 
 class Administrator(db.Model):
@@ -82,7 +106,7 @@ class Administrator(db.Model):
     floor = db.Column(db.String(80), unique=False, nullable=False)
     buildingName = db.Column(db.String(80), unique=False, nullable=False)
     role = db.Column(db.String(50), nullable=False, default=RoleEnum.ADMINISTRATOR.value)
-
+    
     
     buildings = db.relationship('Building', backref='administrator')  # Cambiado a 'buildings'
     recommendations = db.relationship('Recommendation', backref='administrator')
@@ -99,10 +123,32 @@ class Administrator(db.Model):
             "floor": self.floor,
             "buildingName": self.buildingName,
             "role": self.role,
+            "neighbor": self.neighbor_id,
+            "seller": self.seller_id,
             'buildings': [building.serialize() for building in self.buildings],
             "recommendations": [recommendation.serialize() for recommendation in self.recommendations]
             # do not serialize the password, its a security breach
         }
+
+
+
+    def __repr__(self):
+        return f'<ADMINISTRATOR {self.email}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "name": self.name,
+            "lastname": self.lastname,
+            "floor": self.floor,
+            "buildingName": self.buildingName,
+            "role": self.role,
+            'buildings': [building.serialize() for building in self.buildings],
+
+            # do not serialize the password, its a security breach
+        }               
+
 class Building(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     buildingName = db.Column(db.String(80), unique=False, nullable=False)
@@ -115,15 +161,32 @@ class Building(db.Model):
         return {
             "id": self.id,
             "buildingName": self.buildingName,
-        }              
+
+        }
+
+
+    def __repr__(self):
+        return f'<BUILDING {self.email}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "buildingName": self.buildingName,
+            
+            # do not serialize the password, its a security breach
+        }                          
+                                  
+
 #uno a muchos entre seller y productos
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
     price =  db.Column(db.Float(30), unique=False, nullable=False)
     schedule = db.Column(db.String(50), unique=False, nullable=False)
+    description = db.Column(db.String(255), unique=False, nullable=False)
 
-    seller_id = db.Column(db.Integer, db.ForeignKey('seller.id'))
+    seller_id = db.Column(db.Integer, db.ForeignKey('seller.id', ondelete='CASCADE'))
+    seller = db.relationship(Seller)
     orders = db.relationship('order_product', backref='product')
     review = db.relationship('Review', backref='Product', uselist=False) 
 
@@ -135,7 +198,9 @@ class Product(db.Model):
             "id": self.id,
             "name": self.name,
             "price": self.price,
-            "schedule": self.schedule
+            "schedule": self.schedule,
+            "description": self.description,
+            "seller_name": self.seller.serialize()['name']
         }     
         
 class Review(db.Model):
@@ -143,10 +208,11 @@ class Review(db.Model):
     comment_text = db.Column(db.String(255), nullable=True, unique=False)
     stars = db.Column(db.Integer, nullable=False, unique=False)
     
-    neighbor_id = db.Column(db.Integer, db.ForeignKey("neighbor.id"), unique=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"), unique=True) 
+    neighbor_id = db.Column(db.Integer, db.ForeignKey("neighbor.id", ondelete='CASCADE'), unique=True)
+    product_id = db.Column(db.Integer, db.ForeignKey("product.id" ), unique=True) 
 
-    
+
+
     def __repr__(self):
         return f'<Review {self.id}>'
     
@@ -166,7 +232,7 @@ class Order(db.Model):
     buyer_name = db.Column(db.String(80), unique=False, nullable=False)
     amount = db.Column(db.Integer, unique=False, nullable=False)
     
-    seller_id = db.Column(db.Integer, db.ForeignKey('seller.id'))
+    seller_id = db.Column(db.Integer, db.ForeignKey('seller.id', ondelete='CASCADE'))
     products = db.relationship('order_product', backref='order')
 
     def __repr__(self):

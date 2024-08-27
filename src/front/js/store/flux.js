@@ -7,6 +7,11 @@ const getState = ({ getStore, getActions, setStore }) => {
       admin: {},
       users: null,
       favorites: [],
+      people: {
+        neighbor: [],
+        seller: [],
+      },
+      allBusiness: [],
       business: [],
       shop: {},
       currentUser: {},
@@ -25,12 +30,32 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      getAllBusiness: async () => {
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}/api/businesses`);
+            if (!response.ok) {
+                throw new Error(`Error fetching businesses: ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log(data);
+            setStore({ allBusiness: data.businesses});
+        } catch (error) {
+            console.error("Error fetching businesses:", error);
+        }
+    },
+    
+    
+
       removeToFavorite: (id) => {
         const store = getStore();
         const filteredFavorite = store.favorites.filter(
           (favorite) => favorite.name !== id
         );
         setStore({ favorites: filteredFavorite });
+      },
+
+      clearFavorites: () => {
+        setStore({ favorites: [] })
       },
 
       // Use getActions to call a function within a fuction
@@ -72,12 +97,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getProfileNeighbor: async (id) => {
-        console.log("HEREEEE PROFILE", id);
+        // console.log("HEREEEE PROFILE", id);
         // if (!id) return;
 
         try {
           const token = localStorage.getItem("token")
-          console.log("TOKEN NEIGHBOR", token)
+          // console.log("TOKEN NEIGHBOR", token)
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/neighbor/${id}`,
             {
@@ -89,10 +114,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
 
-          console.log("response", response)
+          // console.log("response", response)
           if (response.ok) {
             const data = await response.json();
-            console.log("data neighbor", data)
+            // console.log("data neighbor", data)
             setStore({ neighbor: data });
             return data;
           } else {
@@ -108,7 +133,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
       getProfileSeller: async (id) => {
-        console.log("HEREEEE PROFILE", id);
+        // console.log("HEREEEE PROFILE", id);
         if (!id) return;
 
         const token = localStorage.getItem("token")
@@ -132,6 +157,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.ok) {
             const data = await response.json();
             setStore({ seller: data });
+            console.log(data);
+            console.log(token);
             return data;
           } else {
             const errorData = await response.json()
@@ -202,9 +229,9 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
             }
           );
-
           if (response.ok) {
             const data = await response.json();
+            console.log('response', data)
             setStore({ users: data });
             return data;
           } else {
@@ -239,7 +266,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          console.log("DATAAAA", data);
+          // console.log("DATAAAA", data);
           actions.getProfileNeighbor(id);
         } catch (error) {
           console.error("Error editing neighbor:", error.message);
@@ -311,7 +338,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             {
               method: "POST",
               headers: { "Content-type": "application/json" },
-
               body: JSON.stringify({ email, password, name, lastname, floor }),
             }
           );
@@ -322,14 +348,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("data completa del registerNeighbor", data);
 
           if (data.user) {
+            // console.log("dsadasa", data)
             setStore({ currentUser: data.user });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.user.role)
+            localStorage.setItem('name', data.user.name)
+            localStorage.setItem('id', data.user.id)
+
+            return data
           } else {
             console.log("El objeto 'user' no está presente en la respuesta");
+            return false
           }
-          localStorage.setItem('token', data.token);
-          return data;
         } catch (error) {
-          console.log(error);
+          console.log(error)
+          return false
         }
       },
       registerSeller: async (
@@ -342,7 +375,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         shopName
       ) => {
         try {
-          console.log("seller flux Fab", phone)
+          // console.log("seller flux Fab", phone)
           const response = await fetch(
             process.env.BACKEND_URL + `/api/seller/registers`,
             {
@@ -368,10 +401,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (data.user) {
             setStore({ currentUser: data.user });
+            localStorage.setItem('token', data.token)
           } else {
             console.log("El objeto 'user' no está presente en la respuesta");
           }
           localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role)
+          localStorage.setItem('name', data.user.name)
+          localStorage.setItem('id', data.user.id)
           return data;
         } catch (error) {
           console.log(error);
@@ -417,22 +454,77 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("El objeto 'user' no está presente en la respuesta");
           }
           localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role)
+          localStorage.setItem('name', data.user.name)
+          localStorage.setItem('id', data.user.id)
           return data;
         } catch (error) {
           console.log(error);
         }
       },
 
-      getSingleBusiness: async (seller_id, business_id) => {
-        if (!seller_id || !business_id) return;
-        // const jwt = localStorage.getItem("token");
+
+
+      getAllUser: async () => {
         try {
-          const response = await fetch(
-            `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${business_id}`,
+          console.log("hola")
+          const response = await fetch(process.env.BACKEND_URL + `/api/neighbors/sellers`,
             {
               method: "GET",
               headers: {
-                // authorization: `Bearer ${jwt}`
+                "Content-Type": "application/json",
+              },
+            });
+
+          if (response.ok) {
+            const data = await response.json();
+            setStore({
+              people: {
+                neighbor: data.neighbor,
+                seller: data.seller
+              }
+            });
+          } else {
+            console.error("Error encontrando los neighbors:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error encontrando los seller:", error.message);
+        }
+      },
+
+      deleteUser: async (id, userType) => {
+        let actions = getActions();
+        const role = userType.toLowerCase()
+        const response = await fetch(process.env.BACKEND_URL + `/api/administrator/${role}/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*',
+          },
+        })
+        if (!response.ok) {
+          alert("No se puede eliminar neighbor");
+        } else {
+          actions.getAllUser();
+        }
+      },
+
+      // getSingleBusiness: async (seller_id, business_id) => {
+      //   if (!seller_id || !business_id) return;
+      //   // const jwt = localStorage.getItem("token");
+      // },
+
+      getSingleBusiness: async (seller_id, product_name) => {
+        console.log (seller_id,product_name)
+        if (!seller_id || !product_name) return;
+        //const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/seller/${seller_id}/business/${product_name}`,
+            {
+              method: "GET",
+              headers: {
+                //authorization: `Bearer ${jwt}`
               },
             }
           );
@@ -441,22 +533,25 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          setStore({ shop: data });
+          console.log(data);
+          setStore({ shop: data.Business });
+          return true;
         } catch (error) {
           console.log(error);
         }
       },
-      createReview: async (business_id) => {
-        if (!business_id) return;
+
+      createReview: async (id, product_id) => {
+        if (!product_id) return;
         const token = localStorage.getItem("token");
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/neighbor/${neighbor_id}/business/${business_id}`,
+            `${process.env.BACKEND_URL}/api/neighbor/${id}/business/${product_id}/create-review`,
             {
-              methods: "POST",
+              method: "POST",
               headers: {
-                "Content-type": "appliaction/json",
-                authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                "Content-type": "appliaction/json"
               },
             }
           );
@@ -471,37 +566,20 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getCurrentUser: async () => {
-        getCurrentUser: async () => {
-          const token = localStorage("token");
-          try {
-            const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            });
-            const data = await response.json();
-            setStore({ currentUser: data });
-          } catch (error) {
-            console.log(error);
-          }
-          getCurrentUser: async () => {
-            getCurrentUser: async () => {
-              const token = localStorage("token");
-              try {
-                const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
-                  headers: {
-                    authorization: `Bearer ${token}`,
-                  },
-                });
-                const data = await response.json();
-                setStore({ currentUser: data });
-              } catch (error) {
-                console.log(error);
-              }
-            }
-          }
+        const token = localStorage("token");
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL} + /me`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          });
+          const data = await response.json();
+          setStore({ currentUser: data });
+        } catch (error) {
+          console.log(error);
         }
       },
+
       getAllRecommendations: async () => {
         const token = localStorage.getItem("token")
         if (!token) {
@@ -531,6 +609,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (error) {
           console.error("Error fetching recommendations:", error.message);
+        }
+      },
+
+      createBusiness: async (id, shopName, price, schedule, description) => {
+        console.log(id, shopName, price, schedule, description)
+        const token = localStorage.getItem("token")
+        if (!token) {
+          console.error("No token found")
+          return { error: "No token found" }
+        }
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/seller/${id}/create-business`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ shopName, price, schedule, description }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          } else {
+            const data = await response.json();
+            return data;
+          }
+        } catch (error) {
+          console.log(error);
         }
       },
 
@@ -622,11 +730,75 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error:", error)
         }
+      },
+      chekingStatus: async () => {
+        const token = localStorage.getItem("token")
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "/api/checking",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+              },
+            }
+          )
+          if (!response.ok) {
+            return false;
+          }
+          const data = await response.json();
+          return data
+        } catch (error) {
+          console.log(error)
+        }
+      },
+
+      changeStatus: async (id, role, status) => {
+        const store = getStore()
+        const token = localStorage.getItem("token")
+        try {
+          const response = await fetch(process.env.BACKEND_URL + "/api/changeStatus",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+              },
+              body: JSON.stringify({ id, role, status })
+            }
+          )
+          const data = await response.json()
+          const roleToUpdate = role === "NEIGHBOR" ? "neighbor" : "seller";
+
+          if (response.ok) {
+            const updateUsers = store.users[roleToUpdate].map((user) => user.id === id ? { ...user, status: status } : user)
+            setStore({ users: { ...store.users, [roleToUpdate]: updateUsers } })
+          }
+          return data
+
+        } catch (error) {
+          console.log(error)
+        }
+
       }
 
-
+      // deleteSeller: async (id) => {
+      //   let actions = getActions();
+      //   const response = await fetch(process.env.BACKEND_URL+'/administrator/seller'+ `/${id}`, {
+      //     method: "DELETE",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //   },
+      //   })
+      //   if (!response.ok) {
+      //     alert("No se puede eliminar Seller");
+      //   }else {
+      //     actions.getAllUser();
+      //   }
     },
   };
 };
+
 
 export default getState;

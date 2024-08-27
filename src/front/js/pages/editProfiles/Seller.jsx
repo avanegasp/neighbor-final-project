@@ -2,11 +2,12 @@ import React, { useContext } from "react";
 import { Context } from "../../store/appContext.js";
 import EditProfileDetails from "../../component/editProfileDetails/EditProfileDetails.jsx";
 
+
 const ProfileEditSeller = () => {
   const { store } = useContext(Context)
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="col-10 text-center">
+      <div className="col-12 text-center">
         <EditProfileDetails
           name={store.seller.name}
           lastname={store.seller.lastname}

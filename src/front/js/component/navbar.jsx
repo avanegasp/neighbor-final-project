@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "../../styles/navbar.css";
 import "../../styles/index.css";
 import Favorite from "./favorite/Favorite.jsx";
 
@@ -12,10 +11,10 @@ export const Navbar = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const name = localStorage.getItem("name")
+  const name = localStorage.getItem("name");
   function roleLink() {
-    const role = localStorage.getItem("role")
-    const id = localStorage.getItem("id")
+    const role = localStorage.getItem("role");
+    const id = localStorage.getItem("id");
 
     if (role && id) {
       switch (role) {
@@ -25,6 +24,8 @@ export const Navbar = () => {
           return `/profileSeller/${id}`;
         case "ADMINISTRATOR":
           return `/profileAdmin/${id}`;
+        default:
+          return "/";
       }
     }
   }
@@ -39,22 +40,27 @@ export const Navbar = () => {
   const handleLogout = () => {
     localStorage.clear();
     setIsAuthenticated(false);
+    actions.clearFavorites()
     navigate('/login');
   };
 
   return (
     <nav className="navbar">
-      <Link className="navbar-brand" to="/">
+      <Link className="navbar-brand mb-3" to="/">
         <span className="icon-n">N</span>
       </Link>
 
       <div className="d-flex justify-content-end align-items-center flex-grow-1">
-        {location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/" ? null : (
+        {location.pathname === "/login" ||
+          location.pathname === "/register" ||
+          location.pathname === "/" ? null : (
           <>
             <div className="d-flex justify-content-center flex-grow-1">
-              <span><strong className="fs-2 text">Sesión de :</strong></span>
-              <span className="ms-3">
-                <Link className="fs-2 text" to={roleLink()}>
+              <span>
+                <strong className="fs-2"><i className="fa-solid fa-user-large"></i></strong>
+              </span>
+              <span className="ms-3 ">
+                <Link className="fs-2 text-white" to={roleLink()}>
                   {name}
                 </Link>
               </span>
@@ -64,19 +70,33 @@ export const Navbar = () => {
                 className="btn text-white fs-1"
                 type="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false">
+                aria-expanded="false"
+              >
                 <i className="fa-regular fa-thumbs-up"></i>{" "}
                 <span className="favNumNavbar">{store.favorites.length}</span>
               </button>
               <ul className="dropdown-menu dropdown-menu-end">
                 <li>
                   <div className="bg-white">
-                    <Favorite favorites={store.favorites} removeToFavorite={actions.removeToFavorite} />
+                    <Favorite
+                      favorites={store.favorites}
+                      removeToFavorite={actions.removeToFavorite}
+                    />
                   </div>
                 </li>
               </ul>
             </div>
 
+            {/* <div className="dropdown-item">
+              <Link
+                className="text-success fs-5 mx-1 my-1"
+                to="/adminDeleteUser"
+              >
+                <i className="text-success fs-5 mx-1 my-1 fa-solid fa-trash"></i>{" "}
+                Administración de usuarios
+              </Link>
+            </div> */}
+            <div className="dropdown-divider"></div>
             <div className="dropdown">
               <button
                 className="btn text-white fs-1"
@@ -120,4 +140,3 @@ export const Navbar = () => {
 };
 
 export default Navbar;
-

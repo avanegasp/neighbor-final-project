@@ -19,12 +19,19 @@ import Recommendations from "./pages/recommendations/Recommendations.jsx";
 
 import Login from "./pages/Login.jsx";
 import Register from "./pages/register.jsx";
+
+import AdminDeleteUser from "./component/adminDeleteUser/AdminDeleteUser.jsx";
+import DeleteUser from "./pages/deleteUser/DeleteUser.jsx";
+
+
 import Shop from "./pages/Shop.jsx"
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer";
 
+import BuildingUsers from "./pages/directory/BuildingUsers.jsx";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -53,8 +60,15 @@ const Layout = () => {
             <Route element={<Login />} path="/login" />
             <Route element={<Directory />} path="/directory" />
             <Route element={<Register />} path="/register" />
-            <Route element={<Shop />} path="seller/:seller_id/shop/:business_id" />
+            <Route element={<Shop />} path="/seller/:seller_id/shop/:business_id" />
             <Route element={<Business />} path="/business" />
+            
+
+            <Route element={<DeleteUser  />} path="/adminDeleteUser" />
+            
+
+
+            <Route element={<BuildingUsers />} path="/buildingUsers" />
 
             <Route element={<h1>Not found!</h1>} />
           </Routes>
