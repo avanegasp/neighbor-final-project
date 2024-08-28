@@ -1,81 +1,58 @@
-# WebApp boilerplate with React JS and Flask API
+# Proyecto Final: Neighbors
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+## Descripción 
 
-- Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
-- Integrated with Pipenv for package managing.
-- Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
+**"Neighbors"** es una aplicación integral para la gestión y comunicación dentro de un edificio de apartamentos, utilizando un enfoque moderno con tecnologías como React, Flask, SQLAlchemy, y más. La aplicación facilita la interacción entre residentes (vecinos), vendedores (sellers) y administradores (admins), permitiendo una experiencia fluida para compras, trueques, anuncios y gestión del edificio.
 
-### 1) Installation:
+## Tecnologías utilizadas:
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
+- **Frontend:** Javascript, React, Bootstrap, Cloudinary
+- **Backend:** Flask, SQLAlchemy, Python
+- **Base de Datos:** PostgreSQL (SQLAlchemy)
+- **Otras herramientas:** Postman, WhatsApp
 
-It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
+## Características principales
 
-1. Install the python packages: `$ pipenv install`
-2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
+### Roles y Permisos
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+- **Vecino (Neighbor):**
+- Perfil personal editable.
+- Visita perfiles de vendedores y visualiza tiendas.
+- Accede al directorio completo del edificio.
 
-4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
-5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
+- **Vendedor (Seller):**
+- Perfil personal editable.
+- Crea y gestiona una tienda: establece precios, horarios y descripciones de productos.
 
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
+- **Administrador (Admin):**
+- Accede a todas las funciones de un vecino y vendedor.
+- Administra la entrada y salida de residentes.
+- Elimina residentes y todo su contenido asociado.
 
-### Undo a migration
+### Funcionalidades CRUD
 
-You are also able to undo a migration by running
+- Crear, Leer, Actualizar y Eliminar (CRUD) operaciones para perfiles de vecinos, vendedores y tiendas.
+- Gestión completa de productos y anuncios en la tienda de los vendedores.
+- Gestión y administración de usuarios por parte de los administradores.
 
-```sh
-$ pipenv run downgrade
-```
+### Integración con WhatsApp:
 
-### Backend Populate Table Users
+Permite a los usuarios realizar compras, trueques y anuncios a través de WhatsApp, facilitando la comunicación directa con vendedores y otros residentes.
+Interfaz de Usuario:
 
-To insert test users in the database execute the following command:
+## Perfil de Usuario 
+- Edita y visualiza detalles personales.
+- **Directorio:** Lista completa de todos los residentes del edificio.
+- **Tienda del Vendedor:** Visualiza y gestiona productos con detalles completos.
 
-```sh
-$ flask insert-test-users 5
-```
+### Backend y API:
 
-And you will see the following message:
+- **Flask y SQLAlchemy** para la gestión del backend y operaciones de base de datos.
+- **Endpoints RESTful** para manejar operaciones CRUD y autenticación de usuarios.
+- Utiliza **Postman** para probar los endpoints del backend y asegura la integración con el frontend.
 
-```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
+### Despliegue y Gestión de Imágenes
 
-### **Important note for the database and the data inside it**
+- **Cloudinary** para el almacenamiento y gestión de imágenes en la aplicación.
+- **Render** para el despliegue de la página
 
-Every Github codespace environment will have **its own database**, so if you're working with more people eveyone will have a different database and different records inside it. This data **will be lost**, so don't spend too much time manually creating records for testing, instead, you can automate adding records to your database by editing ```commands.py``` file inside ```/src/api``` folder. Edit line 32 function ```insert_test_data``` to insert the data according to your model (use the function ```insert_test_users``` above as an example). Then, all you need to do is run ```pipenv run insert-test-data```.
-
-### Front-End Manual Installation:
-
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
-
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
-
-## Publish your website!
-
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://start.4geeksacademy.com/deploy).
-
-### Contributors
-
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
-
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
