@@ -1,5 +1,7 @@
 # Proyecto Final: Neighbors
 
+![image](https://github.com/user-attachments/assets/61e20a20-161d-4bee-865b-1a292cdf56d5)
+
 ## Descripción 
 
 **"Neighbors"** es una aplicación integral para la gestión y comunicación dentro de un edificio de apartamentos, utilizando un enfoque moderno con tecnologías como React, Flask, SQLAlchemy, y más. La aplicación facilita la interacción entre residentes (vecinos), vendedores (sellers) y administradores (admins), permitiendo una experiencia fluida para compras, trueques, anuncios y gestión del edificio.
