@@ -40,10 +40,11 @@
 ### Integración con WhatsApp:
 
 Permite a los usuarios realizar compras, trueques y anuncios a través de WhatsApp, facilitando la comunicación directa con vendedores y otros residentes.
-Interfaz de Usuario:
 
-## Perfil de Usuario 
-- Edita y visualiza detalles personales.
+## Interfaz del Usuario
+
+### Perfil del Usuario 
+- **Edita** y **visualiza** los detalles personales.
 - **Directorio:** Lista completa de todos los residentes del edificio.
 - **Tienda del Vendedor:** Visualiza y gestiona productos con detalles completos.
 
