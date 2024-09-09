@@ -4,7 +4,7 @@
 
 ## Descripción 
 
-**"Neighbors"** es una aplicación integral para la gestión y comunicación dentro de un edificio de apartamentos, utilizando un enfoque moderno con tecnologías como React, Flask, SQLAlchemy, y más. La aplicación facilita la interacción entre residentes (vecinos), vendedores (sellers) y administradores (admins), permitiendo una experiencia fluida para compras, trueques, anuncios y gestión del edificio.
+**"Neighbors"** es una aplicación integral para la gestión y comunicación dentro de un edificio de apartamentos, utilizando un enfoque moderno con tecnologías como React, Flask, SQLAlchemy, y más. La aplicación facilita la interacción entre vecinos (neighbors), vendedores (sellers) y administradores (admins), permitiendo una experiencia fluida para compras, trueques, anuncios y gestión del edificio.
 
 ## Tecnologías utilizadas:
 
