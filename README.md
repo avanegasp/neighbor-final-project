@@ -17,16 +17,16 @@
 
 ### Roles y Permisos
 
-- **Vecino (Neighbor):**
+**Vecino (Neighbor):**
 - Perfil personal editable.
 - Visita perfiles de vendedores y visualiza tiendas.
 - Accede al directorio completo del edificio.
 
-- **Vendedor (Seller):**
+**Vendedor (Seller):**
 - Perfil personal editable.
 - Crea y gestiona una tienda: establece precios, horarios y descripciones de productos.
 
-- **Administrador (Admin):**
+**Administrador (Admin):**
 - Accede a todas las funciones de un vecino y vendedor.
 - Administra la entrada y salida de residentes.
 - Elimina residentes y todo su contenido asociado.
