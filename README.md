@@ -1,6 +1,7 @@
 # Proyecto Final: Neighbors
 
-![image](https://github.com/user-attachments/assets/61e20a20-161d-4bee-865b-1a292cdf56d5)
+![allFix](https://github.com/user-attachments/assets/a0d3b68e-fbbb-4eb0-af63-5a5a661a128b)
+
 
 ## Descripción 
 
